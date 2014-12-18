@@ -1,0 +1,69 @@
+<ui:composition template="/resources/templates/templateCRUD.xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:param name="mbean" value="${usuarioFaces}" />
+	<ui:param name="mbeanModel" value="${usuarioFaces.crudModel}" />
+	<ui:param name="mbeanPesquisaModel" value="${usuarioFaces.crudPesquisaModel}" />
+
+	<ui:define name="cadastro">
+
+		<p:fieldset style="width: 98%">
+
+			<h:panelGrid style="width: 60%">
+
+				<p:outputLabel for="itNome" value="Nome" />
+				<p:inputText id="itNome" value="#{mbeanModel.nome}" required="true" maxlength="100" styleClass="coluna90" />
+
+			</h:panelGrid>
+
+			<h:panelGrid columns="3" style="width: 60%">
+
+				<p:outputLabel for="itLogin" value="Login" />
+				<p:outputLabel for="itSenha" value="Senha" />
+				<p:outputLabel for="itRepetirSenha" value="Repetir Senha" />
+
+				<p:inputText id="itLogin" value="#{mbeanModel.login}" required="true" maxlength="50" styleClass="coluna90" />
+				<p:password id="itSenha" value="#{mbean.senha}" maxlength="50" styleClass="coluna90" />
+				<p:password id="itRepetirSenha" value="#{mbean.repetirSenha}" maxlength="50" styleClass="coluna90" />
+
+			</h:panelGrid>
+
+			<h:panelGrid style="width: 60%">
+
+				<p:outputLabel for="omGrupo" value="Grupo" />
+				<h:selectOneMenu id="omGrupo" value="#{mbeanModel.grupoModel.id}" required="true">
+					<f:selectItem itemLabel="Selecione" itemValue="" />
+					<f:selectItems value="#{mbean.grupos}" />
+				</h:selectOneMenu>
+
+			</h:panelGrid>
+
+		</p:fieldset>
+
+	</ui:define>
+
+	<ui:define name="pesquisaCampos">
+
+		<h:outputText value="Nome" />
+		<p:inputText value="#{mbeanPesquisaModel.nome}" styleClass="coluna50" />
+
+	</ui:define>
+
+	<ui:define name="colunasTabela">
+
+		<p:column headerText="Nome" styleClass="coluna60">
+			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
+				<h:outputText value="#{linha.nome}" />
+				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+			</p:commandLink>
+		</p:column>
+
+		<p:column headerText="Grupo" styleClass="coluna30">
+			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
+				<h:outputText value="#{linha.grupoModel.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+			</p:commandLink>
+		</p:column>
+
+	</ui:define>
+
+</ui:composition>

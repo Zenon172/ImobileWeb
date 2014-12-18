@@ -1,0 +1,168 @@
+<ui:composition template="/resources/templates/templateCRUD.xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xmlns:ts="http://java.sun.com/jsf/composite/components" xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<ui:param name="mbean" value="${captacaoFaces}" />
+	<ui:param name="mbeanModel" value="${captacaoFaces.crudModel}" />
+	<ui:param name="mbeanPesquisaModel" value="${captacaoFaces.crudPesquisaModel}" />
+
+	<ui:define name="cadastro">
+
+		<p:fieldset style="width: 98%">
+
+			<h:panelGrid columns="6" columnClasses="coluna15, coluna15, coluna15, coluna15, coluna20, coluna20" style="width: 70%">
+
+				<p:outputLabel for="calDataAnuncio" value="Data do Anúncio" />
+				<p:outputLabel for="omTipoImovel" value="Tipo" />
+				<p:outputLabel for="omOrigem" value="Origem" />
+				<p:outputLabel for="omBairro" value="Bairro" />
+				<p:outputLabel for="omStatusCaptacao" value="Status" />
+				<p:outputLabel for="itValor" value="Valor" />
+
+				<ts:calendar id="calDataAnuncio" value="#{mbeanModel.dataAnuncio}" styleClass="coluna90" />
+				<h:selectOneMenu id="omTipoImovel" value="#{mbeanModel.tipoImovelModel.id}" required="true" style="width: 90%">
+					<f:selectItem itemLabel="Selecione" itemValue="" />
+					<f:selectItems value="#{mbean.comboTipoImovel}" />
+				</h:selectOneMenu>
+
+				<h:selectOneMenu id="omOrigem" value="#{mbeanModel.origemModel.id}" required="true" style="width: 90%">
+					<f:selectItem itemLabel="Selecione" itemValue="" />
+					<f:selectItems value="#{mbean.comboOrigem}" />
+				</h:selectOneMenu>
+				<h:selectOneMenu id="omBairro" value="#{mbeanModel.bairroModel.id}" required="true" style="width: 90%">
+					<f:selectItem itemLabel="Selecione" itemValue="" />
+					<f:selectItems value="#{mbean.comboBairro}" />
+				</h:selectOneMenu>
+				<h:selectOneMenu id="omStatusCaptacao" value="#{mbeanModel.statusCaptacaoModel.id}" required="true" style="width: 90%">
+					<f:selectItem itemLabel="Selecione" itemValue="" />
+					<f:selectItems value="#{mbean.comboStatusCaptacao}" />
+				</h:selectOneMenu>
+				<pe:inputNumber id="itValor" value="#{mbeanModel.valor}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 90%; text-align:right" />
+
+			</h:panelGrid>
+
+			<h:panelGrid style="width: 100%">
+
+				<p:outputLabel for="itLink" value="Link" />
+				<p:inputText id="itLink" value="#{mbeanModel.link}" styleClass="coluna98" />
+
+				<p:outputLabel for="itaDescricao" value="Descrição" />
+				<p:inputTextarea id="itaDescricao" value="#{mbeanModel.descricao}" rows="5" styleClass="coluna98" />
+
+			</h:panelGrid>
+
+			<p:fieldset legend="Contatos">
+
+				<h:panelGrid style="width: 100%; margin-bottom: 10px">
+
+					<p:outputLabel for="itContato" value="Anunciante" />
+					<p:inputText id="itContato" value="#{mbeanModel.contato}" maxlength="100" styleClass="coluna40" />
+
+				</h:panelGrid>
+
+				<p:dataGrid columns="2" var="contato" value="#{mbeanModel.contatos}" rowIndexVar="index">
+
+					<p:column>
+						<h:panelGrid columns="2" columnClasses="coluna30, coluna70">
+							<h:outputText value="Telefone #{index + 1}" />
+							<h:outputText value="E-mail #{index + 1}" />
+
+							<p:inputMask id="itTelefone" mask="(99) 9999-9999" value="#{contato.telefone}" maxlength="15" styleClass="coluna90" />
+							<p:inputText id="itEmail" value="#{contato.email}" maxlength="100" styleClass="coluna90" />
+						</h:panelGrid>
+					</p:column>
+
+				</p:dataGrid>
+
+			</p:fieldset>
+
+			<h:panelGrid style="width: 100%">
+
+				<p:outputLabel for="itaObservacao" value="Observação" />
+				<p:inputTextarea id="itaObservacao" value="#{mbeanModel.observacao}" rows="5" styleClass="coluna98" />
+
+			</h:panelGrid>
+
+		</p:fieldset>
+
+	</ui:define>
+
+	<ui:define name="pesquisaCampos">
+
+		<h:panelGrid columns="4" columnClasses="coluna20, coluna20, coluna20, coluna40" style="width: 60%">
+
+			<p:outputLabel for="omTipoImovelPesquisa" value="Tipo" />
+			<p:outputLabel for="omOrigemPesquisa" value="Origem" />
+			<p:outputLabel for="omBairroPesquisa" value="Bairro" />
+			<p:outputLabel for="omStatusCaptacaoPesquisa" value="Status" />
+			
+			<h:selectOneMenu id="omTipoImovelPesquisa" value="#{mbeanPesquisaModel.tipoImovelModel.id}" style="width: 90%">
+				<f:selectItem itemLabel="Selecione" itemValue="" />
+				<f:selectItems value="#{mbean.comboTipoImovel}" />
+			</h:selectOneMenu>
+			<h:selectOneMenu id="omOrigemPesquisa" value="#{mbeanPesquisaModel.origemModel.id}" style="width: 90%">
+				<f:selectItem itemLabel="Selecione" itemValue="" />
+				<f:selectItems value="#{mbean.comboOrigem}" />
+			</h:selectOneMenu>
+			<h:selectOneMenu id="omBairroPesquisa" value="#{mbeanPesquisaModel.bairroModel.id}" style="width: 90%">
+				<f:selectItem itemLabel="Selecione" itemValue="" />
+				<f:selectItems value="#{mbean.comboBairro}" />
+			</h:selectOneMenu>
+			<h:selectOneMenu id="omStatusCaptacaoPesquisa" value="#{mbeanPesquisaModel.statusCaptacaoModel.id}" style="width: 60%">
+				<f:selectItem itemLabel="Selecione" itemValue="" />
+				<f:selectItems value="#{mbean.comboStatusCaptacao}" />
+			</h:selectOneMenu>
+
+		</h:panelGrid>
+
+		<p:outputLabel for="itDescricaoPesquisa" value="Termo a pesquisar" />
+		<p:inputText id="itDescricaoPesquisa" value="#{mbeanPesquisaModel.descricao}" styleClass="coluna30" />
+
+
+	</ui:define>
+
+	<ui:define name="colunasTabela">
+
+		<p:column headerText="Tipo" styleClass="coluna60">
+			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
+				<h:outputText value="#{linha.tipoImovelModel.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+			</p:commandLink>
+		</p:column>
+
+		<p:column headerText="Descrição" styleClass="coluna30">
+			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
+				<h:outputText value="#{linha.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+			</p:commandLink>
+		</p:column>
+
+		<p:column headerText="Bairro" styleClass="coluna30">
+			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
+				<h:outputText value="#{linha.bairroModel.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+			</p:commandLink>
+		</p:column>
+
+		<p:column headerText="Origem" styleClass="coluna30">
+			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
+				<h:outputText value="#{linha.origemModel.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+			</p:commandLink>
+		</p:column>
+
+		<p:column headerText="Valor" styleClass="coluna30">
+			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
+				<h:outputText value="#{linha.valor}" />
+				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+			</p:commandLink>
+		</p:column>
+
+		<p:column headerText="Status" styleClass="coluna30">
+			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
+				<h:outputText value="#{linha.statusCaptacaoModel.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+			</p:commandLink>
+		</p:column>
+
+	</ui:define>
+
+</ui:composition>
