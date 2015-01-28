@@ -27,7 +27,7 @@ public final class CaptacaoDAO implements CrudDAO<CaptacaoModel> {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		broker.setSQL("SELECT C.ID, C.TIPO_IMOVEL_ID, (SELECT TI.DESCRICAO FROM TIPO_IMOVEL TI WHERE TI.ID = C.TIPO_IMOVEL_ID), C.DESCRICAO, C.VALOR, C.BAIRRO_ID, (SELECT B.DESCRICAO FROM BAIRRO B WHERE B.ID = C.BAIRRO_ID), C.ORIGEM_ID, (SELECT O.DESCRICAO FROM ORIGEM O WHERE O.ID = C.ORIGEM_ID), C.CONTATO, C.DATA_ANUNCIO, C.LINK, C.DATA_CADASTRO, C.USUARIO_CADASTRO_ID, (SELECT U.NOME FROM USUARIO U WHERE U.ID = C.USUARIO_CADASTRO_ID), C.STATUS_CAPTACAO_ID, (SELECT SC.DESCRICAO FROM STATUS_CAPTACAO SC WHERE SC.ID = C.STATUS_CAPTACAO_ID), C.OBSERVACAO FROM CAPTACAO C WHERE C.TIPO_IMOVEL_ID = COALESCE(?, C.TIPO_IMOVEL_ID) AND SEM_ACENTOS(BUSCA_CAPTACAO(C.ID)) ILIKE SEM_ACENTOS(COALESCE(?, C.DESCRICAO)) AND C.BAIRRO_ID = COALESCE(?, C.BAIRRO_ID) AND C.ORIGEM_ID = COALESCE(?, C.ORIGEM_ID) AND SEM_ACENTOS(COALESCE(C.CONTATO, '')) ILIKE SEM_ACENTOS(COALESCE(?, COALESCE(C.CONTATO, ''))) AND C.STATUS_CAPTACAO_ID = COALESCE(?, C.STATUS_CAPTACAO_ID) ORDER BY C.DATA_CADASTRO DESC", model.getTipoImovelModel().getId(), Utilitario.getStringIlike(model.getDescricao(), true), model.getBairroModel().getId(), model.getOrigemModel().getId(), Utilitario.getStringIlike(model.getContato(), true), model.getStatusCaptacaoModel().getId());
+		broker.setSQL("SELECT C.ID, C.TIPO_IMOVEL_ID, (SELECT TI.DESCRICAO FROM TIPO_IMOVEL TI WHERE TI.ID = C.TIPO_IMOVEL_ID), C.DESCRICAO, C.VALOR, C.BAIRRO_ID, (SELECT B.DESCRICAO FROM BAIRRO B WHERE B.ID = C.BAIRRO_ID), C.ORIGEM_ID, (SELECT O.DESCRICAO FROM ORIGEM O WHERE O.ID = C.ORIGEM_ID), C.CONTATO, C.DATA_ANUNCIO, C.LINK, C.DATA_CADASTRO, C.USUARIO_CADASTRO_ID, (SELECT U.NOME FROM USUARIO U WHERE U.ID = C.USUARIO_CADASTRO_ID), C.STATUS_CAPTACAO_ID, (SELECT SC.DESCRICAO FROM STATUS_CAPTACAO SC WHERE SC.ID = C.STATUS_CAPTACAO_ID), C.OBSERVACAO FROM CAPTACAO C WHERE C.TIPO_IMOVEL_ID = COALESCE(?, C.TIPO_IMOVEL_ID) AND SEM_ACENTOS(BUSCA_CAPTACAO(C.ID)) ILIKE SEM_ACENTOS(COALESCE(?, SEM_ACENTOS(BUSCA_CAPTACAO(C.ID)))) AND C.BAIRRO_ID = COALESCE(?, C.BAIRRO_ID) AND C.ORIGEM_ID = COALESCE(?, C.ORIGEM_ID) AND SEM_ACENTOS(COALESCE(C.CONTATO, '')) ILIKE SEM_ACENTOS(COALESCE(?, COALESCE(C.CONTATO, ''))) AND C.STATUS_CAPTACAO_ID = COALESCE(?, C.STATUS_CAPTACAO_ID) ORDER BY C.DATA_CADASTRO DESC", model.getTipoImovelModel().getId(), Utilitario.getStringIlike(model.getDescricao(), true), model.getBairroModel().getId(), model.getOrigemModel().getId(), Utilitario.getStringIlike(model.getContato(), true), model.getStatusCaptacaoModel().getId());
 
 		return broker.getCollectionBean(CaptacaoModel.class, "id", "tipoImovelModel.id", "tipoImovelModel.descricao", "descricao", "valor", "bairroModel.id", "bairroModel.descricao", "origemModel.id", "origemModel.descricao", "contato", "dataAnuncio", "link", "dataCadastro", "usuarioCadastroModel.id", "usuarioCadastroModel.nome", "statusCaptacaoModel.id", "statusCaptacaoModel.descricao", "observacao");
 	}
@@ -129,7 +129,14 @@ public final class CaptacaoDAO implements CrudDAO<CaptacaoModel> {
 	}
 
 	public CaptacaoModel excluir(final CaptacaoModel model) throws TSApplicationException {
-		return null;
+		
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+
+		broker.setSQL("DELE FROM CAPTACAO WHERE ID = ?", model.getId());
+		
+		broker.execute();
+		
+		return model;
 	}
 
 	public void excluir(final CaptacaoContatoModel model, TSDataBaseBrokerIf broker) throws TSApplicationException {

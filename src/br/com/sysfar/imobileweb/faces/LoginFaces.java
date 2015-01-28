@@ -57,7 +57,7 @@ public final class LoginFaces extends TSMainFaces {
 
 		try {
 
-			this.usuarioDAO.alterarSenha(this.usuarioAuxiliarModel, this.novaSenha);
+			this.usuarioDAO.alterarSenha(this.usuarioAuxiliarModel, TSCryptoUtil.gerarHash(this.novaSenha, TSConstant.CRIPTOGRAFIA_MD5));
 
 			this.addInfoMessage("Senha alterada com sucesso!");
 

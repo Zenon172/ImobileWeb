@@ -12,6 +12,7 @@ import br.com.sysfar.imobileweb.dao.GrupoDAO;
 import br.com.sysfar.imobileweb.dao.UsuarioDAO;
 import br.com.sysfar.imobileweb.model.GrupoModel;
 import br.com.sysfar.imobileweb.model.UsuarioModel;
+import br.com.topsys.constant.TSConstant;
 import br.com.topsys.util.TSCryptoUtil;
 import br.com.topsys.util.TSUtil;
 
@@ -91,7 +92,7 @@ public class UsuarioFaces extends CrudFaces<UsuarioModel> {
 	protected void prePersist() {
 
 		if (!TSUtil.isEmpty(this.senha)) {
-			this.crudModel.setSenha(TSCryptoUtil.criptografar(this.senha));
+			this.crudModel.setSenha(TSCryptoUtil.gerarHash(this.senha, TSConstant.CRIPTOGRAFIA_MD5));
 		}
 
 	}
