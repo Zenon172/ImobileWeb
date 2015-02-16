@@ -21,6 +21,51 @@
 
 			</h:panelGrid>
 
+			<p:panel header="Permissões" style="margin-top: 10px">
+
+				<h:panelGrid columns="2" style="width: 50%">
+
+					<h:outputText value="Menu" />
+					<h:outputText value="" />
+
+					<h:selectOneMenu value="#{mbean.menuSelecionadoModel.id}" styleClass="coluna98">
+						<f:selectItem itemValue="" itemLabel="Não Selecionado" />
+						<f:selectItems value="#{mbean.comboMenu}" />
+					</h:selectOneMenu>
+					<p:commandButton icon="ui-icon-plus" value="Adicionar" action="#{mbean.addMenu}" process="@form" update="@form" />
+
+				</h:panelGrid>
+
+				<h:panelGrid style="width: 100%">
+
+					<p:dataTable value="#{mbeanModel.menus}" var="linha" emptyMessage="Nenhuma permissão adicionada">
+
+						<p:column headerText="Menu" styleClass="coluna60">
+							<h:outputText value="#{linha.menuModel.descricao}" />
+						</p:column>
+
+						<p:column headerText="Inserir" styleClass="coluna010">
+							<p:selectBooleanCheckbox value="#{linha.flagInserir}" />
+						</p:column>
+
+						<p:column headerText="Alterar" styleClass="coluna010">
+							<p:selectBooleanCheckbox value="#{linha.flagAlterar}" />
+						</p:column>
+
+						<p:column headerText="Excluir" styleClass="coluna010">
+							<p:selectBooleanCheckbox value="#{linha.flagExcluir}" />
+						</p:column>
+
+						<p:column headerText="Atalho" styleClass="coluna010">
+							<p:selectBooleanCheckbox value="#{linha.flagAtalho}" />
+						</p:column>
+
+					</p:dataTable>
+
+				</h:panelGrid>
+
+			</p:panel>
+
 		</p:fieldset>
 
 	</ui:define>

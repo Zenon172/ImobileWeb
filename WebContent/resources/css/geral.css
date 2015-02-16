@@ -326,6 +326,11 @@ root {
 	background-image: url(../images/puzzle.png) !important;
 }
 
+.icone48{
+	height: 48px !important;
+	width: 48px !important;
+}
+
 .hosflow48 {
 	height: 48px !important;
 	width: 48px !important;
@@ -342,250 +347,14 @@ root {
 	left: 15px !important;
 }
 
-.paciente48 {
-	height: 48px;
-	width: 48px;
-	background-image: url(../images/paciente48.png) !important;
-	top: 15px !important;
-	left: 15px !important;
-}
-
-.faturamento48 {
-	height: 48px;
-	width: 48px;
-	background-image: url(../images/faturamento48.png) !important;
-	top: 15px !important;
-	left: 15px !important;
-}
-
-.roupa48 {
-	height: 48px;
-	width: 48px;
-	background-image: url(../images/roupa48.png) !important;
-	top: 15px !important;
-	left: 15px !important;
-}
-
-.limpeza48 {
-	height: 48px;
-	width: 48px;
-	background-image: url(../images/limpeza48.png) !important;
-	top: 15px !important;
-	left: 15px !important;
-}
-
-.cozinha48 {
-	height: 48px;
-	width: 48px;
-	background-image: url(../images/cozinha48.png) !important;
-	top: 15px !important;
-	left: 15px !important;
-}
-
-.lab48 {
-	height: 48px;
-	width: 48px;
-	background-image: url(../images/lab48.png) !important;
-	top: 15px !important;
-	left: 15px !important;
-}
-
-.relatec48 {
-	height: 48px;
-	width: 48px;
-	background-image: url(../images/printer48.png) !important;
-	top: 15px !important;
-	left: 15px !important;
-}
-
-.listaAtendimento48 {
-	height: 48px;
-	width: 48px;
-	background-image: url(../images/lista48.png) !important;
-	top: 15px !important;
-	left: 15px !important;
-}
-
-.busca48 {
-	height: 48px;
-	width: 48px;
-	background-image: url(../images/busca48.png) !important;
-	top: 15px !important;
-	left: 15px !important;
-}
-
-.pep48 {
-	height: 48px;
-	width: 48px;
-	background-image: url(../images/pep48.png) !important;
-	top: 15px !important;
-	left: 15px !important;
-}
-
-.bolsaSangue48 {
-	height: 48px;
-	width: 48px;
-	background-image: url(../images/bolsaSangue48.png) !important;
-	top: 15px !important;
-	left: 15px !important;
-}
-
-.quiz48 {
-	height: 48px;
-	width: 48px;
-	background-image: url(../images/quiz48.png) !important;
-	top: 15px !important;
-	left: 15px !important;
-}
-
-.basket48 {
-	height: 64px;
-	width: 64px;
-	background-image: url(../images/basket48.png) !important;
-	top: 7px !important;
-	left: 7px !important;
-}
-
-.shop48 {
-	height: 48px;
-	width: 48px;
-	background-image: url(../images/shop_48.png) !important;
-	top: 15px !important;
-	left: 15px !important;
-}
-
-.issue48 {
-	height: 48px;
-	width: 48px;
-	background-image: url(../images/issue48.png) !important;
-	top: 15px !important;
-	left: 15px !important;
-}
-
-.money48 {
-	height: 48px;
-	width: 48px;
-	background-image: url(../images/money48.png) !important;
-	top: 15px !important;
-	left: 15px !important;
-}
-
-.mala48 {
-	height: 48px;
-	width: 48px;
-	background-image: url(../images/mala48.png) !important;
-	top: 15px !important;
-	left: 15px !important;
-}
-
-.box48 {
-	height: 48px;
-	width: 48px;
-	background-image: url(../images/box48.png) !important;
-	top: 15px !important;
-	left: 15px !important;
-}
-
-.cp48 {
-	height: 48px;
-	width: 48px;
-	background-image: url(../images/cp48.png) !important;
-	top: 15px !important;
-	left: 15px !important;
-}
-
-.cr48 {
-	height: 48px;
-	width: 48px;
-	background-image: url(../images/cr48.png) !important;
-	top: 15px !important;
-	left: 15px !important;
-}
-
-.baixacr48 {
-	height: 48px;
-	width: 48px;
-	background-image: url(../images/baixacr48.png) !important;
-	top: 15px !important;
-	left: 15px !important;
-}
-
-.baixacr48 {
-	height: 48px;
-	width: 48px;
-	background-image: url(../images/baixacr48.png) !important;
-	top: 15px !important;
-	left: 15px !important;
-}
-
-.baixacr48 {
-	height: 48px;
-	width: 48px;
-	background-image: url(../images/baixacr48.png) !important;
-	top: 15px !important;
-	left: 15px !important;
-}
-
-.transferencia48 {
-	height: 48px;
-	width: 48px;
-	background-image: url(../images/transferencia48.png) !important;
-	top: 15px !important;
-	left: 15px !important;
-}
-
-.baixacp48 {
-	height: 64px;
-	width: 64px;
-	background-image: url(../images/baixacp48.png) !important;
-	top: 15px !important;
-	left: 15px !important;
-}
-
-.conciliacao48 {
-	height: 48px;
-	width: 48px;
-	background-image: url(../images/conciliacao48.png) !important;
-	top: 15px !important;
-	left: 15px !important;
-}
-
 .grupo48 {
-	height: 48px;
-	width: 48px;
 	background-image: url(../images/grupo48.png) !important;
 	top: 15px !important;
 	left: 15px !important;
 }
 
 .usuario48 {
-	height: 48px;
-	width: 48px;
 	background-image: url(../images/usuario48.png) !important;
-	top: 15px !important;
-	left: 15px !important;
-}
-
-.origem48 {
-	height: 48px;
-	width: 48px;
-	background-image: url(../images/origem48.png) !important;
-	top: 15px !important;
-	left: 15px !important;
-}
-
-.chamado48 {
-	height: 48px;
-	width: 48px;
-	background-image: url(../images/phone48.png) !important;
-	top: 15px !important;
-	left: 15px !important;
-}
-
-.msg48 {
-	height: 48px;
-	width: 48px;
-	background-image: url(../images/msg48.png) !important;
 	top: 15px !important;
 	left: 15px !important;
 }

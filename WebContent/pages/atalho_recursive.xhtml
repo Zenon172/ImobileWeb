@@ -48,7 +48,7 @@
 
 			<c:if test="${!empty linha.icone}">
 
-				<p:commandButton id="btnAtalho#{linha.id}" icon="#{linha.icone}" ajax="false" action="#{menuFaces.redirecionar}" styleClass="#{linha.id == menuFaces.menuModel.id?'selecionado':null}" style="margin-top:5px; width: 64px; height:64px" disabled="#{menuFaces.possuiMovimentacao and linha.flagDependePaciente}">
+				<p:commandButton id="btnAtalho#{linha.id}" icon="icone48 #{linha.icone}" ajax="false" action="#{menuFaces.redirecionar}" styleClass="#{linha.id == menuFaces.menuModel.id?'selecionado':null}" style="margin-top:5px; width: 64px; height:64px">
 					<f:setPropertyActionListener target="#{menuFaces.menuModel}" value="#{linha}" />
 				</p:commandButton>
 

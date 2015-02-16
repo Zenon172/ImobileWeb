@@ -12,6 +12,7 @@ public class MenuModel extends BaseModel {
 	private Boolean flagInserir;
 	private Boolean flagAlterar;
 	private Boolean flagExcluir;
+	private Boolean flagAtalho;
 	private Boolean flagImprimir;
 	private Integer ordem;
 	private List<MenuModel> subMenus;
@@ -115,6 +116,14 @@ public class MenuModel extends BaseModel {
 
 	public void setIcone(String icone) {
 		this.icone = icone;
+	}
+
+	public Boolean getFlagAtalho() {
+		return flagAtalho;
+	}
+
+	public void setFlagAtalho(Boolean flagAtalho) {
+		this.flagAtalho = flagAtalho;
 	}
 
 }

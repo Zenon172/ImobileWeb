@@ -5,6 +5,7 @@ import java.util.List;
 import br.com.sysfar.imobileweb.model.BairroModel;
 import br.com.sysfar.imobileweb.model.GrupoModel;
 import br.com.sysfar.imobileweb.model.OrigemModel;
+import br.com.sysfar.imobileweb.model.PosicaoSolModel;
 import br.com.sysfar.imobileweb.model.StatusCaptacaoModel;
 import br.com.sysfar.imobileweb.model.TipoImovelModel;
 import br.com.topsys.database.TSDataBaseBrokerIf;
@@ -60,6 +61,16 @@ public final class ComboDAO {
 		broker.setSQL("SELECT ID, DESCRICAO FROM STATUS_CAPTACAO ORDER BY DESCRICAO");
 
 		return broker.getCollectionBean(StatusCaptacaoModel.class, "id", "descricao");
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<PosicaoSolModel> pesquisarPosicaoSol() {
+		
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+		
+		broker.setSQL("SELECT ID, DESCRICAO FROM POSICAO_SOL ORDER BY DESCRICAO");
+		
+		return broker.getCollectionBean(PosicaoSolModel.class, "id", "descricao");
 	}
 
 }

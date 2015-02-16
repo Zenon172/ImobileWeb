@@ -3,6 +3,8 @@ package br.com.sysfar.imobileweb.model;
 import java.util.Date;
 import java.util.List;
 
+import br.com.topsys.util.TSUtil;
+
 @SuppressWarnings("serial")
 public class CaptacaoModel extends BaseModel {
 
@@ -26,7 +28,12 @@ public class CaptacaoModel extends BaseModel {
 
 	private String observacao;
 	
+	private UsuarioModel responsavelModel;
+	
 	private List<CaptacaoContatoModel> contatos;
+	
+	private Date dataInicial;
+	private Date dataFinal;
 
 	public TipoImovelModel getTipoImovelModel() {
 		return tipoImovelModel;
@@ -85,7 +92,7 @@ public class CaptacaoModel extends BaseModel {
 	}
 
 	public String getLink() {
-		return link;
+		return TSUtil.tratarString(link);
 	}
 
 	public void setLink(String link) {
@@ -114,5 +121,29 @@ public class CaptacaoModel extends BaseModel {
 
 	public void setContatos(List<CaptacaoContatoModel> contatos) {
 		this.contatos = contatos;
+	}
+
+	public UsuarioModel getResponsavelModel() {
+		return responsavelModel;
+	}
+
+	public void setResponsavelModel(UsuarioModel responsavelModel) {
+		this.responsavelModel = responsavelModel;
+	}
+
+	public Date getDataInicial() {
+		return dataInicial;
+	}
+
+	public void setDataInicial(Date dataInicial) {
+		this.dataInicial = dataInicial;
+	}
+
+	public Date getDataFinal() {
+		return dataFinal;
+	}
+
+	public void setDataFinal(Date dataFinal) {
+		this.dataFinal = dataFinal;
 	}
 }
