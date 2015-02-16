@@ -8,7 +8,7 @@
 
 				<c:if test="${!empty linha.icone}">
 
-					<p:commandButton id="btnAtalho#{linha.subMenus.get(0).id}" icon="#{linha.icone}" ajax="false" action="#{menuFaces.redirecionar}" styleClass="#{linha.subMenus.get(0).id == menuFaces.menuModel.id?'selecionado':null}" style="margin-top:5px; width: 64px; height:64px" disabled="#{!menuFaces.possuiMovimentacao and linha.subMenus.get(0).flagDependePaciente}">
+					<p:commandButton id="btnAtalho#{linha.subMenus.get(0).id}" icon="icone48 #{linha.icone}" ajax="false" action="#{menuFaces.redirecionar}" styleClass="#{linha.subMenus.get(0).id == menuFaces.menuModel.id?'selecionado':null}" style="margin-top:5px; width: 64px; height:64px">
 						<f:setPropertyActionListener target="#{menuFaces.menuModel}" value="#{linha.subMenus.get(0)}" />
 					</p:commandButton>
 
@@ -22,7 +22,7 @@
 
 				<c:if test="${!empty linha.icone}">
 
-					<p:commandButton id="btnAtalho#{linha.id}" icon="#{linha.icone}" type="button" style="margin-top:5px; width: 64px; height:64px" styleClass="#{linha.id == menuFaces.menuModel.menuModel.id?'selecionado':null}"/>
+					<p:commandButton id="btnAtalho#{linha.id}" icon="icone48 #{linha.icone}" type="button" style="margin-top:5px; width: 64px; height:64px" styleClass="#{linha.id == menuFaces.menuModel.menuModel.id?'selecionado':null}"/>
 
 					<p:tieredMenu overlay="true" trigger="btnAtalho#{linha.id}" my="left top" at="right top" style="width: 180px;">
 

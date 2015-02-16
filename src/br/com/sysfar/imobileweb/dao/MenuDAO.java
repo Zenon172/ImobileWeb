@@ -26,9 +26,9 @@ public final class MenuDAO {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		broker.setSQL("SELECT M.ID, M.DESCRICAO, M.URL, M.MENU_ID, (SELECT M2.DESCRICAO FROM MENU M2 WHERE M2.ID = M.MENU_ID), M.MANAGED_BEAN, M.ORDEM, TRUE, TRUE, TRUE, TRUE, M.ICONE FROM MENU M WHERE CASE WHEN ?::INTEGER IS NULL THEN M.MENU_ID IS NULL ELSE M.MENU_ID = ? END", menuModel.getId(), menuModel.getId());
+		broker.setSQL("SELECT M.ID, M.DESCRICAO, M.URL, M.MENU_ID, (SELECT M2.DESCRICAO FROM MENU M2 WHERE M2.ID = M.MENU_ID), M.MANAGED_BEAN, M.ORDEM, TRUE, TRUE, TRUE, TRUE, TRUE, M.ICONE FROM MENU M WHERE CASE WHEN ?::INTEGER IS NULL THEN M.MENU_ID IS NULL ELSE M.MENU_ID = ? END", menuModel.getId(), menuModel.getId());
 
-		return broker.getCollectionBean(MenuModel.class, "id", "descricao", "url", "menuModel.id", "menuModel.descricao", "managedBean", "ordem", "flagInserir", "flagAlterar", "flagExcluir", "flagImprimir", "icone");
+		return broker.getCollectionBean(MenuModel.class, "id", "descricao", "url", "menuModel.id", "menuModel.descricao", "managedBean", "ordem", "flagInserir", "flagAlterar", "flagExcluir", "flagImprimir", "flagAtalho", "icone");
 
 	}
 

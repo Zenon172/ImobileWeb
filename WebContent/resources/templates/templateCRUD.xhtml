@@ -28,10 +28,10 @@
 							<h:outputLabel value="Data Atualização" />
 							<h:outputLabel value="Usuário Atualização" />
 							<h:inputText disabled="true" style="width: 95%;" value="#{mbeanModel.id}" />
-							<h:inputText disabled="true" style="width: 95%;" value="#{mbeanModel.dataCadastro}" rendered="#{empty possuiDadosCadastro ? 'true' : 'false'}">
+							<h:inputText disabled="true" style="width: 95%;" value="#{mbeanModel.dataCadastro}" rendered="#{empty possuiDadosCadastro ? 'true' : possuiDadosCadastro}">
 								<ui:include src="/resources/templates/include_gmt_format.xhtml" />
 							</h:inputText>
-							<h:inputText disabled="true" style="width: 95%;" value="#{mbeanModel.usuarioCadastroModel.nome}" rendered="#{empty possuiDadosCadastro ? 'true' : 'false'}" />
+							<h:inputText disabled="true" style="width: 95%;" value="#{mbeanModel.usuarioCadastroModel.nome}" rendered="#{empty possuiDadosCadastro ? 'true' : possuiDadosCadastro}" />
 							<h:inputText disabled="true" style="width: 95%;" value="#{mbeanModel.dataAtualizacao}" rendered="#{empty possuiDadosAtualizacao ? 'false' : 'true'}">
 								<ui:include src="/resources/templates/include_gmt_format.xhtml" />
 							</h:inputText>

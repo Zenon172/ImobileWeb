@@ -1,0 +1,69 @@
+<ui:composition template="/resources/templates/templateCRUD.xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:param name="mbean" value="${condominioFaces}" />
+	<ui:param name="mbeanModel" value="${condominioFaces.crudModel}" />
+	<ui:param name="mbeanPesquisaModel" value="${condominioFaces.crudPesquisaModel}" />
+
+	<ui:define name="cadastro">
+
+		<p:fieldset style="width: 98%">
+
+			<h:panelGrid style="width: 40%">
+
+				<p:outputLabel for="itDescricao" value="Descrição" />
+				<p:inputText id="itDescricao" value="#{mbeanModel.descricao}" required="true" maxlength="100" styleClass="coluna90" />
+				
+				<p:outputLabel for="itQtdTorres" value="Qtd. de Torres" />
+				<p:inputText id="itQtdTorres" value="#{mbeanModel.qtdTorres}" maxlength="3" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna20" />
+				
+				<p:outputLabel for="somBairro" value="Bairro" />
+				<h:selectOneMenu id="somBairro" value="#{mbeanModel.bairroModel.id}" required="true" styleClass="coluna40">
+					<f:selectItem itemValue="" itemLabel="Não Selecionado" />
+					<f:selectItems value="#{mbean.comboBairro}" />
+				</h:selectOneMenu>
+
+			</h:panelGrid>
+
+		</p:fieldset>
+
+	</ui:define>
+
+	<ui:define name="pesquisaCampos">
+
+		<h:outputText value="Descrição" />
+		<p:inputText value="#{mbeanPesquisaModel.descricao}" styleClass="coluna40" />
+		
+		<h:outputFormat value="Bairro" />
+		<h:selectOneMenu value="#{mbeanPesquisaModel.bairroModel.id}" styleClass="coluna20">
+			<f:selectItem itemValue="" itemLabel="Não Selecionado" />
+			<f:selectItems value="#{mbean.comboBairro}" />
+		</h:selectOneMenu>
+
+	</ui:define>
+
+	<ui:define name="colunasTabela">
+
+		<p:column headerText="Bairro" styleClass="coluna30">
+			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
+				<h:outputText value="#{linha.bairroModel.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+			</p:commandLink>
+		</p:column>
+
+		<p:column headerText="Qtd. Torres" styleClass="coluna010">
+			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
+				<h:outputText value="#{linha.qtdTorres}" />
+				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+			</p:commandLink>
+		</p:column>
+
+		<p:column headerText="Descrição" styleClass="coluna50">
+			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
+				<h:outputText value="#{linha.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+			</p:commandLink>
+		</p:column>
+
+	</ui:define>
+
+</ui:composition>

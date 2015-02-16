@@ -1,5 +1,6 @@
 package br.com.sysfar.imobileweb.dao;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import br.com.sysfar.imobileweb.model.ConstrutoraModel;
@@ -14,9 +15,9 @@ public final class ConstrutoraDAO implements CrudDAO<ConstrutoraModel> {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		broker.setSQL("SELECT ID, DESCRICAO, EMAIL, TELEFONE FROM CONSTRUTORA WHERE ID = ?", model.getId());
+		broker.setSQL("SELECT ID, DESCRICAO, EMAIL, TELEFONE, USUARIO_CADASTRO_ID, (SELECT U.NOME FROM USUARIO U WHERE U.ID = C.USUARIO_CADASTRO_ID), C.DATA_CADASTRO FROM CONSTRUTORA C WHERE ID = ?", model.getId());
 
-		return (ConstrutoraModel) broker.getObjectBean(ConstrutoraModel.class, "id", "descricao", "email", "telefone");
+		return (ConstrutoraModel) broker.getObjectBean(ConstrutoraModel.class, "id", "descricao", "email", "telefone", "usuarioCadastroModel.id", "usuarioCadastroModel.nome", "dataCadastro");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -45,7 +46,7 @@ public final class ConstrutoraDAO implements CrudDAO<ConstrutoraModel> {
 
 		model.setId(broker.getSequenceNextValue("construtora_id_seq"));
 
-		broker.setSQL("INSERT INTO CONSTRUTORA (ID, DESCRICAO, EMAIL, TELEFONE) VALUES (?, ?, ?, ?)", model.getId(), model.getDescricao(), model.getEmail(), model.getTelefone());
+		broker.setSQL("INSERT INTO CONSTRUTORA (ID, DESCRICAO, EMAIL, TELEFONE, USUARIO_CADASTRO_ID, DATA_CADASTRO) VALUES (?, ?, ?, ?, ?, ?)", model.getId(), model.getDescricao(), model.getEmail(), model.getTelefone(), model.getUsuarioCadastroModel().getId(), new Timestamp(model.getDataCadastro().getTime()));
 
 		broker.execute();
 
@@ -56,7 +57,7 @@ public final class ConstrutoraDAO implements CrudDAO<ConstrutoraModel> {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		broker.setSQL("UPDATE CONSTRUTORA SET DESCRICAO = ?, EMAIL = ?, TELEFONE = ? WHERE ID = ?", model.getDescricao(), model.getEmail(), model.getTelefone(), model.getId());
+		broker.setSQL("UPDATE CONSTRUTORA SET DESCRICAO = ?, EMAIL = ?, TELEFONE = ?, USUARIO_CADASTRO_ID = ?, DATA_CADASTRO = ? WHERE ID = ?", model.getDescricao(), model.getEmail(), model.getTelefone(), model.getUsuarioCadastroModel().getId(), new Timestamp(model.getDataCadastro().getTime()), model.getId());
 
 		broker.execute();
 

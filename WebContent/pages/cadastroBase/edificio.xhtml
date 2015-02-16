@@ -1,0 +1,87 @@
+<ui:composition template="/resources/templates/templateCRUD.xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:param name="mbean" value="${edificioFaces}" />
+	<ui:param name="mbeanModel" value="${edificioFaces.crudModel}" />
+	<ui:param name="mbeanPesquisaModel" value="${edificioFaces.crudPesquisaModel}" />
+
+	<ui:define name="cadastro">
+
+		<p:fieldset style="width: 98%">
+
+			<h:panelGrid style="width: 40%">
+
+				<p:outputLabel for="itDescricao" value="Descrição" />
+				<p:inputText id="itDescricao" value="#{mbeanModel.descricao}" required="true" maxlength="100" styleClass="coluna90" />
+			
+			</h:panelGrid>
+			
+			<h:panelGrid columns="2" columnClasses="coluna30, coluna70" style="width: 40%">
+				
+				<p:outputLabel for="itQtdPavimentos" value="Qtd. de pavimentos" />
+				<p:outputLabel for="itQtdApartamentosAndar" value="Qtd. de apartamentos por andar" />
+				
+				<p:inputText id="itQtdPavimentos" value="#{mbeanModel.qtdPavimentos}" maxlength="3" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna90" />
+				<p:inputText id="itQtdApartamentosAndar" value="#{mbeanModel.qtdApartamentosAndar}" maxlength="3" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna60" />
+				
+			</h:panelGrid>
+			
+			<h:panelGrid style="width: 40%">
+				
+				<p:outputLabel for="somCondominio" value="Condomínio" />
+				<h:selectOneMenu id="somCondominio" value="#{mbeanModel.condominioModel.id}" required="true" styleClass="coluna40">
+					<f:selectItem itemValue="" itemLabel="Não Selecionado" />
+					<f:selectItems value="#{mbean.comboCondominio}" />
+				</h:selectOneMenu>
+
+			</h:panelGrid>
+
+		</p:fieldset>
+
+	</ui:define>
+
+	<ui:define name="pesquisaCampos">
+
+		<h:outputText value="Descrição" />
+		<p:inputText value="#{mbeanPesquisaModel.descricao}" styleClass="coluna40" />
+		
+		<h:outputFormat value="Condomínio" />
+		<h:selectOneMenu value="#{mbeanPesquisaModel.condominioModel.id}" styleClass="coluna20">
+			<f:selectItem itemValue="" itemLabel="Não Selecionado" />
+			<f:selectItems value="#{mbean.comboCondominio}" />
+		</h:selectOneMenu>
+
+	</ui:define>
+
+	<ui:define name="colunasTabela">
+
+		<p:column headerText="Bairro" styleClass="coluna30">
+			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
+				<h:outputText value="#{linha.condominioModel.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+			</p:commandLink>
+		</p:column>
+
+		<p:column headerText="Qtd. Pavimentos" styleClass="coluna010">
+			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
+				<h:outputText value="#{linha.qtdPavimentos}" />
+				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+			</p:commandLink>
+		</p:column>
+
+		<p:column headerText="Qtd. apartamentos por andar" styleClass="coluna010">
+			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
+				<h:outputText value="#{linha.qtdApartamentosAndar}" />
+				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+			</p:commandLink>
+		</p:column>
+
+		<p:column headerText="Descrição" styleClass="coluna50">
+			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
+				<h:outputText value="#{linha.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+			</p:commandLink>
+		</p:column>
+
+	</ui:define>
+
+</ui:composition>

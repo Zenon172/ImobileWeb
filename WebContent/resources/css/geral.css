@@ -359,6 +359,12 @@ root {
 	left: 15px !important;
 }
 
+.cadastroBase48 {
+	background-image: url(../images/cadastroBase48.png) !important;
+	top: 15px !important;
+	left: 15px !important;
+}
+
 .viewRelatec {
 	height: 48px;
 	width: 48px;

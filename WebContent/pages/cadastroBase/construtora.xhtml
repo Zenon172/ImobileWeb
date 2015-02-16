@@ -1,0 +1,65 @@
+<ui:composition template="/resources/templates/templateCRUD.xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:param name="mbean" value="${construtoraFaces}" />
+	<ui:param name="mbeanModel" value="${construtoraFaces.crudModel}" />
+	<ui:param name="mbeanPesquisaModel" value="${construtoraFaces.crudPesquisaModel}" />
+	<ui:param name="possuiDadosCadastro" value="true" />
+
+	<ui:define name="cadastro">
+
+		<p:fieldset style="width: 98%">
+
+			<h:panelGrid style="width: 60%">
+
+				<p:outputLabel for="itDescricao" value="Descrição" />
+				<p:inputText id="itDescricao" value="#{mbeanModel.descricao}" required="true" maxlength="100" styleClass="coluna90" />
+
+			</h:panelGrid>
+			
+			<h:panelGrid columns="2" columnClasses="coluna25, coluna75" style="width: 50%">
+				
+				<p:outputLabel for="itTelefone" value="Telefone" />
+				<p:outputLabel for="itEmail" value="E-mail" />
+				
+				<p:inputMask id="itTelefone" mask="(99) 9999-9999" value="#{mbeanModel.telefone}" maxlength="15" styleClass="coluna90" />
+				<p:inputText id="itEmail" value="#{mbeanModel.email}" required="true" maxlength="50" styleClass="coluna90" />
+				
+			</h:panelGrid>
+
+		</p:fieldset>
+
+	</ui:define>
+
+	<ui:define name="pesquisaCampos">
+
+		<h:outputText value="Descrição" />
+		<p:inputText value="#{mbeanPesquisaModel.descricao}" styleClass="coluna50" />
+
+	</ui:define>
+
+	<ui:define name="colunasTabela">
+
+		<p:column headerText="Descrição" styleClass="coluna45">
+			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
+				<h:outputText value="#{linha.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+			</p:commandLink>
+		</p:column>
+
+		<p:column headerText="Telefone" styleClass="coluna015">
+			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
+				<h:outputText value="#{linha.telefone}" />
+				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+			</p:commandLink>
+		</p:column>
+
+		<p:column headerText="E-mail" styleClass="coluna30">
+			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
+				<h:outputText value="#{linha.email}" />
+				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+			</p:commandLink>
+		</p:column>
+
+	</ui:define>
+
+</ui:composition>

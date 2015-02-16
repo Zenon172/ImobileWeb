@@ -3,6 +3,7 @@ package br.com.sysfar.imobileweb.dao;
 import java.util.List;
 
 import br.com.sysfar.imobileweb.model.BairroModel;
+import br.com.sysfar.imobileweb.model.CondominioModel;
 import br.com.sysfar.imobileweb.model.GrupoModel;
 import br.com.sysfar.imobileweb.model.OrigemModel;
 import br.com.sysfar.imobileweb.model.PosicaoSolModel;
@@ -41,6 +42,16 @@ public final class ComboDAO {
 		broker.setSQL("SELECT ID, DESCRICAO FROM BAIRRO ORDER BY DESCRICAO");
 
 		return broker.getCollectionBean(BairroModel.class, "id", "descricao");
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<CondominioModel> pesquisarCondominio() {
+		
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+		
+		broker.setSQL("SELECT ID, DESCRICAO FROM CONDOMINIO ORDER BY DESCRICAO");
+		
+		return broker.getCollectionBean(CondominioModel.class, "id", "descricao");
 	}
 
 	@SuppressWarnings("unchecked")

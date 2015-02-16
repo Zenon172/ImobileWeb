@@ -25,7 +25,7 @@ public final class EdificioDAO implements CrudDAO<EdificioModel> {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		broker.setSQL("SELECT ID, DESCRICAO, CONDOMINIO_ID, (SELECT C.DESCRICAO FROM CONDOMINIO C WHERE C.ID = E.CONDOMINIO_ID), QTD_PAVIMENTOS, QTD_APARTAMENTOS_ANDAR FROM EDIFICIO E WHERE SEM_ACENTOS(DESCRICAO) ILIKE SEM_ACENTOS(COALESCE(?, DESCRICAO)) ORDER BY DESCRICAO", Utilitario.getStringIlike(model.getDescricao(), true));
+		broker.setSQL("SELECT ID, DESCRICAO, CONDOMINIO_ID, (SELECT C.DESCRICAO FROM CONDOMINIO C WHERE C.ID = E.CONDOMINIO_ID), QTD_PAVIMENTOS, QTD_APARTAMENTOS_ANDAR FROM EDIFICIO E WHERE SEM_ACENTOS(DESCRICAO) ILIKE SEM_ACENTOS(COALESCE(?, DESCRICAO)) ORDER BY E.DESCRICAO", Utilitario.getStringIlike(model.getDescricao(), true));
 
 		return broker.getCollectionBean(EdificioModel.class, "id", "descricao", "condominioModel.id", "condominioModel.descricao", "qtdPavimentos", "qtdApartamentosAndar");
 	}
