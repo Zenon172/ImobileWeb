@@ -14,9 +14,9 @@ public final class UsuarioDAO implements CrudDAO<UsuarioModel> {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		broker.setSQL("SELECT ID, NOME, LOGIN, SENHA, GRUPO_ID, (SELECT DESCRICAO FROM GRUPO G WHERE G.ID = GRUPO_ID) FROM USUARIO WHERE ID = ?", model.getId());
+		broker.setSQL("SELECT ID, NOME, EMAIL, LOGIN, SENHA, GRUPO_ID, (SELECT DESCRICAO FROM GRUPO G WHERE G.ID = GRUPO_ID) FROM USUARIO WHERE ID = ?", model.getId());
 
-		return (UsuarioModel) broker.getObjectBean(UsuarioModel.class, "id", "nome", "login", "senha", "grupoModel.id", "grupoModel.descricao");
+		return (UsuarioModel) broker.getObjectBean(UsuarioModel.class, "id", "nome", "email", "login", "senha", "grupoModel.id", "grupoModel.descricao");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -45,7 +45,7 @@ public final class UsuarioDAO implements CrudDAO<UsuarioModel> {
 
 		model.setId(broker.getSequenceNextValue("usuario_id_seq"));
 
-		broker.setSQL("INSERT INTO USUARIO (ID, NOME, LOGIN, SENHA, GRUPO_ID) VALUES (?, ?, ?, ?, ?)", model.getId(), model.getNome(), model.getLogin(), model.getSenha(), model.getGrupoModel().getId());
+		broker.setSQL("INSERT INTO USUARIO (ID, NOME, EMAIL, LOGIN, SENHA, GRUPO_ID) VALUES (?, ?, ?, ?, ?, ?)", model.getId(), model.getNome(), model.getEmail(), model.getLogin(), model.getSenha(), model.getGrupoModel().getId());
 
 		broker.execute();
 
@@ -56,7 +56,7 @@ public final class UsuarioDAO implements CrudDAO<UsuarioModel> {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		broker.setSQL("UPDATE USUARIO SET NOME = ?, LOGIN = ?, SENHA = ?, grupo_id = ? WHERE ID = ?", model.getNome(), model.getLogin(), model.getSenha(), model.getGrupoModel().getId(), model.getId());
+		broker.setSQL("UPDATE USUARIO SET NOME = ?, EMAIL = ?, LOGIN = ?, SENHA = ?, grupo_id = ? WHERE ID = ?", model.getNome(), model.getEmail(), model.getLogin(), model.getSenha(), model.getGrupoModel().getId(), model.getId());
 
 		broker.execute();
 

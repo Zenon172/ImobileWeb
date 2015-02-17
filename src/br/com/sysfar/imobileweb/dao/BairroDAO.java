@@ -29,16 +29,6 @@ public final class BairroDAO implements CrudDAO<BairroModel> {
 		return broker.getCollectionBean(BairroModel.class, "id", "descricao");
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<BairroModel> pesquisarCombo() {
-
-		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
-
-		broker.setSQL("SELECT ID, DESCRICAO FROM BAIRRO ORDER BY DESCRICAO");
-
-		return broker.getCollectionBean(BairroModel.class, "id", "descricao");
-	}
-
 	public BairroModel inserir(final BairroModel model) throws TSApplicationException {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();

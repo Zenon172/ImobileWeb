@@ -9,6 +9,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
+import org.primefaces.context.RequestContext;
+
 import br.com.sysfar.imobileweb.dao.CaptacaoDAO;
 import br.com.sysfar.imobileweb.dao.ComboDAO;
 import br.com.sysfar.imobileweb.dao.CrudDAO;
@@ -21,7 +23,11 @@ import br.com.sysfar.imobileweb.model.StatusCaptacaoModel;
 import br.com.sysfar.imobileweb.model.TipoImovelModel;
 import br.com.sysfar.imobileweb.model.UsuarioModel;
 import br.com.sysfar.imobileweb.util.Constantes;
+import br.com.sysfar.imobileweb.util.EmailUtil;
+import br.com.sysfar.imobileweb.util.LayoutEmailUtil;
 import br.com.sysfar.imobileweb.util.Utilitario;
+import br.com.topsys.exception.TSApplicationException;
+import br.com.topsys.util.TSUtil;
 
 @SuppressWarnings("serial")
 @ViewScoped
@@ -37,6 +43,10 @@ public class CaptacaoFaces extends CrudFaces<CaptacaoModel> {
 	private List<SelectItem> comboOrigem;
 	private List<SelectItem> comboStatusCaptacao;
 	private List<SelectItem> comboResponsavel;
+	
+	private List<CaptacaoModel> captacoesExistentes;
+	
+	private boolean flagValidarCaptacaoDuplicada;
 
 	@Override
 	@PostConstruct
@@ -93,6 +103,66 @@ public class CaptacaoFaces extends CrudFaces<CaptacaoModel> {
 		this.crudModel.setContatos(this.captacaoDAO.pesquisarContatos(this.crudModel));
 		this.carregarContatos();
 	}
+	
+	@Override
+	protected void posInsert() {
+		
+		CaptacaoModel captacaoModel = this.captacaoDAO.obter(this.crudModel);
+		
+		try {
+			
+			if(!TSUtil.isEmpty(captacaoModel.getResponsavelModel().getEmail())){
+				
+				new EmailUtil().enviar(captacaoModel.getResponsavelModel().getEmail(), "Nova Captação em " + captacaoModel.getBairroModel().getDescricao(), new LayoutEmailUtil().getLayoutEmailNovaCaptacao(captacaoModel));
+				
+			}
+			
+		} catch (TSApplicationException e) {
+			
+			super.throwException(e);
+			
+		}
+	
+	}
+	
+	@Override
+	protected boolean validaCampos() {
+		
+		boolean valida = true;
+		
+		if(this.flagValidarCaptacaoDuplicada && !this.validarCaptacaoDuplicada()){
+			super.addErrorMessage("Captações similares foram encontradas");
+			RequestContext.getCurrentInstance().addCallbackParam("validationFailed", false);
+			valida = false;
+		} else {
+			RequestContext.getCurrentInstance().addCallbackParam("validationFailed", true);
+		}
+		
+		return valida;
+	}
+	
+	public boolean validarCaptacaoDuplicada(){
+		
+		String descricao = this.crudPesquisaModel.getDescricao();
+		
+		this.captacoesExistentes = new ArrayList<CaptacaoModel>();
+				
+		for(CaptacaoContatoModel contato : this.crudModel.getContatos()){
+			
+			if(!TSUtil.isEmpty(contato.getTelefone())){
+				
+				this.crudPesquisaModel.setDescricao(contato.getTelefone());
+				
+				this.captacoesExistentes.addAll(this.captacaoDAO.pesquisar(this.crudPesquisaModel));
+			
+			}
+			
+		}
+		
+		this.crudPesquisaModel.setDescricao(descricao);
+		
+		return this.captacoesExistentes.isEmpty();
+	}
 
 	@Override
 	protected void preInsert() {
@@ -144,6 +214,22 @@ public class CaptacaoFaces extends CrudFaces<CaptacaoModel> {
 
 	public void setComboResponsavel(List<SelectItem> comboResponsavel) {
 		this.comboResponsavel = comboResponsavel;
+	}
+
+	public List<CaptacaoModel> getCaptacoesExistentes() {
+		return captacoesExistentes;
+	}
+
+	public void setCaptacoesExistentes(List<CaptacaoModel> captacoesExistentes) {
+		this.captacoesExistentes = captacoesExistentes;
+	}
+
+	public boolean isFlagValidarCaptacaoDuplicada() {
+		return flagValidarCaptacaoDuplicada;
+	}
+
+	public void setFlagValidarCaptacaoDuplicada(boolean flagValidarCaptacaoDuplicada) {
+		this.flagValidarCaptacaoDuplicada = flagValidarCaptacaoDuplicada;
 	}
 
 	@Override

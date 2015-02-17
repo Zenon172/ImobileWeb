@@ -29,16 +29,6 @@ public final class TipoFachadaDAO implements CrudDAO<TipoFachadaModel> {
 		return broker.getCollectionBean(TipoFachadaModel.class, "id", "descricao");
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<TipoFachadaModel> pesquisarCombo() {
-
-		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
-
-		broker.setSQL("SELECT ID, DESCRICAO FROM TIPO_FACHADA ORDER BY DESCRICAO");
-
-		return broker.getCollectionBean(TipoFachadaModel.class, "id", "descricao");
-	}
-
 	public TipoFachadaModel inserir(final TipoFachadaModel model) throws TSApplicationException {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();

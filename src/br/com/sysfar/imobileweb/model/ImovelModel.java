@@ -14,6 +14,8 @@ public class ImovelModel extends BaseModel {
 	private String endereco;
 
 	private String complemento;
+	
+	private EdificioModel edificioModel;
 
 	private Integer andar;
 
@@ -27,7 +29,9 @@ public class ImovelModel extends BaseModel {
 
 	private ConstrutoraModel construtoraModel;
 
-	private TipoPisoModel tipoPisoModel;
+	private TipoPisoModel tipoPisoSalaModel;
+	
+	private TipoPisoModel tipoPisoQuartoModel;
 
 	private Integer anoConstrucao;
 
@@ -51,7 +55,7 @@ public class ImovelModel extends BaseModel {
 
 	private Integer dependencias;
 
-	private Integer wcEmpregedas;
+	private Integer wcEmpregadas;
 
 	private Integer armariosBanheiros;
 
@@ -117,7 +121,7 @@ public class ImovelModel extends BaseModel {
 
 	private String descricaoMobilia;
 
-	private Integer qtdVagasEstacioamento;
+	private Integer qtdVagasEstacionamento;
 
 	private Boolean flagUtilizouFgts;
 
@@ -125,7 +129,7 @@ public class ImovelModel extends BaseModel {
 
 	private Boolean flagTerrenoForeiro;
 
-	private Boolean flagEsclusividade;
+	private Boolean flagExclusividade;
 
 	private Boolean flagHabitado;
 
@@ -233,12 +237,20 @@ public class ImovelModel extends BaseModel {
 		this.construtoraModel = construtoraModel;
 	}
 
-	public TipoPisoModel getTipoPisoModel() {
-		return tipoPisoModel;
+	public TipoPisoModel getTipoPisoSalaModel() {
+		return tipoPisoSalaModel;
 	}
 
-	public void setTipoPisoModel(TipoPisoModel tipoPisoModel) {
-		this.tipoPisoModel = tipoPisoModel;
+	public void setTipoPisoSalaModel(TipoPisoModel tipoPisoSalaModel) {
+		this.tipoPisoSalaModel = tipoPisoSalaModel;
+	}
+
+	public TipoPisoModel getTipoPisoQuartoModel() {
+		return tipoPisoQuartoModel;
+	}
+
+	public void setTipoPisoQuartoModel(TipoPisoModel tipoPisoQuartoModel) {
+		this.tipoPisoQuartoModel = tipoPisoQuartoModel;
 	}
 
 	public Integer getAnoConstrucao() {
@@ -329,12 +341,12 @@ public class ImovelModel extends BaseModel {
 		this.dependencias = dependencias;
 	}
 
-	public Integer getWcEmpregedas() {
-		return wcEmpregedas;
+	public Integer getWcEmpregadas() {
+		return wcEmpregadas;
 	}
 
-	public void setWcEmpregedas(Integer wcEmpregedas) {
-		this.wcEmpregedas = wcEmpregedas;
+	public void setWcEmpregadas(Integer wcEmpregadas) {
+		this.wcEmpregadas = wcEmpregadas;
 	}
 
 	public Integer getArmariosBanheiros() {
@@ -593,12 +605,12 @@ public class ImovelModel extends BaseModel {
 		this.descricaoMobilia = descricaoMobilia;
 	}
 
-	public Integer getQtdVagasEstacioamento() {
-		return qtdVagasEstacioamento;
+	public Integer getQtdVagasEstacionamento() {
+		return qtdVagasEstacionamento;
 	}
 
-	public void setQtdVagasEstacioamento(Integer qtdVagasEstacioamento) {
-		this.qtdVagasEstacioamento = qtdVagasEstacioamento;
+	public void setQtdVagasEstacionamento(Integer qtdVagasEstacionamento) {
+		this.qtdVagasEstacionamento = qtdVagasEstacionamento;
 	}
 
 	public Boolean getFlagUtilizouFgts() {
@@ -625,12 +637,12 @@ public class ImovelModel extends BaseModel {
 		this.flagTerrenoForeiro = flagTerrenoForeiro;
 	}
 
-	public Boolean getFlagEsclusividade() {
-		return flagEsclusividade;
+	public Boolean getFlagExclusividade() {
+		return flagExclusividade;
 	}
 
-	public void setFlagEsclusividade(Boolean flagEsclusividade) {
-		this.flagEsclusividade = flagEsclusividade;
+	public void setFlagExclusividade(Boolean flagExclusividade) {
+		this.flagExclusividade = flagExclusividade;
 	}
 
 	public Boolean getFlagHabitado() {
@@ -703,5 +715,13 @@ public class ImovelModel extends BaseModel {
 
 	public void setProprietarioModel(ProprietarioModel proprietarioModel) {
 		this.proprietarioModel = proprietarioModel;
+	}
+
+	public EdificioModel getEdificioModel() {
+		return edificioModel;
+	}
+
+	public void setEdificioModel(EdificioModel edificioModel) {
+		this.edificioModel = edificioModel;
 	}
 }

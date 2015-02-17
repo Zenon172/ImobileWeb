@@ -29,16 +29,6 @@ public final class TipoPisoDAO implements CrudDAO<TipoPisoModel> {
 		return broker.getCollectionBean(TipoPisoModel.class, "id", "descricao");
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<TipoPisoModel> pesquisarCombo() {
-
-		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
-
-		broker.setSQL("SELECT ID, DESCRICAO FROM TIPO_PISO ORDER BY DESCRICAO");
-
-		return broker.getCollectionBean(TipoPisoModel.class, "id", "descricao");
-	}
-
 	public TipoPisoModel inserir(final TipoPisoModel model) throws TSApplicationException {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();

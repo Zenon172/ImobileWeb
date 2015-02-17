@@ -5,6 +5,8 @@ public class UsuarioModel extends BaseModel {
 
 	private String nome;
 
+	private String email;
+	
 	private String login;
 
 	private String senha;
@@ -19,6 +21,14 @@ public class UsuarioModel extends BaseModel {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getLogin() {

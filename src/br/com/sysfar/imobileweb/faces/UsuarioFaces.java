@@ -53,6 +53,11 @@ public class UsuarioFaces extends CrudFaces<UsuarioModel> {
 	protected boolean validaCampos() {
 
 		boolean valida = true;
+		
+		if(!TSUtil.isEmpty(this.crudModel.getEmail()) && !TSUtil.isEmailValid(this.crudModel.getEmail())){
+			super.addErrorMessage("E-mail inválido");
+			valida = false;
+		}
 
 		if (TSUtil.isEmpty(this.crudModel.getId())) {
 

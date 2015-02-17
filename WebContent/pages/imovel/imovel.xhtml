@@ -1,91 +1,259 @@
 <ui:composition template="/resources/templates/templateCRUD.xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xmlns:ts="http://java.sun.com/jsf/composite/components" xmlns:pe="http://primefaces.org/ui/extensions">
 
-	<ui:param name="mbean" value="${captacaoFaces}" />
-	<ui:param name="mbeanModel" value="${captacaoFaces.crudModel}" />
-	<ui:param name="mbeanPesquisaModel" value="${captacaoFaces.crudPesquisaModel}" />
+	<ui:param name="mbean" value="${imovelFaces}" />
+	<ui:param name="mbeanModel" value="${imovelFaces.crudModel}" />
+	<ui:param name="mbeanPesquisaModel" value="${imovelFaces.crudPesquisaModel}" />
 	<ui:param name="possuiDadosAtualizacao" value="true" />
 
 	<ui:define name="cadastro">
 
 		<p:fieldset style="width: 98%">
 
-			<h:panelGrid columns="7" columnClasses="coluna25, coluna11, coluna15, coluna15, coluna15, coluna10, coluna15" style="width: 100%">
-				
-				<p:outputLabel for="omResponsavel" value="Captador" />
-				<p:outputLabel for="calDataAnuncio" value="Data do Anúncio" />
-				<p:outputLabel for="omTipoImovel" value="Tipo" />
-				<p:outputLabel for="omOrigem" value="Origem" />
-				<p:outputLabel for="omBairro" value="Bairro" />
-				<p:outputLabel for="omStatusCaptacao" value="Status" />
-				<p:outputLabel for="itValor" value="Valor" />
-				
-				<h:selectOneMenu id="omResponsavel" value="#{mbeanModel.responsavelModel.id}" required="true" style="width: 95%">
-					<f:selectItem itemLabel="Selecione" itemValue="" />
-					<f:selectItems value="#{mbean.comboResponsavel}" />
-				</h:selectOneMenu>
-				<ts:calendar id="calDataAnuncio" value="#{mbeanModel.dataAnuncio}" styleClass="coluna90" />
-				<h:selectOneMenu id="omTipoImovel" value="#{mbeanModel.tipoImovelModel.id}" required="true" style="width: 90%">
-					<f:selectItem itemLabel="Selecione" itemValue="" />
-					<f:selectItems value="#{mbean.comboTipoImovel}" />
-				</h:selectOneMenu>
+			<p:fieldset legend="Dados do imóvel" style="margin-top: 5px;">
 
-				<h:selectOneMenu id="omOrigem" value="#{mbeanModel.origemModel.id}" required="true" style="width: 90%">
-					<f:selectItem itemLabel="Selecione" itemValue="" />
-					<f:selectItems value="#{mbean.comboOrigem}" />
-				</h:selectOneMenu>
-				<h:selectOneMenu id="omBairro" value="#{mbeanModel.bairroModel.id}" required="true" style="width: 90%">
-					<f:selectItem itemLabel="Selecione" itemValue="" />
-					<f:selectItems value="#{mbean.comboBairro}" />
-				</h:selectOneMenu>
-				<h:selectOneMenu id="omStatusCaptacao" value="#{mbeanModel.statusCaptacaoModel.id}" required="true" style="width: 90%">
-					<f:selectItem itemLabel="Selecione" itemValue="" />
-					<f:selectItems value="#{mbean.comboStatusCaptacao}" />
-				</h:selectOneMenu>
-				<pe:inputNumber id="itValor" value="#{mbeanModel.valor}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 90%; text-align:right" />
+				<h:panelGrid columns="4" columnClasses="coluna25, coluna20, coluna10, coluna45" style="width: 100%">
 
-			</h:panelGrid>
+					<p:outputLabel for="somTipoImovel" value="Tipo" />
+					<h:outputText value="Posição do sol" />
+					<p:outputLabel for="itValor" value="Valor" />
+					<h:outputText value="" />
 
-			<h:panelGrid style="width: 100%">
-
-				<p:outputLabel for="itLink" value="Link" />
-				<p:inputText id="itLink" value="#{mbeanModel.link}" styleClass="coluna99" />
-
-				<p:outputLabel for="itaDescricao" value="Descrição" />
-				<p:inputTextarea id="itaDescricao" value="#{mbeanModel.descricao}" rows="10" autoResize="false" styleClass="coluna99" />
-
-			</h:panelGrid>
-
-			<p:fieldset legend="Contatos">
-
-				<h:panelGrid style="width: 100%; margin-bottom: 10px">
-
-					<p:outputLabel for="itContato" value="Anunciante" />
-					<p:inputText id="itContato" value="#{mbeanModel.contato}" maxlength="100" styleClass="coluna40" />
+					<h:selectOneMenu id="somTipoImovel" value="#{mbeanModel.tipoImovelModel.id}" required="true" styleClass="coluna95">
+						<f:selectItem itemValue="" itemLabel="Não Selecionado" />
+						<f:selectItems value="#{mbean.comboTipoImovel}" />
+					</h:selectOneMenu>
+					<h:selectOneMenu value="#{mbeanModel.posicaoSolModel.id}" styleClass="coluna95">
+						<f:selectItem itemValue="" itemLabel="Não Selecionado" />
+						<f:selectItems value="#{mbean.comboPosicaoSol}" />
+					</h:selectOneMenu>
+					<pe:inputNumber id="itValor" value="#{mbeanModel.valor}" required="true" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 90%; text-align:right" />
+					<p:selectBooleanCheckbox itemLabel="Piscina Privativa" value="#{mbeanModel.flagPiscinaPrivativa}" />
 
 				</h:panelGrid>
 
-				<p:dataGrid columns="2" var="contato" value="#{mbeanModel.contatos}" rowIndexVar="index">
+			</p:fieldset>
 
-					<p:column>
-						<h:panelGrid columns="2" columnClasses="coluna30, coluna70">
-							<h:outputText value="Telefone #{index + 1}" />
-							<h:outputText value="E-mail #{index + 1}" />
+			<p:fieldset legend="Endereço" style="margin-top: 5px;">
 
-							<p:inputMask id="itTelefone" mask="(99) 9999-9999" value="#{contato.telefone}" maxlength="15" styleClass="coluna90" />
-							<p:inputText id="itEmail" value="#{contato.email}" maxlength="100" styleClass="coluna90" />
-						</h:panelGrid>
-					</p:column>
+				<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width: 100%">
 
-				</p:dataGrid>
+					<h:outputText value="Endereço" />
+					<h:outputText value="Complemento" />
+
+					<p:inputText value="#{mbeanModel.endereco}" maxlength="100" styleClass="coluna95" />
+					<p:inputText value="#{mbeanModel.complemento}" maxlength="100" styleClass="coluna95" />
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="6" columnClasses="coluna20, coluna20, coluna10, coluna10, coluna30, coluna10" style="width: 100%">
+
+					<p:outputLabel for="somBairro" value="Bairro" />
+					<h:outputText value="Edifício" />
+					<h:outputText value="Andar" />
+					<h:outputText value="Unidade" />
+					<h:outputText value="Ponto de Referência" />
+					<h:outputText value="Cep" />
+
+					<h:selectOneMenu id="somBairro" value="#{mbeanModel.bairroModel.id}" required="true" styleClass="coluna95">
+						<f:selectItem itemValue="" itemLabel="Não Selecionado" />
+						<f:selectItems value="#{mbean.comboBairro}" />
+					</h:selectOneMenu>
+					<h:selectOneMenu value="#{mbeanModel.edificioModel.id}" styleClass="coluna95">
+						<f:selectItem itemValue="" itemLabel="Não Selecionado" />
+						<f:selectItems value="#{mbean.comboEdificio}" />
+					</h:selectOneMenu>
+					<p:inputText value="#{mbeanModel.andar}" maxlength="2" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna85" />
+					<p:inputText value="#{mbeanModel.unidade}" maxlength="100" styleClass="coluna85" />
+					<p:inputText value="#{mbeanModel.pontoReferencia}" maxlength="100" styleClass="coluna95" />
+					<p:inputMask mask="99.999-999" value="#{mbeanModel.cep}" maxlength="10" styleClass="coluna95" />
+
+				</h:panelGrid>
 
 			</p:fieldset>
 
-			<h:panelGrid style="width: 100%">
+			<p:fieldset legend="Dados Gerais" style="margin-top: 5px;">
 
-				<p:outputLabel for="itaObservacao" value="Observação" />
-				<p:inputTextarea id="itaObservacao" value="#{mbeanModel.observacao}" rows="5" autoResize="false" styleClass="coluna98" />
+				<h:panelGrid columns="6" columnClasses="coluna20, coluna20, coluna20, coluna10, coluna10, coluna20" style="width: 100%">
 
-			</h:panelGrid>
+					<h:outputText value="Construtora" />
+					<h:outputText value="Tipo de piso da sala" />
+					<h:outputText value="Tipo de piso do quarto" />
+					<h:outputText value="Ano construção" />
+					<h:outputText value="Área privativa" />
+					<h:outputText value="Tipo de Fachada" />
+
+					<h:selectOneMenu value="#{mbeanModel.construtoraModel.id}" styleClass="coluna95">
+						<f:selectItem itemValue="" itemLabel="Não Selecionado" />
+						<f:selectItems value="#{mbean.comboConstrutora}" />
+					</h:selectOneMenu>
+					<h:selectOneMenu value="#{mbeanModel.tipoPisoSalaModel.id}" styleClass="coluna95">
+						<f:selectItem itemValue="" itemLabel="Não Selecionado" />
+						<f:selectItems value="#{mbean.comboTipoPiso}" />
+					</h:selectOneMenu>
+					<h:selectOneMenu value="#{mbeanModel.tipoPisoQuartoModel.id}" styleClass="coluna95">
+						<f:selectItem itemValue="" itemLabel="Não Selecionado" />
+						<f:selectItems value="#{mbean.comboTipoPiso}" />
+					</h:selectOneMenu>
+					<p:inputText value="#{mbeanModel.anoConstrucao}" maxlength="2" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna85" />
+					<pe:inputNumber value="#{mbeanModel.areaPrivativa}" decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 90%; text-align:right" />
+					<h:selectOneMenu value="#{mbeanModel.tipoFachadaModel.id}" styleClass="coluna90">
+						<f:selectItem itemValue="" itemLabel="Não Selecionado" />
+						<f:selectItems value="#{mbean.comboTipoFachada}" />
+					</h:selectOneMenu>
+
+				</h:panelGrid>
+
+			</p:fieldset>
+
+			<p:fieldset legend="Quantidades Ambientes Internos" style="margin-top: 5px;">
+
+				<h:panelGrid columns="8" style="width: 100%">
+
+					<h:outputText value="Quartos" />
+					<h:outputText value="Suites" />
+					<h:outputText value="Banheiros" />
+					<h:outputText value="Varandas" />
+					<h:outputText value="Dependências" />
+					<h:outputText value="WC Empregadas" />
+					<h:outputText value="Armários banheiros" />
+					<h:outputText value="Armários cozinhas" />
+
+					<p:inputText value="#{mbeanModel.quartos}" maxlength="2" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna90" />
+					<p:inputText value="#{mbeanModel.suites}" maxlength="2" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna90" />
+					<p:inputText value="#{mbeanModel.banheiros}" maxlength="2" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna90" />
+					<p:inputText value="#{mbeanModel.varandas}" maxlength="2" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna90" />
+					<p:inputText value="#{mbeanModel.dependencias}" maxlength="2" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna90" />
+					<p:inputText value="#{mbeanModel.wcEmpregadas}" maxlength="2" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna90" />
+					<p:inputText value="#{mbeanModel.armariosBanheiros}" maxlength="2" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna90" />
+					<p:inputText value="#{mbeanModel.armariosCozinhas}" maxlength="2" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna90" />
+
+					<h:outputText value="Armários quartos" />
+					<h:outputText value="Closets" />
+					<h:outputText value="Pavimentos" />
+					<h:outputText value="Home Offices" />
+					<h:outputText value="Despensas" />
+					<h:outputText value="Depósitos" />
+					<h:outputText value="" />
+					<h:outputText value="" />
+
+					<p:inputText value="#{mbeanModel.armariosQuartos}" maxlength="2" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna90" />
+					<p:inputText value="#{mbeanModel.closets}" maxlength="2" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna90" />
+					<p:inputText value="#{mbeanModel.pavimentos}" maxlength="2" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna90" />
+					<p:inputText value="#{mbeanModel.homeOffices}" maxlength="2" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna90" />
+					<p:inputText value="#{mbeanModel.despensas}" maxlength="2" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna90" />
+					<p:inputText value="#{mbeanModel.depositos}" maxlength="2" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna90" />
+					<p:selectBooleanCheckbox itemLabel="Cozinha Americana" value="#{mbeanModel.flagCozinhaAmericana}" />
+					<h:outputText value="" />
+
+				</h:panelGrid>
+
+			</p:fieldset>
+
+			<p:fieldset legend="Ambientes Externos" style="margin-top: 5px;">
+
+				<h:panelGrid columns="6" style="width: 100%">
+
+					<p:selectBooleanCheckbox itemLabel="Salão de festas" value="#{mbeanModel.flagSalaoFestas}" />
+					<p:selectBooleanCheckbox itemLabel="Playground" value="#{mbeanModel.flagPlayground}" />
+					<p:selectBooleanCheckbox itemLabel="Piscina" value="#{mbeanModel.flagPiscina}" />
+					<p:selectBooleanCheckbox itemLabel="Academia" value="#{mbeanModel.flagAcademia}" />
+					<p:selectBooleanCheckbox itemLabel="Quadra Poliesportiva" value="#{mbeanModel.flagQuadraPoliesportiva}" />
+					<p:selectBooleanCheckbox itemLabel="Parque infantil" value="#{mbeanModel.flagParqueInfantil}" />
+					<p:selectBooleanCheckbox itemLabel="Campo" value="#{mbeanModel.flagCampo}" />
+					<p:selectBooleanCheckbox itemLabel="Salão de jogos" value="#{mbeanModel.flagSalaoJogos}" />
+					<p:selectBooleanCheckbox itemLabel="Sauna" value="#{mbeanModel.flagSauna}" />
+					<p:selectBooleanCheckbox itemLabel="Brinquedoteca" value="#{mbeanModel.flagBrinquedoteca}" />
+					<p:selectBooleanCheckbox itemLabel="Cinema" value="#{mbeanModel.flagCinema}" />
+					<p:selectBooleanCheckbox itemLabel="Quadra de Squash" value="#{mbeanModel.flagQuadraSquash}" />
+					<p:selectBooleanCheckbox itemLabel="Quadra de Tênis" value="#{mbeanModel.flagQuadraTenis}" />
+					<p:selectBooleanCheckbox itemLabel="Churrasqueira" value="#{mbeanModel.flagChurrasqueira}" />
+					<p:selectBooleanCheckbox itemLabel="Estacionamento de Visitante" value="#{mbeanModel.flagEstacionamentoVisitante}" />
+					<p:selectBooleanCheckbox itemLabel="Água individual" value="#{mbeanModel.flagAguaIndividual}" />
+					<p:selectBooleanCheckbox itemLabel="Gás individual" value="#{mbeanModel.flagGasIndividual}" />
+					<p:selectBooleanCheckbox itemLabel="Gerador próprio" value="#{mbeanModel.flagGeradorProprio}" />
+
+				</h:panelGrid>
+
+			</p:fieldset>
+
+			<p:fieldset legend="Informações Adicionais" style="margin-top: 5px;">
+
+				<h:panelGrid columns="6" columnClasses="coluna30, coluna15, coluna10, coluna10, coluna5, coluna10" style="width: 100%">
+
+					<h:outputText value="Nome do Administrador" />
+					<h:outputText value="Tel. do Administrador" />
+					<h:outputText value="Valor cond." />
+					<h:outputText value="Qtd. Vagas" />
+					<h:outputText value="Elevador" />
+					<h:outputText value="Qtd. Elevadores" />
+
+					<p:inputText value="#{mbeanModel.nomeAdministrador}" maxlength="100" styleClass="coluna95" />
+					<p:inputMask mask="(99) 9999-9999" value="#{mbeanModel.telefoneAdministrador}" maxlength="15" styleClass="coluna90" />
+					<pe:inputNumber value="#{mbeanModel.valorCondominio}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 85%; text-align:right" />
+					<p:inputText value="#{mbeanModel.qtdVagasEstacionamento}" maxlength="2" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna85" />
+					<p:selectBooleanCheckbox value="#{mbeanModel.flagElevador}" />
+					<p:inputText value="#{mbeanModel.qtdElevadores}" maxlength="2" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna95" />
+
+				</h:panelGrid>
+
+				<h:panelGrid style="width: 100%">
+
+					<h:outputText value="Mobiliado" />
+					<p:selectBooleanCheckbox value="#{mbeanModel.flagMobiliado}" />
+
+					<h:outputText value="Descrição da mobília" />
+					<p:inputTextarea value="#{mbeanModel.descricaoMobilia}" rows="3" autoResize="false" styleClass="coluna99" />
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="7" style="width: 100%">
+
+					<p:selectBooleanCheckbox itemLabel="Utilizou FGTS" value="#{mbeanModel.flagUtilizouFgts}" />
+					<p:selectBooleanCheckbox itemLabel="Imóvel Quitado" value="#{mbeanModel.flagImovelQuitado}" />
+					<p:selectBooleanCheckbox itemLabel="Terreno Foreiro" value="#{mbeanModel.flagTerrenoForeiro}" />
+					<p:selectBooleanCheckbox itemLabel="Exclusividade" value="#{mbeanModel.flagExclusividade}" />
+					<p:selectBooleanCheckbox itemLabel="Habitado" value="#{mbeanModel.flagHabitado}" />
+
+				</h:panelGrid>
+
+			</p:fieldset>
+
+			<p:fieldset legend="Informações Gerenciais" style="margin-top: 5px;">
+
+				<h:panelGrid columns="4" columnClasses="coluna10, coluna20, coluna10, coluna60" style="width: 100%">
+
+					<h:outputText value="Data da captação" />
+					<h:outputText value="Captador" />
+					<h:outputText value="Comissão" />
+					<h:outputText value="Proprietário" />
+
+					<ts:calendar value="#{mbeanModel.dataCaptacao}" />
+					<h:selectOneMenu value="#{mbeanModel.captadorModel.id}" styleClass="coluna95">
+						<f:selectItem itemValue="" itemLabel="Não Selecionado" />
+						<f:selectItems value="#{mbean.comboCaptador}" />
+					</h:selectOneMenu>
+					<pe:inputNumber value="#{mbeanModel.comissao}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 90%; text-align:right" />
+					<h:selectOneMenu value="#{mbeanModel.proprietarioModel.id}" styleClass="coluna95">
+						<f:selectItem itemValue="" itemLabel="Não Selecionado" />
+						<f:selectItems value="#{mbean.comboProprietario}" />
+					</h:selectOneMenu>
+
+				</h:panelGrid>
+
+				<h:panelGrid style="width: 100%">
+	
+					<h:outputText value="Motivo da Venda" />
+					<p:inputTextarea value="#{mbeanModel.motivoVenda}" rows="3" autoResize="false" styleClass="coluna99" />
+	
+					<h:outputText value="Outros imóveis a venda" />
+					<p:inputTextarea value="#{mbeanModel.outrosImoveisVenda}" rows="3" autoResize="false" styleClass="coluna99" />
+	
+					<h:outputText value="Observações" />
+					<p:inputTextarea value="#{mbeanModel.observacoes}" rows="3" autoResize="false" styleClass="coluna99" />
+	
+				</h:panelGrid>
+
+			</p:fieldset>
 
 		</p:fieldset>
 
@@ -93,107 +261,13 @@
 
 	<ui:define name="pesquisaCampos">
 
-		<h:panelGrid style="width: 20%">
-			
-			<h:outputText value="Período" />
-			<h:panelGrid columns="3" columnClasses="coluna47, coluna6, coluna47" style="width: 95%; margin-left: -2px">
-				<ts:calendar id="dataInicial" value="#{mbeanPesquisaModel.dataInicial}" />
-				<h:outputText value="a" />
-				<ts:calendar id="dataFinal" value="#{mbeanPesquisaModel.dataFinal}" />
-			</h:panelGrid>
-		
-		</h:panelGrid>
-		
-		<h:panelGrid columns="5" columnClasses="coluna25, coluna20, coluna20, coluna20, coluna15" style="width: 80%">
 
-			<p:outputLabel for="omResponsavelPesquisa" value="Captador" />
-			<p:outputLabel for="omTipoImovelPesquisa" value="Tipo" />
-			<p:outputLabel for="omOrigemPesquisa" value="Origem" />
-			<p:outputLabel for="omBairroPesquisa" value="Bairro" />
-			<p:outputLabel for="omStatusCaptacaoPesquisa" value="Status" />
-			
-			<h:selectOneMenu id="omResponsavelPesquisa" value="#{mbeanPesquisaModel.responsavelModel.id}" style="width: 90%">
-				<f:selectItem itemLabel="Selecione" itemValue="" />
-				<f:selectItems value="#{mbean.comboResponsavel}" />
-			</h:selectOneMenu>
-			<h:selectOneMenu id="omTipoImovelPesquisa" value="#{mbeanPesquisaModel.tipoImovelModel.id}" style="width: 90%">
-				<f:selectItem itemLabel="Selecione" itemValue="" />
-				<f:selectItems value="#{mbean.comboTipoImovel}" />
-			</h:selectOneMenu>
-			<h:selectOneMenu id="omOrigemPesquisa" value="#{mbeanPesquisaModel.origemModel.id}" style="width: 90%">
-				<f:selectItem itemLabel="Selecione" itemValue="" />
-				<f:selectItems value="#{mbean.comboOrigem}" />
-			</h:selectOneMenu>
-			<h:selectOneMenu id="omBairroPesquisa" value="#{mbeanPesquisaModel.bairroModel.id}" style="width: 90%">
-				<f:selectItem itemLabel="Selecione" itemValue="" />
-				<f:selectItems value="#{mbean.comboBairro}" />
-			</h:selectOneMenu>
-			<h:selectOneMenu id="omStatusCaptacaoPesquisa" value="#{mbeanPesquisaModel.statusCaptacaoModel.id}" style="width: 90%">
-				<f:selectItem itemLabel="Selecione" itemValue="" />
-				<f:selectItems value="#{mbean.comboStatusCaptacao}" />
-			</h:selectOneMenu>
-
-		</h:panelGrid>
-		
-		<h:panelGrid style="width: 100%">
-		
-			<p:outputLabel for="itDescricaoPesquisa" value="Termo a pesquisar" />
-			<p:inputText id="itDescricaoPesquisa" value="#{mbeanPesquisaModel.descricao}" styleClass="coluna30" />
-		
-		</h:panelGrid>
 
 	</ui:define>
 
 	<ui:define name="colunasTabela">
 
-		<p:column headerText="Tipo" styleClass="coluna45">
-			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
-				<h:outputText value="#{linha.tipoImovelModel.descricao}" />
-				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
-			</p:commandLink>
-		</p:column>
 
-		<p:column headerText="Captador" styleClass="coluna15">
-			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
-				<h:outputText value="#{linha.responsavelModel.nome}" />
-				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
-			</p:commandLink>
-		</p:column>
-
-		<p:column headerText="Descrição" styleClass="coluna30">
-			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
-				<h:outputText value="#{linha.descricao}" />
-				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
-			</p:commandLink>
-		</p:column>
-
-		<p:column headerText="Bairro" styleClass="coluna30">
-			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
-				<h:outputText value="#{linha.bairroModel.descricao}" />
-				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
-			</p:commandLink>
-		</p:column>
-
-		<p:column headerText="Origem" styleClass="coluna30">
-			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
-				<h:outputText value="#{linha.origemModel.descricao}" />
-				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
-			</p:commandLink>
-		</p:column>
-
-		<p:column headerText="Valor" styleClass="coluna30">
-			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
-				<h:outputText value="#{linha.valor}" />
-				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
-			</p:commandLink>
-		</p:column>
-
-		<p:column headerText="Status" styleClass="coluna30">
-			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
-				<h:outputText value="#{linha.statusCaptacaoModel.descricao}" />
-				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
-			</p:commandLink>
-		</p:column>
 
 	</ui:define>
 

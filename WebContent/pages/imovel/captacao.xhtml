@@ -4,10 +4,11 @@
 	<ui:param name="mbeanModel" value="${captacaoFaces.crudModel}" />
 	<ui:param name="mbeanPesquisaModel" value="${captacaoFaces.crudPesquisaModel}" />
 	<ui:param name="possuiDadosAtualizacao" value="true" />
+	<ui:param name="permissaoInserir" value="false" />
 
 	<ui:define name="cadastro">
 
-		<p:fieldset style="width: 98%">
+		<p:fieldset id="fsCadastro" style="width: 98%">
 
 			<h:panelGrid columns="7" columnClasses="coluna25, coluna11, coluna15, coluna15, coluna15, coluna10, coluna15" style="width: 100%">
 				
@@ -91,6 +92,76 @@
 
 	</ui:define>
 
+	<ui:define name="comandosCrudFim">
+		
+		<p:commandButton id="btnInserir2" value="Gravar" icon="salvar" oncomplete="PF('cdCadastrarCRUD2').show()" rendered="#{!mbean.alterar and menuFaces.menuModel.flagInserir}"  style="margin-left: 5px;">
+			<f:setPropertyActionListener target="#{captacaoFaces.flagValidarCaptacaoDuplicada}" value="#{true}" />
+		</p:commandButton>
+		
+		<p:confirmDialog message="Confirmar a INCLUSÃO do registro?" header="Aviso" severity="alert" widgetVar="cdCadastrarCRUD2" rendered="#{menuFaces.menuModel.flagInserir}">
+			<p:commandButton process="@form" value="Sim" onclick="PF('cdCadastrarCRUD2').hide()" action="#{mbean.insertEvent}" oncomplete="abrirDialog(dlgCaptacoesExistentes, args)" update="fsCadastro panelGroupCaptacoesSimilares" />
+			<p:commandButton type="button" value="Não" onclick="PF('cdCadastrarCRUD2').hide()" />
+		</p:confirmDialog>
+		
+		<p:dialog dynamic="true" modal="true" resizable="false" closeOnEscape="true" widgetVar="dlgCaptacoesExistentes" header="Captações Similares" styleClass="dialog70">
+
+		<h:panelGroup id="panelGroupCaptacoesSimilares">
+
+			<p:scrollPanel id="spPanelGroupCaptacoesSimilares" mode="native" style="background: none; padding: 5px; margin: 5px; overflow: auto;">
+
+				<h:panelGrid style="width: 100%">
+					
+					<p:dataTable value="#{mbean.captacoesExistentes}" var="linha" emptyMessage="Nenhuma captação similar encontrada">
+						
+						<p:column headerText="Tipo" styleClass="coluna10">
+							<h:outputText value="#{linha.tipoImovelModel.descricao}" />
+						</p:column>
+						
+						<p:column headerText="Captador" styleClass="coluna20">
+							<h:outputText value="#{linha.responsavelModel.nome}" />
+						</p:column>
+						
+						<p:column headerText="Descrição" styleClass="coluna45">
+							<h:outputText value="#{linha.descricao}" />
+						</p:column>
+						
+						<p:column headerText="Bairro" styleClass="coluna15">
+							<h:outputText value="#{linha.bairroModel.descricao}" />
+						</p:column>
+						
+						<p:column headerText="Valor" styleClass="coluna05">
+							<h:outputText value="#{linha.valor}" />
+						</p:column>
+						
+						<p:column headerText="Status" styleClass="coluna05">
+							<h:outputText value="#{linha.statusCaptacaoModel.descricao}" />
+						</p:column>
+					
+					</p:dataTable>
+
+				</h:panelGrid>
+
+				<script type="text/javascript">
+					$(document).ready(function() {
+						$("div[id*=spPanelGroupCaptacoesSimilares]").height($(window).height() * 0.7 - 120);
+					});
+				</script>
+
+			</p:scrollPanel>
+
+			<p:panel style="margin: 5px;">
+				<p:commandButton id="btnInserir3" value="Gravar" icon="salvar" oncomplete="dlgCaptacoesExistentes.hide(); PF('cdCadastrarCRUD2').show()" rendered="#{!mbean.alterar and menuFaces.menuModel.flagInserir}" style="margin-left: 5px;" >
+					<f:setPropertyActionListener target="#{captacaoFaces.flagValidarCaptacaoDuplicada}" value="#{false}" />
+				</p:commandButton>
+				<p:commandButton type="button" value="Fechar" icon="ui-icon-close" onclick="dlgCaptacoesExistentes.hide();" />
+			</p:panel>
+
+		</h:panelGroup>
+
+	</p:dialog>
+				
+	</ui:define>
+	
 	<ui:define name="pesquisaCampos">
 
 		<h:panelGrid style="width: 20%">
