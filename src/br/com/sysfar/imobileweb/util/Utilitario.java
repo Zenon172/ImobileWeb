@@ -70,6 +70,11 @@ public class Utilitario {
 		c.add(Calendar.MONTH, qtdMeses);
 
 		return c.getTime();
+
+	}
+	
+	public static boolean isPeriodoInvalido(Date dataInicial, Date dataFinal) {
+		return dataFinal.before(dataInicial);
 	}
 
 }

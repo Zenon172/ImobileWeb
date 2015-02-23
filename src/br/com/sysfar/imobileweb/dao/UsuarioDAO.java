@@ -29,16 +29,6 @@ public final class UsuarioDAO implements CrudDAO<UsuarioModel> {
 		return broker.getCollectionBean(UsuarioModel.class, "id", "nome", "login", "senha", "grupoModel.id", "grupoModel.descricao");
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<UsuarioModel> pesquisarCombo() {
-		
-		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
-		
-		broker.setSQL("SELECT ID, NOME, LOGIN, SENHA, GRUPO_ID, (SELECT DESCRICAO FROM GRUPO G WHERE G.ID = GRUPO_ID) FROM USUARIO U ORDER BY U.NOME");
-		
-		return broker.getCollectionBean(UsuarioModel.class, "id", "nome", "login", "senha", "grupoModel.id", "grupoModel.descricao");
-	}
-
 	public UsuarioModel inserir(final UsuarioModel model) throws TSApplicationException {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();

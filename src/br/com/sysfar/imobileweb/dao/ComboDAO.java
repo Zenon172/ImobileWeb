@@ -10,6 +10,7 @@ import br.com.sysfar.imobileweb.model.GrupoModel;
 import br.com.sysfar.imobileweb.model.OrigemModel;
 import br.com.sysfar.imobileweb.model.PosicaoSolModel;
 import br.com.sysfar.imobileweb.model.ProprietarioModel;
+import br.com.sysfar.imobileweb.model.StatusAtividadeModel;
 import br.com.sysfar.imobileweb.model.StatusCaptacaoModel;
 import br.com.sysfar.imobileweb.model.TipoFachadaModel;
 import br.com.sysfar.imobileweb.model.TipoImovelModel;
@@ -81,6 +82,16 @@ public final class ComboDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<StatusAtividadeModel> pesquisarStatusAtividade() {
+		
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+		
+		broker.setSQL("SELECT ID, DESCRICAO FROM STATUS_ATIVIDADE ORDER BY DESCRICAO");
+		
+		return broker.getCollectionBean(StatusAtividadeModel.class, "id", "descricao");
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<PosicaoSolModel> pesquisarPosicaoSol() {
 		
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
@@ -148,6 +159,16 @@ public final class ComboDAO {
 		broker.setSQL("SELECT ID, NOME FROM PROPRIETARIO ORDER BY NOME");
 		
 		return broker.getCollectionBean(ProprietarioModel.class, "id", "nome");
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<UsuarioModel> pesquisarUsuarios() {
+		
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+		
+		broker.setSQL("SELECT ID, NOME, LOGIN, SENHA, GRUPO_ID, (SELECT DESCRICAO FROM GRUPO G WHERE G.ID = GRUPO_ID) FROM USUARIO U ORDER BY U.NOME");
+		
+		return broker.getCollectionBean(UsuarioModel.class, "id", "nome", "login", "senha", "grupoModel.id", "grupoModel.descricao");
 	}
 
 }

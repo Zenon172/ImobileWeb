@@ -14,6 +14,13 @@ public class UsuarioModel extends BaseModel {
 	private Boolean flagAdministrador;
 
 	private GrupoModel grupoModel;
+	
+	public UsuarioModel() {
+	}
+	
+	public UsuarioModel(Long id) {
+		this.id = id;
+	}
 
 	public String getNome() {
 		return nome;

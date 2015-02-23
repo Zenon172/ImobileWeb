@@ -128,7 +128,7 @@ public abstract class CrudFaces<T extends Serializable> extends TSMainFaces {
 
 	}
 
-	protected final void executeFind() {
+	protected void executeFind() {
 
 		this.preFind();
 

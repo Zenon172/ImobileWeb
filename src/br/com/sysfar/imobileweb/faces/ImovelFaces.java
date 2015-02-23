@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
 import br.com.sysfar.imobileweb.dao.ComboDAO;
@@ -22,10 +22,13 @@ import br.com.sysfar.imobileweb.model.TipoFachadaModel;
 import br.com.sysfar.imobileweb.model.TipoImovelModel;
 import br.com.sysfar.imobileweb.model.TipoPisoModel;
 import br.com.sysfar.imobileweb.model.UsuarioModel;
+import br.com.sysfar.imobileweb.util.Constantes;
 import br.com.sysfar.imobileweb.util.Utilitario;
+import br.com.topsys.util.TSUtil;
+import br.com.topsys.web.util.TSFacesUtil;
 
 @SuppressWarnings("serial")
-@ViewScoped
+@SessionScoped
 @ManagedBean(name = "imovelFaces")
 public class ImovelFaces extends CrudFaces<ImovelModel> {
 
@@ -65,7 +68,27 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 		this.comboDAO = new ComboDAO();
 
 		this.iniciarCombos();
+		
+		CaptacaoModel captacaoModel = (CaptacaoModel)TSFacesUtil.getObjectInSession(Constantes.SESSION_CAPTACAO_ATUAL);
 
+		if(!TSUtil.isEmpty(captacaoModel)){
+			
+			this.gerarViaCaptacao(captacaoModel);
+			
+			TSFacesUtil.removeObjectInSession(Constantes.SESSION_CAPTACAO_ATUAL);
+			
+		}
+	}
+	
+	private void gerarViaCaptacao(CaptacaoModel captacao){
+		
+		this.crudModel.setTipoImovelModel(captacao.getTipoImovelModel());
+		this.crudModel.setValor(captacao.getValor());
+		this.crudModel.setBairroModel(captacao.getBairroModel());
+		this.crudModel.setCaptacaoModel(captacao);
+		this.crudModel.setDataCaptacao(captacao.getDataAtualizacao());
+		this.crudModel.setCaptadorModel(captacao.getResponsavelModel());
+		
 	}
 
 	private void iniciarCombos() {

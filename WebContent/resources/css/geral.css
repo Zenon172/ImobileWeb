@@ -371,6 +371,12 @@ root {
 	left: 15px !important;
 }
 
+.atividade48 {
+	background-image: url(../images/atividade48.png) !important;
+	top: 15px !important;
+	left: 15px !important;
+}
+
 .viewRelatec {
 	height: 48px;
 	width: 48px;
@@ -1643,4 +1649,8 @@ select {
 .ui-growl-message p {
 	text-shadow: 0px 0px 0px #333333 !important;
 	font-weight: bold !important;
+}
+
+.scrollPanelDialog {
+	background: none; padding: 5px; margin: 5px; overflow: auto !important;
 }

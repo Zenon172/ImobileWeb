@@ -32,6 +32,10 @@ public class CaptacaoModel extends BaseModel {
 	
 	private List<CaptacaoContatoModel> contatos;
 	
+	private ImovelModel imovelGeradoModel;
+	
+	private List<AtividadeModel> atividades;
+	
 	private Date dataInicial;
 	private Date dataFinal;
 
@@ -145,5 +149,21 @@ public class CaptacaoModel extends BaseModel {
 
 	public void setDataFinal(Date dataFinal) {
 		this.dataFinal = dataFinal;
+	}
+
+	public ImovelModel getImovelGeradoModel() {
+		return imovelGeradoModel;
+	}
+
+	public void setImovelGeradoModel(ImovelModel imovelGeradoModel) {
+		this.imovelGeradoModel = imovelGeradoModel;
+	}
+
+	public List<AtividadeModel> getAtividades() {
+		return atividades;
+	}
+
+	public void setAtividades(List<AtividadeModel> atividades) {
+		this.atividades = atividades;
 	}
 }

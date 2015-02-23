@@ -10,6 +10,7 @@
 		<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/geral.css" />
 		<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/theme/jquery-ui.theme.css" />
 		<script src="#{request.contextPath}/resources/js/funcoes.js" type="text/javascript" />
+		<script src="#{request.contextPath}/resources/js/jquery.mask.min.js" type="text/javascript" />
 		<link rel="shortcut icon" href="#{request.contextPath}/resources/images/logo3x4.jpg" />
 	</h:head>
 
@@ -123,7 +124,7 @@
 
 		<p:growl id="msgCadastro" globalOnly="false" showDetail="true" showSummary="false" autoUpdate="true" escape="false" />
 
-		<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();" />
+		<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();" rendered="#{!menuFaces.telaPossuiSchedule}" />
 
 		<p:dialog modal="true" widgetVar="statusDialog" header="Processando solicitação..." draggable="false" closable="false" resizable="false" width="225">
 			<p:graphicImage value="../resources/images/ajax-loader.gif" style="border: 0px;width:200px;height:25px" />

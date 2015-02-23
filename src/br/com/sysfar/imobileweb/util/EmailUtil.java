@@ -25,9 +25,10 @@ public class EmailUtil {
 	public EmailUtil() {
 
 		this.porta = "587";
-		this.email = "sistemaimobileweb@gmail.com";
+		this.email = "contato@sistemaimobileweb.com.br";
 		this.senha = "na5@MAyaT3ra";
-		this.smtp = "smtp.gmail.com";
+		//this.smtp = "mail.sistemaimobileweb.com";
+		this.smtp = "localhost";
 
 	}
 
@@ -41,8 +42,8 @@ public class EmailUtil {
 			props.put("mail.smtp.host", smtp);
 			props.put("mail.smtp.port", porta);
 			props.put("mail.smtp.auth", "true");
-			props.put("mail.smtp.ssl.enable", "false");
-			props.put("mail.smtp.starttls.required", "true");
+			//props.put("mail.smtp.ssl.enable", "false");
+			//props.put("mail.smtp.starttls.required", "true");
 
 			Authenticator auth = new Authenticator() {
 
@@ -72,6 +73,7 @@ public class EmailUtil {
 
 		} catch (Exception e) {
 
+			e.printStackTrace();
 			throw new TSApplicationException("ERRO.ENVIO.EMAIL", e);
 
 		}

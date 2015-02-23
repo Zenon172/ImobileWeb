@@ -8,10 +8,45 @@
 
 	<ui:define name="cadastro">
 
-		<p:fieldset id="fsCadastro" style="width: 98%">
+		<p:fieldset legend="Contatos" style="width: 98%">
+
+			<h:panelGrid style="width: 100%; margin-bottom: 10px">
+
+				<p:outputLabel for="itContato" value="Anunciante" />
+				<p:inputText id="itContato" value="#{mbeanModel.contato}" maxlength="100" styleClass="coluna40" />
+
+			</h:panelGrid>
+
+			<p:dataGrid columns="2" var="contato" value="#{mbeanModel.contatos}" rowIndexVar="index">
+
+				<p:column>
+					<h:panelGrid columns="2" columnClasses="coluna30, coluna70">
+						<h:outputText value="Telefone #{index + 1}" />
+						<h:outputText value="E-mail #{index + 1}" />
+
+						<p:inputText id="itTelefone" value="#{contato.telefone}" maxlength="15" styleClass="coluna90 telefone">
+							<p:ajax global="false" event="change" listener="#{mbean.validarTelefoneDuplicidade(contato.telefone)}" process="@this" />
+						</p:inputText>
+						<p:inputText id="itEmail" value="#{contato.email}" maxlength="100" styleClass="coluna90">
+							<p:ajax global="false" event="change" listener="#{mbean.validarEmailDuplicidade(contato.email)}" process="@this" />
+						</p:inputText>
+					</h:panelGrid>
+				</p:column>
+
+			</p:dataGrid>
+
+			<p:outputPanel autoUpdate="true">
+				<script type="text/javascript">
+					$(".telefone").mask("(00) 0000-00009");
+				</script>
+			</p:outputPanel>
+
+		</p:fieldset>
+
+		<p:fieldset legend="Dados do Imóvel" id="fsCadastro" style="width: 98%">
 
 			<h:panelGrid columns="7" columnClasses="coluna25, coluna11, coluna15, coluna15, coluna15, coluna10, coluna15" style="width: 100%">
-				
+
 				<p:outputLabel for="omResponsavel" value="Captador" />
 				<p:outputLabel for="calDataAnuncio" value="Data do Anúncio" />
 				<p:outputLabel for="omTipoImovel" value="Tipo" />
@@ -19,7 +54,7 @@
 				<p:outputLabel for="omBairro" value="Bairro" />
 				<p:outputLabel for="omStatusCaptacao" value="Status" />
 				<p:outputLabel for="itValor" value="Valor" />
-				
+
 				<h:selectOneMenu id="omResponsavel" value="#{mbeanModel.responsavelModel.id}" required="true" style="width: 95%">
 					<f:selectItem itemLabel="Selecione" itemValue="" />
 					<f:selectItems value="#{mbean.comboResponsavel}" />
@@ -56,125 +91,204 @@
 
 			</h:panelGrid>
 
-			<p:fieldset legend="Contatos">
-
-				<h:panelGrid style="width: 100%; margin-bottom: 10px">
-
-					<p:outputLabel for="itContato" value="Anunciante" />
-					<p:inputText id="itContato" value="#{mbeanModel.contato}" maxlength="100" styleClass="coluna40" />
-
-				</h:panelGrid>
-
-				<p:dataGrid columns="2" var="contato" value="#{mbeanModel.contatos}" rowIndexVar="index">
-
-					<p:column>
-						<h:panelGrid columns="2" columnClasses="coluna30, coluna70">
-							<h:outputText value="Telefone #{index + 1}" />
-							<h:outputText value="E-mail #{index + 1}" />
-
-							<p:inputMask id="itTelefone" mask="(99) 9999-9999" value="#{contato.telefone}" maxlength="15" styleClass="coluna90" />
-							<p:inputText id="itEmail" value="#{contato.email}" maxlength="100" styleClass="coluna90" />
-						</h:panelGrid>
-					</p:column>
-
-				</p:dataGrid>
-
-			</p:fieldset>
-
 			<h:panelGrid style="width: 100%">
 
 				<p:outputLabel for="itaObservacao" value="Observação" />
-				<p:inputTextarea id="itaObservacao" value="#{mbeanModel.observacao}" rows="5" autoResize="false" styleClass="coluna98" />
+				<p:inputTextarea id="itaObservacao" value="#{mbeanModel.observacao}" rows="5" autoResize="false" styleClass="coluna99" />
 
 			</h:panelGrid>
 
 		</p:fieldset>
 
+		<p:fieldset legend="Atividades" style="width: 98%" rendered="#{!empty mbeanModel.id}">
+
+			<h:panelGrid id="pgListaAtividade" style="width: 100%">
+
+				<p:commandButton type="button" value="Adicionar" icon="ui-icon-plus" onclick="dlgAtividade.show()" />
+
+				<p:dataTable value="#{mbeanModel.atividades}" var="linha" emptyMessage="Nenhuma atividade registrada">
+
+					<p:column headerText="Responsável" styleClass="coluna20">
+						<h:outputText value="#{linha.responsavelModel.nome}" />
+					</p:column>
+
+					<p:column headerText="Observação" styleClass="coluna40">
+						<h:outputText value="#{linha.observacao}" />
+					</p:column>
+
+					<p:column headerText="Data inicial" styleClass="coluna015">
+						<h:outputText value="#{linha.dataInicial}">
+							<ui:include src="/resources/templates/include_gmt_format.xhtml" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Data final" styleClass="coluna015">
+						<h:outputText value="#{linha.dataFinal}">
+							<ui:include src="/resources/templates/include_gmt_format.xhtml" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Status" styleClass="coluna010">
+						<h:outputText value="#{linha.statusAtividadeModel.descricao}" />
+					</p:column>
+
+				</p:dataTable>
+
+			</h:panelGrid>
+
+		</p:fieldset>
+
+		<p:dialog dynamic="true" modal="true" resizable="false" closeOnEscape="true" widgetVar="dlgAtividade" header="Atividades" styleClass="dialog70" rendered="#{!empty mbeanModel.id}">
+
+			<h:panelGroup id="pgAtividades">
+
+				<p:scrollPanel id="spAtividades" mode="native" styleClass="scrollPanelDialog">
+
+					<h:panelGrid columns="4" columnClasses="coluna30, coluna20, coluna10, coluna40" style="width: 100%">
+						
+						<h:outputText value="Responsável" />
+						<h:outputText value="Status" />
+						<h:outputText value="Data Inicial" />
+						<h:outputText value="Data Final" />
+						
+						<h:selectOneMenu value="#{mbean.atividadeModel.responsavelModel.id}" styleClass="coluna95">
+							<f:selectItem itemLabel="Não selecionado" itemValue="" />
+							<f:selectItems value="#{mbean.comboResponsavel}" />
+						</h:selectOneMenu>
+						<h:selectOneMenu value="#{mbean.atividadeModel.statusAtividadeModel.id}" styleClass="coluna95">
+							<f:selectItem itemLabel="Não selecionado" itemValue="" />
+							<f:selectItems value="#{mbean.comboStatusAtividade}" />
+						</h:selectOneMenu>
+						<ts:calendar value="#{mbean.atividadeModel.dataInicial}" pattern="dd/MM/yyyy HH:mm" />
+						<ts:calendar value="#{mbean.atividadeModel.dataFinal}" pattern="dd/MM/yyyy HH:mm" />
+						
+					</h:panelGrid>
+					
+					<h:panelGrid style="width: 100%">
+					
+						<h:outputText value="Observação" />
+						<p:inputTextarea id="ita2Observacao" value="#{mbean.atividadeModel.observacao}" rows="4" autoResize="false" styleClass="coluna98" />
+						
+						<h:outputText value="Retorno" />
+						<p:inputTextarea id="ita2ObservacaoRetorno" value="#{mbean.atividadeModel.retorno}" disabled="true" rows="4" autoResize="false" styleClass="coluna98" />
+						
+					</h:panelGrid>
+
+					<script type="text/javascript">
+						$(document).ready(function() {
+							$("div[id*=spAtividades]").height($(window).height() * 0.7 - 120);
+							$("textarea[id*=ita2Observacao]").height($(window).height() * 0.7 - 360);
+						});
+					</script>
+
+				</p:scrollPanel>
+
+				<p:panel style="margin: 5px;">
+					<p:commandButton value="Gravar" icon="salvar" action="#{mbean.addAtividade}" process="@this, pgAtividades" update="pgAtividades, pgListaAtividade" oncomplete="handleRequest(dlgAtividade, args)" />
+					<p:commandButton type="button" value="Fechar" icon="ui-icon-close" onclick="dlgAtividade.hide();" />
+				</p:panel>
+
+			</h:panelGroup>
+
+		</p:dialog>
+
 	</ui:define>
 
 	<ui:define name="comandosCrudFim">
-		
-		<p:commandButton id="btnInserir2" value="Gravar" icon="salvar" oncomplete="PF('cdCadastrarCRUD2').show()" rendered="#{!mbean.alterar and menuFaces.menuModel.flagInserir}"  style="margin-left: 5px;">
+
+		<p:commandButton id="btnInserir2" value="Gravar" icon="salvar" oncomplete="PF('cdCadastrarCRUD2').show()" rendered="#{!mbean.alterar and menuFaces.menuModel.flagInserir}" style="margin-left: 5px;">
 			<f:setPropertyActionListener target="#{captacaoFaces.flagValidarCaptacaoDuplicada}" value="#{true}" />
 		</p:commandButton>
-		
+
+		<p:commandButton type="button" value="Gerar Imóvel" title="Criar um imóvel no sistema através dessa captação" icon="ui-icon-refresh" onclick="PF('cdCadastrarGerarImovel').show()" rendered="#{!empty mbeanModel.id and !empty mbeanModel.imovelGeradoModel.id and menuFaces.menuModel.flagAlterar}" style="margin-left: 5px;" />
+
 		<p:confirmDialog message="Confirmar a INCLUSÃO do registro?" header="Aviso" severity="alert" widgetVar="cdCadastrarCRUD2" rendered="#{menuFaces.menuModel.flagInserir}">
 			<p:commandButton process="@form" value="Sim" onclick="PF('cdCadastrarCRUD2').hide()" action="#{mbean.insertEvent}" oncomplete="abrirDialog(dlgCaptacoesExistentes, args)" update="fsCadastro panelGroupCaptacoesSimilares" />
 			<p:commandButton type="button" value="Não" onclick="PF('cdCadastrarCRUD2').hide()" />
 		</p:confirmDialog>
-		
+
+		<p:confirmDialog message="Confirmar a GERAÇÃO do imóvel a partir dessa captação?" header="Aviso" severity="alert" widgetVar="cdCadastrarGerarImovel" rendered="#{!empty mbeanModel.id}">
+			<p:commandButton ajax="false" value="Sim" onclick="PF('cdCadastrarGerarImovel').hide()" action="#{mbean.gerarImovel}" />
+			<p:commandButton type="button" value="Não" onclick="PF('cdCadastrarGerarImovel').hide()" />
+		</p:confirmDialog>
+
 		<p:dialog dynamic="true" modal="true" resizable="false" closeOnEscape="true" widgetVar="dlgCaptacoesExistentes" header="Captações Similares" styleClass="dialog70">
 
-		<h:panelGroup id="panelGroupCaptacoesSimilares">
+			<h:panelGroup id="panelGroupCaptacoesSimilares">
 
-			<p:scrollPanel id="spPanelGroupCaptacoesSimilares" mode="native" style="background: none; padding: 5px; margin: 5px; overflow: auto;">
+				<p:scrollPanel id="spPanelGroupCaptacoesSimilares" mode="native" style="background: none; padding: 5px; margin: 5px; overflow: auto;">
 
-				<h:panelGrid style="width: 100%">
-					
-					<p:dataTable value="#{mbean.captacoesExistentes}" var="linha" emptyMessage="Nenhuma captação similar encontrada">
-						
-						<p:column headerText="Tipo" styleClass="coluna10">
-							<h:outputText value="#{linha.tipoImovelModel.descricao}" />
-						</p:column>
-						
-						<p:column headerText="Captador" styleClass="coluna20">
-							<h:outputText value="#{linha.responsavelModel.nome}" />
-						</p:column>
-						
-						<p:column headerText="Descrição" styleClass="coluna45">
-							<h:outputText value="#{linha.descricao}" />
-						</p:column>
-						
-						<p:column headerText="Bairro" styleClass="coluna15">
-							<h:outputText value="#{linha.bairroModel.descricao}" />
-						</p:column>
-						
-						<p:column headerText="Valor" styleClass="coluna05">
-							<h:outputText value="#{linha.valor}" />
-						</p:column>
-						
-						<p:column headerText="Status" styleClass="coluna05">
-							<h:outputText value="#{linha.statusCaptacaoModel.descricao}" />
-						</p:column>
-					
-					</p:dataTable>
+					<h:panelGrid style="width: 100%">
 
-				</h:panelGrid>
+						<p:dataTable value="#{mbean.captacoesExistentes}" var="linha" emptyMessage="Nenhuma captação similar encontrada">
 
-				<script type="text/javascript">
-					$(document).ready(function() {
-						$("div[id*=spPanelGroupCaptacoesSimilares]").height($(window).height() * 0.7 - 120);
-					});
-				</script>
+							<p:column headerText="Tipo" styleClass="coluna10">
+								<h:outputText value="#{linha.tipoImovelModel.descricao}" />
+							</p:column>
 
-			</p:scrollPanel>
+							<p:column headerText="Captador" styleClass="coluna20">
+								<h:outputText value="#{linha.responsavelModel.nome}" />
+							</p:column>
 
-			<p:panel style="margin: 5px;">
-				<p:commandButton id="btnInserir3" value="Gravar" icon="salvar" oncomplete="dlgCaptacoesExistentes.hide(); PF('cdCadastrarCRUD2').show()" rendered="#{!mbean.alterar and menuFaces.menuModel.flagInserir}" style="margin-left: 5px;" >
-					<f:setPropertyActionListener target="#{captacaoFaces.flagValidarCaptacaoDuplicada}" value="#{false}" />
-				</p:commandButton>
-				<p:commandButton type="button" value="Fechar" icon="ui-icon-close" onclick="dlgCaptacoesExistentes.hide();" />
-			</p:panel>
+							<p:column headerText="Descrição" styleClass="coluna45">
+								<h:outputText value="#{linha.descricao}" />
+							</p:column>
 
-		</h:panelGroup>
+							<p:column headerText="Bairro" styleClass="coluna15">
+								<h:outputText value="#{linha.bairroModel.descricao}" />
+							</p:column>
 
-	</p:dialog>
-				
+							<p:column headerText="Valor" styleClass="coluna05">
+								<h:outputText value="#{linha.valor}" />
+							</p:column>
+
+							<p:column headerText="Status" styleClass="coluna05">
+								<h:outputText value="#{linha.statusCaptacaoModel.descricao}" />
+							</p:column>
+
+						</p:dataTable>
+
+					</h:panelGrid>
+
+					<script type="text/javascript">
+						$(document)
+								.ready(
+										function() {
+											$(
+													"div[id*=spPanelGroupCaptacoesSimilares]")
+													.height(
+															$(window).height() * 0.7 - 120);
+										});
+					</script>
+
+				</p:scrollPanel>
+
+				<p:panel style="margin: 5px;">
+					<p:commandButton id="btnInserir3" value="Gravar captação" title="Salva a captação" icon="salvar" oncomplete="dlgCaptacoesExistentes.hide(); PF('cdCadastrarCRUD2').show()" rendered="#{!mbean.alterar and menuFaces.menuModel.flagInserir}" style="margin-left: 5px;">
+						<f:setPropertyActionListener target="#{captacaoFaces.flagValidarCaptacaoDuplicada}" value="#{false}" />
+					</p:commandButton>
+					<p:commandButton type="button" value="Fechar" icon="ui-icon-close" onclick="dlgCaptacoesExistentes.hide();" />
+				</p:panel>
+
+			</h:panelGroup>
+
+		</p:dialog>
+
 	</ui:define>
-	
+
 	<ui:define name="pesquisaCampos">
 
 		<h:panelGrid style="width: 20%">
-			
+
 			<h:outputText value="Período" />
 			<h:panelGrid columns="3" columnClasses="coluna47, coluna6, coluna47" style="width: 95%; margin-left: -2px">
 				<ts:calendar id="dataInicial" value="#{mbeanPesquisaModel.dataInicial}" />
 				<h:outputText value="a" />
 				<ts:calendar id="dataFinal" value="#{mbeanPesquisaModel.dataFinal}" />
 			</h:panelGrid>
-		
+
 		</h:panelGrid>
-		
+
 		<h:panelGrid columns="5" columnClasses="coluna25, coluna20, coluna20, coluna20, coluna15" style="width: 80%">
 
 			<p:outputLabel for="omResponsavelPesquisa" value="Captador" />
@@ -182,7 +296,7 @@
 			<p:outputLabel for="omOrigemPesquisa" value="Origem" />
 			<p:outputLabel for="omBairroPesquisa" value="Bairro" />
 			<p:outputLabel for="omStatusCaptacaoPesquisa" value="Status" />
-			
+
 			<h:selectOneMenu id="omResponsavelPesquisa" value="#{mbeanPesquisaModel.responsavelModel.id}" style="width: 90%">
 				<f:selectItem itemLabel="Selecione" itemValue="" />
 				<f:selectItems value="#{mbean.comboResponsavel}" />
@@ -205,12 +319,12 @@
 			</h:selectOneMenu>
 
 		</h:panelGrid>
-		
+
 		<h:panelGrid style="width: 100%">
-		
+
 			<p:outputLabel for="itDescricaoPesquisa" value="Termo a pesquisar" />
 			<p:inputText id="itDescricaoPesquisa" value="#{mbeanPesquisaModel.descricao}" styleClass="coluna30" />
-		
+
 		</h:panelGrid>
 
 	</ui:define>

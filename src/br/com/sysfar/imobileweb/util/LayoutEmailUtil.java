@@ -13,10 +13,10 @@ public class LayoutEmailUtil {
 		texto.append("Olá ").append(model.getResponsavelModel().getNome()).append(",<br/><br/>");
 		texto.append("Você possui uma nova captação em ").append(model.getBairroModel().getDescricao()).append(".");
 		
-		texto.append("<br/><br/><b>Detalhes da captação:</b>");
+		texto.append("<br/><br/><b>Detalhes da captação:</b><br/>");
 		
 		if(!TSUtil.isEmpty(model.getDataAnuncio())){
-			texto.append("<br/><br/>Data do anúncio: ").append(TSParseUtil.dateToString(model.getDataAnuncio()));
+			texto.append("<br/>Data do anúncio: ").append(TSParseUtil.dateToString(model.getDataAnuncio()));
 		}
 		
 		if(!TSUtil.isEmpty(model.getTipoImovelModel().getId())){

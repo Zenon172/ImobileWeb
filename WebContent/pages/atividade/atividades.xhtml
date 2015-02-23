@@ -1,0 +1,95 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xmlns:ts="http://java.sun.com/jsf/composite/components">
+
+	<h:form id="formAtividades" prependId="false">
+
+		<h:panelGrid style="width: 100%">
+
+			<p:panel>
+
+				<h:panelGrid columns="3" columnClasses="coluna30, coluna20, coluna50" style="width: 100%">
+
+					<h:outputText value="Responsável" />
+					<h:outputText value="Status" />
+					<h:outputText value="" />
+
+					<h:selectOneMenu value="#{atividadeFaces.crudPesquisaModel.responsavelModel.id}" styleClass="coluna95">
+						<f:selectItem itemLabel="Não selecionado" itemValue="" />
+						<f:selectItems value="#{atividadeFaces.comboResponsavel}" />
+					</h:selectOneMenu>
+					<h:selectOneMenu value="#{atividadeFaces.crudPesquisaModel.statusAtividadeModel.id}" styleClass="coluna95">
+						<f:selectItem itemLabel="Não selecionado" itemValue="" />
+						<f:selectItems value="#{atividadeFaces.comboStatusAtividade}" />
+					</h:selectOneMenu>
+					<p:commandButton value="Pesquisar" icon="ui-icon-search" action="#{atividadeFaces.pesquisar}" oncomplete="PF('myschedule').update()" />
+
+				</h:panelGrid>
+
+			</p:panel>
+
+			<p:panel>
+				<p:schedule id="schedule" timeFormat="HH:mm{ - HH:mm}" value="#{atividadeFaces.lazyEventModel}" editable="true" widgetVar="myschedule" allDaySlot="false" draggable="false" resizable="false" locale="pt_BR" timeZone="America/Recife" axisFormat="HH:00" style="margin-top: 10px">
+					<p:ajax event="eventSelect" listener="#{atividadeFaces.onEventSelect}" oncomplete="dlgAtividade.show();" update="pgAtividades" />
+					<p:ajax event="dateSelect" listener="#{atividadeFaces.onDateSelect}" oncomplete="dlgAtividade.show();" update="pgAtividades" />
+				</p:schedule>
+			</p:panel>
+
+		</h:panelGrid>
+
+		<p:dialog dynamic="true" modal="true" resizable="false" closeOnEscape="true" widgetVar="dlgAtividade" header="Atividades" styleClass="dialog70" onHide="myschedule.update();">
+
+			<h:panelGroup id="pgAtividades">
+
+				<p:scrollPanel id="spAtividades" mode="native" styleClass="scrollPanelDialog">
+
+					<h:panelGrid columns="4" columnClasses="coluna30, coluna20, coluna10, coluna40" style="width: 100%">
+
+						<h:outputText value="Responsável" />
+						<h:outputText value="Status" />
+						<h:outputText value="Data Inicial" />
+						<h:outputText value="Data Final" />
+
+						<h:selectOneMenu value="#{atividadeFaces.crudModel.responsavelModel.id}" styleClass="coluna95">
+							<f:selectItem itemLabel="Não selecionado" itemValue="" />
+							<f:selectItems value="#{atividadeFaces.comboResponsavel}" />
+						</h:selectOneMenu>
+						<h:selectOneMenu value="#{atividadeFaces.crudModel.statusAtividadeModel.id}" styleClass="coluna95">
+							<f:selectItem itemLabel="Não selecionado" itemValue="" />
+							<f:selectItems value="#{atividadeFaces.comboStatusAtividade}" />
+						</h:selectOneMenu>
+						<ts:calendar value="#{atividadeFaces.crudModel.dataInicial}" pattern="dd/MM/yyyy HH:mm" />
+						<ts:calendar value="#{atividadeFaces.crudModel.dataFinal}" pattern="dd/MM/yyyy HH:mm" />
+
+					</h:panelGrid>
+
+					<h:panelGrid style="width: 100%">
+
+						<h:outputText value="Observação" />
+						<p:inputTextarea id="ita2Observacao" value="#{atividadeFaces.crudModel.observacao}" rows="4" autoResize="false" styleClass="coluna98" />
+
+						<h:outputText value="Retorno" />
+						<p:inputTextarea id="ita2ObservacaoRetorno" value="#{atividadeFaces.crudModel.retorno}" disabled="#{atividadeFaces.crudModel.usuarioCadastroModel.id != usuarioLogado.id || empty atividadeFaces.crudModel.id}" rows="4" autoResize="false" styleClass="coluna98" />
+
+					</h:panelGrid>
+
+					<script type="text/javascript">
+						$(document).ready(function() {
+							$("div[id*=spAtividades]").height($(window).height() * 0.7 - 120);
+							$("textarea[id*=ita2Observacao]").height($(window).height() * 0.7 - 360);
+						});
+					</script>
+
+				</p:scrollPanel>
+
+				<p:panel style="margin: 5px;">
+					<p:commandButton value="Gravar" icon="salvar" action="#{atividadeFaces.insertEvent}" process="@this, pgAtividades" update="pgAtividades" oncomplete="handleRequest(dlgAtividade, args)" rendered="#{empty atividadeFaces.crudModel.id}" />
+					<p:commandButton value="Gravar" icon="salvar" action="#{atividadeFaces.updateEvent}" process="@this, pgAtividades" update="pgAtividades" oncomplete="handleRequest(dlgAtividade, args)" rendered="#{!empty atividadeFaces.crudModel.id}" />
+					<p:commandButton type="button" value="Fechar" icon="ui-icon-close" onclick="dlgAtividade.hide();" />
+				</p:panel>
+
+			</h:panelGroup>
+
+		</p:dialog>
+
+	</h:form>
+
+</ui:composition>
