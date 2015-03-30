@@ -7,11 +7,13 @@ import br.com.sysfar.imobileweb.model.CondominioModel;
 import br.com.sysfar.imobileweb.model.ConstrutoraModel;
 import br.com.sysfar.imobileweb.model.EdificioModel;
 import br.com.sysfar.imobileweb.model.GrupoModel;
+import br.com.sysfar.imobileweb.model.OperadoraModel;
 import br.com.sysfar.imobileweb.model.OrigemModel;
 import br.com.sysfar.imobileweb.model.PosicaoSolModel;
 import br.com.sysfar.imobileweb.model.ProprietarioModel;
 import br.com.sysfar.imobileweb.model.StatusAtividadeModel;
 import br.com.sysfar.imobileweb.model.StatusCaptacaoModel;
+import br.com.sysfar.imobileweb.model.StatusClienteModel;
 import br.com.sysfar.imobileweb.model.TipoFachadaModel;
 import br.com.sysfar.imobileweb.model.TipoImovelModel;
 import br.com.sysfar.imobileweb.model.TipoPisoModel;
@@ -169,6 +171,26 @@ public final class ComboDAO {
 		broker.setSQL("SELECT ID, NOME, LOGIN, SENHA, GRUPO_ID, (SELECT DESCRICAO FROM GRUPO G WHERE G.ID = GRUPO_ID) FROM USUARIO U ORDER BY U.NOME");
 		
 		return broker.getCollectionBean(UsuarioModel.class, "id", "nome", "login", "senha", "grupoModel.id", "grupoModel.descricao");
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<OperadoraModel> pesquisarOperadoras() {
+
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+
+		broker.setSQL("SELECT ID, DESCRICAO, FLAG_ATIVO FROM OPERADORA WHERE FLAG_ATIVO ORDER BY DESCRICAO");
+
+		return broker.getCollectionBean(OperadoraModel.class, "id", "descricao", "flagAtivo");
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<StatusClienteModel> pesquisarStatusCliente() {
+
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+
+		broker.setSQL("SELECT ID, DESCRICAO FROM STATUS_CLIENTE WHERE FLAG_ATIVO ORDER BY DESCRICAO");
+
+		return broker.getCollectionBean(StatusClienteModel.class, "id", "descricao");
 	}
 
 }

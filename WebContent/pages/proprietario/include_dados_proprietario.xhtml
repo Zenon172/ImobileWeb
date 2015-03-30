@@ -1,0 +1,69 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xmlns:ts="http://java.sun.com/jsf/composite/components" xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<p:fieldset legend="Dados do proprietário" style="width: 98%">
+
+		<h:panelGrid style="width: 100%; margin-bottom: 10px">
+
+			<p:outputLabel for="itNome" value="Nome" />
+			<p:inputText id="itNome" value="#{mbeanProprietarioModel.nome}" required="true" maxlength="100" styleClass="coluna45" />
+
+		</h:panelGrid>
+
+		<p:dataGrid columns="2" var="contato" value="#{mbeanProprietarioModel.contatos}" rowIndexVar="index">
+
+			<p:column>
+				<h:panelGrid columns="3" columnClasses="coluna20, coluna20, coluna60">
+					<h:outputText value="Telefone #{index + 1}" />
+					<h:outputText value="Operadora #{index + 1}" />
+					<h:outputText value="E-mail #{index + 1}" />
+
+					<p:inputText id="itTelefone" value="#{contato.telefone}" maxlength="15" styleClass="coluna90 telefone" />
+					<h:selectOneMenu value="#{contato.operadoraModel.id}" styleClass="coluna95">
+						<f:selectItem itemLabel="selecione" itemValue="" />
+						<f:selectItems value="#{mbean.comboOperadoras}" />
+					</h:selectOneMenu>
+					<p:inputText id="itEmail" value="#{contato.email}" maxlength="100" styleClass="coluna90" />
+				</h:panelGrid>
+			</p:column>
+
+		</p:dataGrid>
+
+	</p:fieldset>
+
+	<p:fieldset legend="Dados do responsável pela venda" style="width: 98%">
+
+		<h:panelGrid style="width: 100%; margin-bottom: 10px">
+
+			<h:outputText value="Nome" />
+			<p:inputText value="#{mbeanProprietarioModel.responsavelVenda}" maxlength="100" styleClass="coluna45" />
+
+		</h:panelGrid>
+
+		<p:dataGrid columns="2" var="contato" value="#{mbeanProprietarioModel.contatosResponsavelVenda}" rowIndexVar="index">
+
+			<p:column>
+				<h:panelGrid columns="3" columnClasses="coluna20, coluna20, coluna60">
+					<h:outputText value="Telefone #{index + 1}" />
+					<h:outputText value="Operadora #{index + 1}" />
+					<h:outputText value="E-mail #{index + 1}" />
+
+					<p:inputText id="itTelefone" value="#{contato.telefone}" maxlength="15" styleClass="coluna90 telefone" />
+					<h:selectOneMenu value="#{contato.operadoraModel.id}" styleClass="coluna95">
+						<f:selectItem itemLabel="selecione" itemValue="" />
+						<f:selectItems value="#{mbean.comboOperadoras}" />
+					</h:selectOneMenu>
+					<p:inputText id="itEmail" value="#{contato.email}" maxlength="100" styleClass="coluna90" />
+				</h:panelGrid>
+			</p:column>
+
+		</p:dataGrid>
+
+	</p:fieldset>
+
+	<p:fieldset legend="Observação" style="width: 98%">
+
+		<p:inputTextarea value="#{mbeanProprietarioModel.observacao}" rows="5" styleClass="coluna98" />
+
+	</p:fieldset>
+
+</ui:composition>

@@ -23,7 +23,10 @@ import br.com.sysfar.imobileweb.model.ImovelModel;
 import br.com.sysfar.imobileweb.model.StatusAtividadeModel;
 import br.com.sysfar.imobileweb.model.UsuarioModel;
 import br.com.sysfar.imobileweb.util.Constantes;
+import br.com.sysfar.imobileweb.util.EmailUtil;
+import br.com.sysfar.imobileweb.util.LayoutEmailUtil;
 import br.com.sysfar.imobileweb.util.Utilitario;
+import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSUtil;
 
 @ViewScoped
@@ -155,6 +158,26 @@ public class AtividadeFaces extends CrudFaces<AtividadeModel> {
 	protected void preUpdate() {
 		this.crudModel.setDataAtualizacao(new Date());
 		this.crudModel.setUsuarioAtualizacaoModel(Utilitario.getUsuarioLogado());
+	}
+	
+	@Override
+	protected void posInsert() {
+
+		AtividadeModel atividadeModel = this.atividadeDAO.obter(this.crudModel);
+		try {
+
+			if (!TSUtil.isEmpty(atividadeModel.getResponsavelModel().getEmail())) {
+
+				new EmailUtil().enviar(atividadeModel.getResponsavelModel().getEmail(), "Nova atividade cadastrada (Código:  " + atividadeModel.getId() + ")", new LayoutEmailUtil().getLayoutEmailNovaAtividade(atividadeModel));
+
+			}
+
+		} catch (TSApplicationException e) {
+
+			super.throwException(e);
+
+		}
+		
 	}
 	
 	public void onEventSelect(SelectEvent selectEvent) {

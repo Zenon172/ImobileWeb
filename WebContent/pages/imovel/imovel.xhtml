@@ -188,7 +188,7 @@
 					<h:outputText value="Qtd. Elevadores" />
 
 					<p:inputText value="#{mbeanModel.nomeAdministrador}" maxlength="100" styleClass="coluna95" />
-					<p:inputMask mask="(99) 9999-9999" value="#{mbeanModel.telefoneAdministrador}" maxlength="15" styleClass="coluna90" />
+					<p:inputText value="#{mbeanModel.telefoneAdministrador}" maxlength="15" styleClass="coluna90 telefone" />
 					<pe:inputNumber value="#{mbeanModel.valorCondominio}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 85%; text-align:right" />
 					<p:inputText value="#{mbeanModel.qtdVagasEstacionamento}" maxlength="2" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna85" />
 					<p:selectBooleanCheckbox value="#{mbeanModel.flagElevador}" />
@@ -218,7 +218,7 @@
 
 			</p:fieldset>
 
-			<p:fieldset legend="Informações Gerenciais" style="margin-top: 5px;">
+			<p:fieldset id="fsInformacoesGerenciais" legend="Informações Gerenciais" style="margin-top: 5px;">
 
 				<h:panelGrid columns="4" columnClasses="coluna10, coluna20, coluna10, coluna60" style="width: 100%">
 
@@ -233,71 +233,197 @@
 						<f:selectItems value="#{mbean.comboCaptador}" />
 					</h:selectOneMenu>
 					<pe:inputNumber value="#{mbeanModel.comissao}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 90%; text-align:right" />
-					<h:selectOneMenu value="#{mbeanModel.proprietarioModel.id}" styleClass="coluna95">
-						<f:selectItem itemValue="" itemLabel="Não Selecionado" />
-						<f:selectItems value="#{mbean.comboProprietario}" />
-					</h:selectOneMenu>
+					<h:panelGroup>
+						<h:selectOneMenu value="#{mbeanModel.proprietarioModel.id}" styleClass="coluna90">
+							<f:selectItem itemValue="" itemLabel="Não Selecionado" />
+							<f:selectItems value="#{mbean.comboProprietario}" />
+						</h:selectOneMenu>
+						<p:commandButton icon="ui-icon-clipboard" action="#{mbean.carregarProprietario}" process="@this" update=":tabview:formProprietario:pgDadosProprietario" oncomplete="dlgDadosProprietario.show()" style="margin-left: 5px"/>
+					</h:panelGroup>
 
 				</h:panelGrid>
 
 				<h:panelGrid style="width: 100%">
-	
+
 					<h:outputText value="Motivo da Venda" />
 					<p:inputTextarea value="#{mbeanModel.motivoVenda}" rows="3" autoResize="false" styleClass="coluna99" />
-	
+
 					<h:outputText value="Outros imóveis a venda" />
 					<p:inputTextarea value="#{mbeanModel.outrosImoveisVenda}" rows="3" autoResize="false" styleClass="coluna99" />
-	
+
 					<h:outputText value="Observações" />
 					<p:inputTextarea value="#{mbeanModel.observacoes}" rows="3" autoResize="false" styleClass="coluna99" />
-	
+
 				</h:panelGrid>
 
 			</p:fieldset>
 
 		</p:fieldset>
+		
+		<p:outputPanel autoUpdate="true">
+			<script type="text/javascript">
+				$(".telefone").mask("(00) 0000-00009");
+			</script>
+		</p:outputPanel>
 
 	</ui:define>
 
+	<ui:define name="cadastroSemForm">
+		
+		<p:dialog dynamic="true" modal="true" resizable="false" closeOnEscape="true" widgetVar="dlgDadosProprietario" header="Proprietário" styleClass="dialog80">
+			
+			<h:form id="formProprietario" prependId="false">
+			
+				<h:panelGroup id="pgDadosProprietario">
+		
+					<p:scrollPanel id="spDadosProprietario" mode="native" styleClass="scrollPanelDialog">
+		
+						<h:panelGrid style="width: 100%">
+							
+							<ui:include src="/pages/proprietario/include_dados_proprietario.xhtml">
+								<ui:param name="mbeanProprietarioModel" value="#{mbeanModel.proprietarioModel}" />
+							</ui:include>
+							
+						</h:panelGrid>
+		
+						<script type="text/javascript">
+							$(document).ready(function() {
+								$("div[id*=spDadosProprietario]").height($(window).height() * 0.8 - 120);
+							});
+						</script>
+		
+					</p:scrollPanel>
+		
+					<p:panel style="margin: 5px;">
+						<p:commandButton value="Gravar" icon="salvar" action="#{mbean.salvarProprietario}" process="@this, pgDadosProprietario" update="pgDadosProprietario, :tabview:frmTabCadastro:fsInformacoesGerenciais" oncomplete="handleRequest(dlgDadosProprietario, args)" />
+						<p:commandButton type="button" value="Fechar" icon="ui-icon-close" onclick="dlgDadosProprietario.hide();" />
+					</p:panel>
+		
+				</h:panelGroup>
+				
+				<p:outputPanel autoUpdate="true">
+					<script type="text/javascript">
+						$(".telefone").mask("(00) 0000-00009");
+					</script>
+				</p:outputPanel>
+				
+			</h:form>
+	
+		</p:dialog>
+		
+	</ui:define>
+	
 	<ui:define name="pesquisaCampos">
 
+		<p:fieldset>
 
+			<h:panelGrid columns="4" columnClasses="coluna10, coluna20, coluna30, coluna40" style="width: 80%">
+
+				<h:outputText value="Código" />
+				<h:outputText value="Tipo" />
+				<h:outputText value="Captador" />
+				<h:outputText value="Proprietário" />
+
+				<p:inputText value="#{mbeanPesquisaModel.codigo}" styleClass="coluna90" />
+				<h:selectOneMenu value="#{mbeanPesquisaModel.tipoImovelModel.id}" styleClass="coluna95">
+					<f:selectItem itemValue="" itemLabel="Não Selecionado" />
+					<f:selectItems value="#{mbean.comboTipoImovel}" />
+				</h:selectOneMenu>
+				<h:selectOneMenu value="#{mbeanPesquisaModel.captadorModel.id}" styleClass="coluna95">
+					<f:selectItem itemValue="" itemLabel="Não Selecionado" />
+					<f:selectItems value="#{mbean.comboCaptador}" />
+				</h:selectOneMenu>
+				<h:selectOneMenu value="#{mbeanPesquisaModel.proprietarioModel.id}" styleClass="coluna95">
+					<f:selectItem itemValue="" itemLabel="Não Selecionado" />
+					<f:selectItems value="#{mbean.comboProprietario}" />
+				</h:selectOneMenu>
+
+			</h:panelGrid>
+
+		</p:fieldset>
+
+		<h:panelGrid columns="3" style="width: 70%">
+
+			<p:fieldset legend="Valor">
+				<h:panelGrid columns="3" columnClasses="coluna49, coluna2, coluna49" styleClass="coluna98">
+					<pe:inputNumber value="#{mbeanPesquisaModel.valorMin}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 90%; text-align:right" />
+					<h:outputText value="a" />
+					<pe:inputNumber value="#{mbeanPesquisaModel.valorMax}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 90%; text-align:right" />
+				</h:panelGrid>
+			</p:fieldset>
+
+			<p:fieldset legend="Valor do Condomínio">
+				<h:panelGrid columns="3" columnClasses="coluna49, coluna2, coluna49" styleClass="coluna98">
+					<pe:inputNumber value="#{mbeanPesquisaModel.valorCondominioMin}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 90%; text-align:right" />
+					<h:outputText value="a" />
+					<pe:inputNumber value="#{mbeanPesquisaModel.valorCondominioMax}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 90%; text-align:right" />
+				</h:panelGrid>
+			</p:fieldset>
+
+			<p:fieldset legend="Quartos">
+				<h:panelGrid columns="3" columnClasses="coluna49, coluna2, coluna49" styleClass="coluna98">
+					<p:inputText value="#{mbeanPesquisaModel.quartosMin}" maxlength="2" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna90" />
+					<h:outputText value="a" />
+					<p:inputText value="#{mbeanPesquisaModel.quartosMax}" maxlength="2" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna90" />
+				</h:panelGrid>
+			</p:fieldset>
+
+		</h:panelGrid>
+
+		<h:panelGrid style="width: 100%">
+
+			<p:fieldset legend="Bairros">
+				<p:selectManyCheckbox value="#{mbeanPesquisaModel.bairrosPesquisa}" layout="grid" columns="12">
+					<f:selectItems value="#{mbean.bairros}" var="bairro" itemLabel="#{bairro.descricao}" itemValue="#{bairro.descricao}" />
+				</p:selectManyCheckbox>
+			</p:fieldset>
+
+		</h:panelGrid>
 
 	</ui:define>
 
 	<ui:define name="colunasTabela">
-		
-		<p:column headerText="Captador" styleClass="coluna20">
+
+		<p:column headerText="Código" styleClass="coluna05">
 			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
-				<h:outputText value="#{linha.captadorModel.nome}" />
+				<h:outputText value="#{linha.codigo}" />
 				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
 			</p:commandLink>
 		</p:column>
-		
+
 		<p:column headerText="Tipo" styleClass="coluna10">
 			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
 				<h:outputText value="#{linha.tipoImovelModel.descricao}" />
 				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
 			</p:commandLink>
 		</p:column>
-		
-		<p:column headerText="Bairro" styleClass="coluna20">
+
+		<p:column headerText="Captador" styleClass="coluna20">
+			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
+				<h:outputText value="#{linha.captadorModel.nome}" />
+				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+			</p:commandLink>
+		</p:column>
+
+		<p:column headerText="Bairro" styleClass="coluna15">
 			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
 				<h:outputText value="#{linha.bairroModel.descricao}" />
 				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
 			</p:commandLink>
 		</p:column>
-		
+
 		<p:column headerText="Edifício" styleClass="coluna20">
 			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
 				<h:outputText value="#{linha.edificioModel.descricao}" />
 				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
 			</p:commandLink>
 		</p:column>
-		
+
 		<p:column headerText="Valor" styleClass="coluna05">
 			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
-				<h:outputText value="#{linha.valor}" />
+				<h:outputText value="#{linha.valor}">
+					<f:convertNumber type="number" pattern="#,###,##0.##" locale="pt_BR" />
+				</h:outputText>
 				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
 			</p:commandLink>
 		</p:column>

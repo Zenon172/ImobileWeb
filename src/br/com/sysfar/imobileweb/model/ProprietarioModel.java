@@ -1,5 +1,7 @@
 package br.com.sysfar.imobileweb.model;
 
+import java.util.List;
+
 @SuppressWarnings("serial")
 public class ProprietarioModel extends BaseModel {
 
@@ -11,6 +13,8 @@ public class ProprietarioModel extends BaseModel {
 	
 	private String email;
 	
+	private String observacao;
+	
 	private String responsavelVenda;
 	
 	private String telefoneResponsavelVenda;
@@ -18,6 +22,11 @@ public class ProprietarioModel extends BaseModel {
 	private String celularResponsavelVenda;
 	
 	private String emailResponsavelVenda;
+	
+	private List<ImovelModel> imoveis;
+	
+	private List<ProprietarioContatoModel> contatos;
+	private List<ProprietarioContatoModel> contatosResponsavelVenda;
 
 	public String getNome() {
 		return nome;
@@ -81,5 +90,37 @@ public class ProprietarioModel extends BaseModel {
 
 	public void setEmailResponsavelVenda(String emailResponsavelVenda) {
 		this.emailResponsavelVenda = emailResponsavelVenda;
+	}
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
+
+	public List<ImovelModel> getImoveis() {
+		return imoveis;
+	}
+
+	public void setImoveis(List<ImovelModel> imoveis) {
+		this.imoveis = imoveis;
+	}
+
+	public List<ProprietarioContatoModel> getContatos() {
+		return contatos;
+	}
+
+	public void setContatos(List<ProprietarioContatoModel> contatos) {
+		this.contatos = contatos;
+	}
+
+	public List<ProprietarioContatoModel> getContatosResponsavelVenda() {
+		return contatosResponsavelVenda;
+	}
+
+	public void setContatosResponsavelVenda(List<ProprietarioContatoModel> contatosResponsavelVenda) {
+		this.contatosResponsavelVenda = contatosResponsavelVenda;
 	}
 }

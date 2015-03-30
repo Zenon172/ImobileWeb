@@ -1,12 +1,16 @@
 package br.com.sysfar.imobileweb.dao;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.sysfar.imobileweb.model.ImovelModel;
+import br.com.sysfar.imobileweb.model.ProprietarioModel;
+import br.com.sysfar.imobileweb.util.Utilitario;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
 import br.com.topsys.exception.TSApplicationException;
+import br.com.topsys.util.TSUtil;
 
 public final class ImovelDAO implements CrudDAO<ImovelModel> {
 
@@ -21,13 +25,48 @@ public final class ImovelDAO implements CrudDAO<ImovelModel> {
 	}
 
 	@SuppressWarnings("unchecked")
+	public List<ImovelModel> pesquisar(final ProprietarioModel model) {
+
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+
+		broker.setSQL("SELECT I.ID, I.CODIGO, I.TIPO_IMOVEL_ID, (SELECT TI.DESCRICAO FROM TIPO_IMOVEL TI WHERE TI.ID = I.TIPO_IMOVEL_ID), I.CAPTADOR_ID, (SELECT C.NOME FROM USUARIO C WHERE C.ID = I.CAPTADOR_ID), I.BAIRRO_ID, (SELECT B.DESCRICAO FROM BAIRRO B WHERE B.ID = I.BAIRRO_ID), I.EDIFICIO_ID, (SELECT E.DESCRICAO FROM EDIFICIO E WHERE E.ID = I.EDIFICIO_ID), I.VALOR, I.ENDERECO, I.COMPLEMENTO, I.ANDAR, I.UNIDADE, I.PONTO_REFERENCIA, I.CEP, I.OBSERVACOES, I.POSICAO_SOL_ID, (SELECT PS.DESCRICAO FROM POSICAO_SOL PS WHERE PS.ID = I.POSICAO_SOL_ID) FROM IMOVEL I WHERE I.PROPRIETARIO_ID = ? ", model.getId());
+
+		return broker.getCollectionBean(ImovelModel.class, "id", "codigo", "tipoImovelModel.id", "tipoImovelModel.descricao", "captadorModel.id", "captadorModel.nome", "bairroModel.id", "bairroModel.descricao", "edificioModel.id", "edificioModel.descricao", "valor", "endereco", "complemento", "andar", "unidade", "pontoReferencia", "cep", "observacoes", "posicaoSolModel.id", "posicaoSolModel.descricao");
+
+	}
+
+	@SuppressWarnings("unchecked")
 	public List<ImovelModel> pesquisar(final ImovelModel model) {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		broker.setSQL("SELECT ID FROM IMOVEL ORDER BY ID");
+		StringBuilder query = new StringBuilder("SELECT I.ID, I.CODIGO, I.TIPO_IMOVEL_ID, (SELECT TI.DESCRICAO FROM TIPO_IMOVEL TI WHERE TI.ID = I.TIPO_IMOVEL_ID), I.CAPTADOR_ID, (SELECT C.NOME FROM USUARIO C WHERE C.ID = I.CAPTADOR_ID), I.BAIRRO_ID, (SELECT B.DESCRICAO FROM BAIRRO B WHERE B.ID = I.BAIRRO_ID), I.EDIFICIO_ID, (SELECT E.DESCRICAO FROM EDIFICIO E WHERE E.ID = I.EDIFICIO_ID), I.VALOR FROM IMOVEL I, BAIRRO B WHERE I.BAIRRO_ID = B.ID AND COALESCE(I.CODIGO, '') ILIKE COALESCE(?, COALESCE(I.CODIGO, '')) AND COALESCE(I.TIPO_IMOVEL_ID, 0) = COALESCE(?, COALESCE(I.TIPO_IMOVEL_ID, 0)) AND COALESCE(I.CAPTADOR_ID, 0) = COALESCE(?, COALESCE(I.CAPTADOR_ID, 0)) AND COALESCE(I.VALOR, 0) BETWEEN COALESCE(?, COALESCE(I.VALOR, 0)) AND COALESCE(?, COALESCE(I.VALOR, 0)) AND COALESCE(I.VALOR_CONDOMINIO, 0) BETWEEN COALESCE(?, COALESCE(I.VALOR_CONDOMINIO, 0)) AND COALESCE(?, COALESCE(I.VALOR_CONDOMINIO, 0)) AND COALESCE(I.QUARTOS, 0) BETWEEN COALESCE(?, COALESCE(I.QUARTOS, 0)) AND COALESCE(?, COALESCE(I.QUARTOS, 0)) AND COALESCE(I.PROPRIETARIO_ID, 0) = COALESCE(?, COALESCE(I.PROPRIETARIO_ID, 0)) ");
 
-		return broker.getCollectionBean(ImovelModel.class, "id");
+		if (!TSUtil.isEmpty(model.getBairrosPesquisa())) {
+			query.append(" AND B.DESCRICAO IN (");
+		}
+
+		List<String> bairrosArray = new ArrayList<String>();
+
+		for (String bairro : model.getBairrosPesquisa()) {
+			query.append("?,");
+			bairrosArray.add(bairro);
+		}
+
+		if (!TSUtil.isEmpty(model.getBairrosPesquisa())) {
+			query.deleteCharAt(query.length() - 1);
+			query.append(")");
+		}
+
+		query.append(" ORDER BY I.ID ");
+
+		broker.setSQL(query.toString(), Utilitario.getStringIlike(model.getCodigo(), true), model.getTipoImovelModel().getId(), model.getCaptadorModel().getId(), model.getValorMin(), model.getValorMax(), model.getValorCondominioMin(), model.getValorCondominioMax(), model.getQuartosMin(), model.getQuartosMax(), model.getProprietarioModel().getId());
+
+		if (!TSUtil.isEmpty(model.getBairrosPesquisa())) {
+			broker.set(bairrosArray.toArray());
+		}
+
+		return broker.getCollectionBean(ImovelModel.class, "id", "codigo", "tipoImovelModel.id", "tipoImovelModel.descricao", "captadorModel.id", "captadorModel.nome", "bairroModel.id", "bairroModel.descricao", "edificioModel.id", "edificioModel.descricao", "valor");
 	}
 
 	public ImovelModel inserir(final ImovelModel model) throws TSApplicationException {
@@ -63,6 +102,25 @@ public final class ImovelDAO implements CrudDAO<ImovelModel> {
 		broker.execute();
 
 		return model;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<ImovelModel> pesquisar(String dadosProprietario) {
+
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+
+		broker.setSQL("SELECT I.ID, I.CODIGO, I.TIPO_IMOVEL_ID, (SELECT TI.DESCRICAO FROM TIPO_IMOVEL TI WHERE TI.ID = I.TIPO_IMOVEL_ID), I.CAPTADOR_ID, (SELECT C.NOME FROM USUARIO C WHERE C.ID = I.CAPTADOR_ID), I.BAIRRO_ID, (SELECT B.DESCRICAO FROM BAIRRO B WHERE B.ID = I.BAIRRO_ID), I.EDIFICIO_ID, (SELECT E.DESCRICAO FROM EDIFICIO E WHERE E.ID = I.EDIFICIO_ID), I.VALOR FROM IMOVEL I, PROPRIETARIO P WHERE P.ID = I.PROPRIETARIO_ID AND SEM_ACENTOS(BUSCA_PROPRIETARIO(P.ID)) ILIKE SEM_ACENTOS(COALESCE(?, SEM_ACENTOS(BUSCA_PROPRIETARIO(P.ID)))) ", Utilitario.getStringIlike(dadosProprietario, true));
+
+		return broker.getCollectionBean(ImovelModel.class, "id", "codigo", "tipoImovelModel.id", "tipoImovelModel.descricao", "captadorModel.id", "captadorModel.nome", "bairroModel.id", "bairroModel.descricao", "edificioModel.id", "edificioModel.descricao", "valor");
+	}
+
+	public Boolean isExisteImovel(String campo) {
+
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+
+		broker.setSQL("SELECT EXISTS(SELECT 1 FROM IMOVEL I, PROPRIETARIO P WHERE P.ID = I.PROPRIETARIO_ID AND SEM_ACENTOS(BUSCA_PROPRIETARIO(P.ID)) ILIKE SEM_ACENTOS(COALESCE(?, SEM_ACENTOS(BUSCA_PROPRIETARIO(P.ID))))) ", Utilitario.getStringIlike(campo, true));
+
+		return (Boolean) broker.getObject();
 	}
 
 }

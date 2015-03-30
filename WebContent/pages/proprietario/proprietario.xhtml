@@ -1,0 +1,112 @@
+<ui:composition template="/resources/templates/templateCRUD.xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xmlns:ts="http://java.sun.com/jsf/composite/components" xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<ui:param name="mbean" value="${proprietarioFaces}" />
+	<ui:param name="mbeanModel" value="${proprietarioFaces.crudModel}" />
+	<ui:param name="mbeanPesquisaModel" value="${proprietarioFaces.crudPesquisaModel}" />
+	<ui:param name="possuiDadosCadastro" value="false" />
+
+	<ui:define name="cadastro">
+
+		<ui:include src="/pages/proprietario/include_dados_proprietario.xhtml">
+			<ui:param name="mbeanProprietarioModel" value="${proprietarioFaces.crudModel}" />
+		</ui:include>
+
+		<p:fieldset legend="Meus Imóveis" toggleable="true" style="width: 98%" rendered="#{!empty mbeanModel.id}">
+
+			<ui:repeat var="linha" value="#{mbeanModel.imoveis}" varStatus="varStatus">
+				
+				<p:fieldset legend="Imovel #{varStatus.index+1}">
+				
+					<h:panelGrid columns="3">
+						
+						<h:outputText value="Tipo" />
+						<h:outputText value="Posição do Sol" />
+						<h:outputText value="Valor" />
+					
+						<p:inputText value="#{linha.tipoImovelModel.descricao}" disabled="true" styleClass="coluna90" />
+						<p:inputText value="#{linha.posicaoSolModel.descricao}" disabled="true" styleClass="coluna90" />
+						<p:inputText value="#{linha.valor}" disabled="true" styleClass="coluna90">
+							<f:convertNumber type="currency" locale="pt_BR" currencySymbol="R$" />
+						</p:inputText>
+						
+					</h:panelGrid>
+					
+					<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width: 100%">
+
+						<h:outputText value="Endereço" />
+						<h:outputText value="Complemento" />
+	
+						<p:inputText value="#{linha.endereco}" disabled="true" styleClass="coluna95" />
+						<p:inputText value="#{linha.complemento}" disabled="true" styleClass="coluna95" />
+	
+					</h:panelGrid>
+	
+					<h:panelGrid columns="6" columnClasses="coluna20, coluna20, coluna10, coluna10, coluna30, coluna10" style="width: 100%">
+	
+						<h:outputText value="Bairro" />
+						<h:outputText value="Edifício" />
+						<h:outputText value="Andar" />
+						<h:outputText value="Unidade" />
+						<h:outputText value="Ponto de Referência" />
+						<h:outputText value="Cep" />
+	
+						<p:inputText value="#{linha.bairroModel.descricao}" disabled="true" styleClass="coluna95" />
+						<p:inputText value="#{linha.edificioModel.descricao}" disabled="true" styleClass="coluna95" />
+						<p:inputText value="#{linha.andar}" disabled="true" styleClass="coluna85" />
+						<p:inputText value="#{linha.unidade}" disabled="true" styleClass="coluna85" />
+						<p:inputText value="#{linha.pontoReferencia}" disabled="true" styleClass="coluna95" />
+						<p:inputText value="#{linha.cep}" disabled="true" styleClass="coluna95" />
+	
+					</h:panelGrid>
+					
+					<h:panelGrid style="width: 100%">
+						
+						<h:outputText value="Observações" />
+						<p:inputTextarea value="#{linha.observacoes}" rows="5" styleClass="coluna98" disabled="true" />
+						
+					</h:panelGrid>
+				
+				</p:fieldset>
+			
+			</ui:repeat>
+
+		</p:fieldset>
+
+		<p:outputPanel autoUpdate="true">
+			<script type="text/javascript">
+				$(".telefone").mask("(00) 0000-00009");
+			</script>
+		</p:outputPanel>
+
+	</ui:define>
+
+	<ui:define name="pesquisaCampos">
+
+		<h:panelGrid style="width: 100%">
+
+			<h:outputText value="Dados do proprietário" />
+			<p:inputText value="#{mbeanPesquisaModel.observacao}" styleClass="coluna40" />
+
+		</h:panelGrid>
+
+	</ui:define>
+
+	<ui:define name="colunasTabela">
+
+		<p:column headerText="Nome" styleClass="coluna40">
+			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
+				<h:outputText value="#{linha.nome}" />
+				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+			</p:commandLink>
+		</p:column>
+
+		<p:column headerText="Observação" styleClass="coluna50">
+			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
+				<h:outputText value="#{linha.observacao}" />
+				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+			</p:commandLink>
+		</p:column>
+
+	</ui:define>
+
+</ui:composition>

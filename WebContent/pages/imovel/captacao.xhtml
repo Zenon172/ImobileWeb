@@ -8,7 +8,7 @@
 
 	<ui:define name="cadastro">
 
-		<p:fieldset legend="Contatos" style="width: 98%">
+		<p:fieldset id="fsContatos" legend="Contatos" style="width: 98%">
 
 			<h:panelGrid style="width: 100%; margin-bottom: 10px">
 
@@ -20,13 +20,18 @@
 			<p:dataGrid columns="2" var="contato" value="#{mbeanModel.contatos}" rowIndexVar="index">
 
 				<p:column>
-					<h:panelGrid columns="2" columnClasses="coluna30, coluna70">
+					<h:panelGrid columns="3" columnClasses="coluna20, coluna20, coluna60">
 						<h:outputText value="Telefone #{index + 1}" />
+						<h:outputText value="Operadora #{index + 1}" />
 						<h:outputText value="E-mail #{index + 1}" />
 
 						<p:inputText id="itTelefone" value="#{contato.telefone}" maxlength="15" styleClass="coluna90 telefone">
 							<p:ajax global="false" event="change" listener="#{mbean.validarTelefoneDuplicidade(contato.telefone)}" process="@this" />
 						</p:inputText>
+						<h:selectOneMenu value="#{contato.operadoraModel.id}" styleClass="coluna95">
+							<f:selectItem itemLabel="selecione" itemValue="" />
+							<f:selectItems value="#{mbean.comboOperadoras}" />
+						</h:selectOneMenu>
 						<p:inputText id="itEmail" value="#{contato.email}" maxlength="100" styleClass="coluna90">
 							<p:ajax global="false" event="change" listener="#{mbean.validarEmailDuplicidade(contato.email)}" process="@this" />
 						</p:inputText>
@@ -145,12 +150,12 @@
 				<p:scrollPanel id="spAtividades" mode="native" styleClass="scrollPanelDialog">
 
 					<h:panelGrid columns="4" columnClasses="coluna30, coluna20, coluna10, coluna40" style="width: 100%">
-						
+
 						<h:outputText value="Responsável" />
 						<h:outputText value="Status" />
 						<h:outputText value="Data Inicial" />
 						<h:outputText value="Data Final" />
-						
+
 						<h:selectOneMenu value="#{mbean.atividadeModel.responsavelModel.id}" styleClass="coluna95">
 							<f:selectItem itemLabel="Não selecionado" itemValue="" />
 							<f:selectItems value="#{mbean.comboResponsavel}" />
@@ -161,24 +166,27 @@
 						</h:selectOneMenu>
 						<ts:calendar value="#{mbean.atividadeModel.dataInicial}" pattern="dd/MM/yyyy HH:mm" />
 						<ts:calendar value="#{mbean.atividadeModel.dataFinal}" pattern="dd/MM/yyyy HH:mm" />
-						
+
 					</h:panelGrid>
-					
+
 					<h:panelGrid style="width: 100%">
-					
+
 						<h:outputText value="Observação" />
 						<p:inputTextarea id="ita2Observacao" value="#{mbean.atividadeModel.observacao}" rows="4" autoResize="false" styleClass="coluna98" />
-						
+
 						<h:outputText value="Retorno" />
 						<p:inputTextarea id="ita2ObservacaoRetorno" value="#{mbean.atividadeModel.retorno}" disabled="true" rows="4" autoResize="false" styleClass="coluna98" />
-						
+
 					</h:panelGrid>
 
 					<script type="text/javascript">
-						$(document).ready(function() {
-							$("div[id*=spAtividades]").height($(window).height() * 0.7 - 120);
-							$("textarea[id*=ita2Observacao]").height($(window).height() * 0.7 - 360);
-						});
+						$(document).ready(
+								function() {
+									$("div[id*=spAtividades]").height(
+											$(window).height() * 0.7 - 120);
+									$("textarea[id*=ita2Observacao]").height(
+											$(window).height() * 0.7 - 360);
+								});
 					</script>
 
 				</p:scrollPanel>
@@ -200,10 +208,10 @@
 			<f:setPropertyActionListener target="#{captacaoFaces.flagValidarCaptacaoDuplicada}" value="#{true}" />
 		</p:commandButton>
 
-		<p:commandButton type="button" value="Gerar Imóvel" title="Criar um imóvel no sistema através dessa captação" icon="ui-icon-refresh" onclick="PF('cdCadastrarGerarImovel').show()" rendered="#{!empty mbeanModel.id and !empty mbeanModel.imovelGeradoModel.id and menuFaces.menuModel.flagAlterar}" style="margin-left: 5px;" />
+		<p:commandButton type="button" value="Gerar Imóvel" title="Criar um imóvel no sistema através dessa captação" icon="ui-icon-refresh" onclick="PF('cdCadastrarGerarImovel').show()" rendered="#{!empty mbeanModel.id and empty mbeanModel.imovelGeradoModel.id and menuFaces.menuModel.flagAlterar}" style="margin-left: 5px;" />
 
 		<p:confirmDialog message="Confirmar a INCLUSÃO do registro?" header="Aviso" severity="alert" widgetVar="cdCadastrarCRUD2" rendered="#{menuFaces.menuModel.flagInserir}">
-			<p:commandButton process="@form" value="Sim" onclick="PF('cdCadastrarCRUD2').hide()" action="#{mbean.insertEvent}" oncomplete="abrirDialog(dlgCaptacoesExistentes, args)" update="fsCadastro panelGroupCaptacoesSimilares" />
+			<p:commandButton process="@form" value="Sim" onclick="PF('cdCadastrarCRUD2').hide()" action="#{mbean.insertEvent}" oncomplete="abrirDialog(dlgCaptacoesExistentes, args)" update="fsContatos fsCadastro panelGroupCaptacoesSimilares" />
 			<p:commandButton type="button" value="Não" onclick="PF('cdCadastrarCRUD2').hide()" />
 		</p:confirmDialog>
 
@@ -220,33 +228,71 @@
 
 					<h:panelGrid style="width: 100%">
 
-						<p:dataTable value="#{mbean.captacoesExistentes}" var="linha" emptyMessage="Nenhuma captação similar encontrada">
+						<p:fieldset legend="Captações similares" rendered="#{!empty mbean.captacoesExistentes}">
 
-							<p:column headerText="Tipo" styleClass="coluna10">
-								<h:outputText value="#{linha.tipoImovelModel.descricao}" />
-							</p:column>
+							<p:dataTable value="#{mbean.captacoesExistentes}" var="linha" emptyMessage="Nenhuma captação similar encontrada">
 
-							<p:column headerText="Captador" styleClass="coluna20">
-								<h:outputText value="#{linha.responsavelModel.nome}" />
-							</p:column>
+								<p:column headerText="Tipo" styleClass="coluna10">
+									<h:outputText value="#{linha.tipoImovelModel.descricao}" />
+								</p:column>
 
-							<p:column headerText="Descrição" styleClass="coluna45">
-								<h:outputText value="#{linha.descricao}" />
-							</p:column>
+								<p:column headerText="Captador" styleClass="coluna20">
+									<h:outputText value="#{linha.responsavelModel.nome}" />
+								</p:column>
 
-							<p:column headerText="Bairro" styleClass="coluna15">
-								<h:outputText value="#{linha.bairroModel.descricao}" />
-							</p:column>
+								<p:column headerText="Descrição" styleClass="coluna45">
+									<h:outputText value="#{linha.descricao}" />
+								</p:column>
 
-							<p:column headerText="Valor" styleClass="coluna05">
-								<h:outputText value="#{linha.valor}" />
-							</p:column>
+								<p:column headerText="Bairro" styleClass="coluna15">
+									<h:outputText value="#{linha.bairroModel.descricao}" />
+								</p:column>
 
-							<p:column headerText="Status" styleClass="coluna05">
-								<h:outputText value="#{linha.statusCaptacaoModel.descricao}" />
-							</p:column>
+								<p:column headerText="Valor" styleClass="coluna05">
+									<h:outputText value="#{linha.valor}" />
+								</p:column>
 
-						</p:dataTable>
+								<p:column headerText="Status" styleClass="coluna05">
+									<h:outputText value="#{linha.statusCaptacaoModel.descricao}" />
+								</p:column>
+
+							</p:dataTable>
+
+						</p:fieldset>
+
+						<p:fieldset legend="Imóveis similares" rendered="#{!empty mbean.imoveisExistentes}">
+
+							<p:dataTable value="#{mbean.imoveisExistentes}" var="linha" emptyMessage="Nenhum imóvel encontrado">
+
+								<p:column headerText="Código" styleClass="coluna05">
+									<h:outputText value="#{linha.codigo}" />
+								</p:column>
+
+								<p:column headerText="Tipo" styleClass="coluna10">
+									<h:outputText value="#{linha.tipoImovelModel.descricao}" />
+								</p:column>
+
+								<p:column headerText="Captador" styleClass="coluna20">
+									<h:outputText value="#{linha.captadorModel.nome}" />
+								</p:column>
+
+								<p:column headerText="Bairro" styleClass="coluna15">
+									<h:outputText value="#{linha.bairroModel.descricao}" />
+								</p:column>
+
+								<p:column headerText="Edifício" styleClass="coluna20">
+									<h:outputText value="#{linha.edificioModel.descricao}" />
+								</p:column>
+
+								<p:column headerText="Valor" styleClass="coluna05">
+									<h:outputText value="#{linha.valor}">
+										<f:convertNumber type="number" pattern="#,###,##0.##" locale="pt_BR" />
+									</h:outputText>
+								</p:column>
+
+							</p:dataTable>
+
+						</p:fieldset>
 
 					</h:panelGrid>
 
@@ -277,6 +323,13 @@
 	</ui:define>
 
 	<ui:define name="pesquisaCampos">
+
+		<h:panelGrid style="width: 20%">
+
+			<h:outputText value="Código" />
+			<p:inputText value="#{mbeanPesquisaModel.id}" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" size="10" />
+
+		</h:panelGrid>
 
 		<h:panelGrid style="width: 20%">
 
@@ -331,49 +384,58 @@
 
 	<ui:define name="colunasTabela">
 
-		<p:column headerText="Tipo" styleClass="coluna45">
+		<p:column headerText="Código" styleClass="coluna05">
 			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
-				<h:outputText value="#{linha.tipoImovelModel.descricao}" />
+				<h:outputText value="#{linha.id}" />
 				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
 			</p:commandLink>
 		</p:column>
 
-		<p:column headerText="Captador" styleClass="coluna15">
+		<p:column headerText="Captador" styleClass="coluna20" sortBy="#{linha.responsavelModel.nome}">
 			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
 				<h:outputText value="#{linha.responsavelModel.nome}" />
 				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
 			</p:commandLink>
 		</p:column>
 
-		<p:column headerText="Descrição" styleClass="coluna30">
+		<p:column headerText="Tipo" styleClass="coluna10">
+			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
+				<h:outputText value="#{linha.tipoImovelModel.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+			</p:commandLink>
+		</p:column>
+
+		<p:column headerText="Descrição" styleClass="coluna15" rendered="false">
 			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
 				<h:outputText value="#{linha.descricao}" />
 				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
 			</p:commandLink>
 		</p:column>
 
-		<p:column headerText="Bairro" styleClass="coluna30">
+		<p:column headerText="Bairro" styleClass="coluna15">
 			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
 				<h:outputText value="#{linha.bairroModel.descricao}" />
 				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
 			</p:commandLink>
 		</p:column>
 
-		<p:column headerText="Origem" styleClass="coluna30">
+		<p:column headerText="Origem" styleClass="coluna10">
 			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
 				<h:outputText value="#{linha.origemModel.descricao}" />
 				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
 			</p:commandLink>
 		</p:column>
 
-		<p:column headerText="Valor" styleClass="coluna30">
+		<p:column headerText="Valor" styleClass="coluna10" sortBy="#{linha.valor}">
 			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
-				<h:outputText value="#{linha.valor}" />
+				<h:outputText value="#{linha.valor}">
+					<f:convertNumber type="currency" locale="pt_BR" currencySymbol="R$" />
+				</h:outputText>
 				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
 			</p:commandLink>
 		</p:column>
 
-		<p:column headerText="Status" styleClass="coluna30">
+		<p:column headerText="Status" styleClass="coluna10" sortBy="#{linha.statusCaptacaoModel.descricao}">
 			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
 				<h:outputText value="#{linha.statusCaptacaoModel.descricao}" />
 				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />

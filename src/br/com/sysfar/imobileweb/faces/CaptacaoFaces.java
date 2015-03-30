@@ -15,12 +15,15 @@ import br.com.sysfar.imobileweb.dao.AtividadeDAO;
 import br.com.sysfar.imobileweb.dao.CaptacaoDAO;
 import br.com.sysfar.imobileweb.dao.ComboDAO;
 import br.com.sysfar.imobileweb.dao.CrudDAO;
+import br.com.sysfar.imobileweb.dao.ImovelDAO;
+import br.com.sysfar.imobileweb.dao.UsuarioDAO;
 import br.com.sysfar.imobileweb.model.AtividadeModel;
 import br.com.sysfar.imobileweb.model.BairroModel;
 import br.com.sysfar.imobileweb.model.CaptacaoContatoModel;
 import br.com.sysfar.imobileweb.model.CaptacaoModel;
 import br.com.sysfar.imobileweb.model.ImovelModel;
 import br.com.sysfar.imobileweb.model.MenuModel;
+import br.com.sysfar.imobileweb.model.OperadoraModel;
 import br.com.sysfar.imobileweb.model.OrigemModel;
 import br.com.sysfar.imobileweb.model.StatusAtividadeModel;
 import br.com.sysfar.imobileweb.model.StatusCaptacaoModel;
@@ -42,6 +45,7 @@ public class CaptacaoFaces extends CrudFaces<CaptacaoModel> {
 	private CaptacaoDAO captacaoDAO;
 	private ComboDAO comboDAO;
 	private AtividadeDAO atividadeDAO;
+	private ImovelDAO imovelDAO;
 
 	private List<SelectItem> comboTipoImovel;
 	private List<SelectItem> comboBairro;
@@ -49,10 +53,12 @@ public class CaptacaoFaces extends CrudFaces<CaptacaoModel> {
 	private List<SelectItem> comboStatusCaptacao;
 	private List<SelectItem> comboResponsavel;
 	private List<SelectItem> comboStatusAtividade;
+	private List<SelectItem> comboOperadoras;
 
 	private AtividadeModel atividadeModel;
 
 	private List<CaptacaoModel> captacoesExistentes;
+	private List<ImovelModel> imoveisExistentes;
 
 	private boolean flagValidarCaptacaoDuplicada;
 
@@ -81,6 +87,7 @@ public class CaptacaoFaces extends CrudFaces<CaptacaoModel> {
 		this.captacaoDAO = new CaptacaoDAO();
 		this.comboDAO = new ComboDAO();
 		this.atividadeDAO = new AtividadeDAO();
+		this.imovelDAO = new ImovelDAO();
 
 		this.comboTipoImovel = super.initCombo(this.comboDAO.pesquisarTipoImovel(), "id", "descricao");
 		this.comboBairro = super.initCombo(this.comboDAO.pesquisarBairro(), "id", "descricao");
@@ -88,6 +95,7 @@ public class CaptacaoFaces extends CrudFaces<CaptacaoModel> {
 		this.comboStatusCaptacao = super.initCombo(this.comboDAO.pesquisarStatusCaptacao(), "id", "descricao");
 		this.comboResponsavel = super.initCombo(this.comboDAO.pesquisarUsuarios(), "id", "nome");
 		this.comboStatusAtividade = super.initCombo(this.comboDAO.pesquisarStatusAtividade(), "id", "descricao");
+		this.comboOperadoras = super.initCombo(this.comboDAO.pesquisarOperadoras(), "id", "descricao");
 
 		this.atividadeModel = this.getInstanceAtividade();
 	}
@@ -118,6 +126,7 @@ public class CaptacaoFaces extends CrudFaces<CaptacaoModel> {
 	private CaptacaoContatoModel getCaptacaoContatoInstance() {
 		CaptacaoContatoModel model = new CaptacaoContatoModel();
 		model.setCaptacaoModel(this.crudModel);
+		model.setOperadoraModel(new OperadoraModel());
 		return model;
 	}
 
@@ -154,17 +163,25 @@ public class CaptacaoFaces extends CrudFaces<CaptacaoModel> {
 
 		boolean valida = true;
 
-		if (TSUtil.isEmpty(this.crudModel.getId()) && this.flagValidarCaptacaoDuplicada && !this.validarCaptacaoDuplicada()) {
+		if (TSUtil.isEmpty(this.crudModel.getId()) && this.flagValidarCaptacaoDuplicada) {
 
-			super.addErrorMessage("Captações similares foram encontradas");
-			valida = false;
-			RequestContext.getCurrentInstance().addCallbackParam("validationFailed", false);
+			if(!this.validarCaptacaoDuplicada()){
+				
+				valida = false;
+				super.addErrorMessage("Captações similares foram encontradas");
+				
+			}
+			
+			if(!this.validarImovelExistente()){
 
-		} else {
+				valida = false;
+				super.addErrorMessage("Imóveis do estoque foram encontrados");
 
-			RequestContext.getCurrentInstance().addCallbackParam("validationFailed", true);
-
+			}
+			
 		}
+		
+		RequestContext.getCurrentInstance().addCallbackParam("validationFailed", valida);
 
 		return valida;
 	}
@@ -198,11 +215,42 @@ public class CaptacaoFaces extends CrudFaces<CaptacaoModel> {
 		return this.captacoesExistentes.isEmpty();
 	}
 
+	public boolean validarImovelExistente() {
+
+		this.imoveisExistentes = new ArrayList<ImovelModel>();
+
+		for (CaptacaoContatoModel contato : this.crudModel.getContatos()) {
+
+			if (!TSUtil.isEmpty(contato.getTelefone()) && contato.getTelefone().length() > 5) {
+
+				this.imoveisExistentes.addAll(this.imovelDAO.pesquisar(contato.getTelefone().substring(5)));
+
+			}
+
+			if (!TSUtil.isEmpty(contato.getEmail())) {
+
+				this.imoveisExistentes.addAll(this.imovelDAO.pesquisar(contato.getEmail()));
+
+			}
+
+		}
+
+		return this.imoveisExistentes.isEmpty();
+	}
+
 	public String validarTelefoneDuplicidade(String telefone) {
 
-		if (!TSUtil.isEmpty(telefone) && telefone.length() >= 14 && this.captacaoDAO.isExisteCaptacaoSimilar(telefone.substring(5))) {
+		if (!TSUtil.isEmpty(telefone) && telefone.length() >= 14) {
 
-			super.addErrorMessage("O telefone informado já foi encontrado em outra captação");
+			if (this.captacaoDAO.isExisteCaptacaoSimilar(telefone.substring(5))) {
+
+				super.addErrorMessage("O telefone informado já foi encontrado em outra captação");
+
+			} else if (this.imovelDAO.isExisteImovel(telefone.substring(5))) {
+
+				super.addErrorMessage("Existe um proprietário com este telefone");
+
+			}
 
 		}
 
@@ -211,9 +259,17 @@ public class CaptacaoFaces extends CrudFaces<CaptacaoModel> {
 
 	public String validarEmailDuplicidade(String email) {
 
-		if (!TSUtil.isEmpty(email) && this.captacaoDAO.isExisteCaptacaoSimilar(email)) {
+		if (!TSUtil.isEmpty(email)) {
 
-			super.addErrorMessage("O e-mail informado já foi encontrado em outra captação");
+			if (this.captacaoDAO.isExisteCaptacaoSimilar(email)) {
+
+				super.addErrorMessage("O telefone informado já foi encontrado em outra captação");
+
+			} else if (this.imovelDAO.isExisteImovel(email)) {
+
+				super.addErrorMessage("Existe um proprietário com este e-mail");
+
+			}
 
 		}
 
@@ -222,7 +278,9 @@ public class CaptacaoFaces extends CrudFaces<CaptacaoModel> {
 
 	public String gerarImovel() {
 
-		TSFacesUtil.addObjectInSession(Constantes.SESSION_CAPTACAO_ATUAL, this.captacaoDAO.obter(this.crudModel));
+		this.detail();
+		
+		TSFacesUtil.addObjectInSession(Constantes.SESSION_CAPTACAO_ATUAL, this.crudModel);
 
 		MenuModel menuModel = new MenuModel();
 
@@ -297,6 +355,24 @@ public class CaptacaoFaces extends CrudFaces<CaptacaoModel> {
 			super.addInfoMessageKey(Constantes.OPERACAO_SUCESSO);
 
 			RequestContext.getCurrentInstance().addCallbackParam("valido", true);
+
+			try {
+
+				this.atividadeModel.setResponsavelModel(new UsuarioDAO().obter(this.atividadeModel.getResponsavelModel()));
+
+				if (!TSUtil.isEmpty(this.atividadeModel.getResponsavelModel().getEmail())) {
+
+					new EmailUtil().enviar(this.atividadeModel.getResponsavelModel().getEmail(), "Nova atividade cadastrada (Código:  " + this.atividadeModel.getId() + ")", new LayoutEmailUtil().getLayoutEmailNovaAtividade(this.atividadeModel));
+
+				}
+
+			} catch (TSApplicationException e) {
+
+				super.throwException(e);
+
+			}
+
+			this.atividadeModel = this.getInstanceAtividade();
 
 		} catch (TSApplicationException e) {
 
@@ -377,6 +453,22 @@ public class CaptacaoFaces extends CrudFaces<CaptacaoModel> {
 
 	public void setComboStatusAtividade(List<SelectItem> comboStatusAtividade) {
 		this.comboStatusAtividade = comboStatusAtividade;
+	}
+
+	public List<SelectItem> getComboOperadoras() {
+		return comboOperadoras;
+	}
+
+	public void setComboOperadoras(List<SelectItem> comboOperadoras) {
+		this.comboOperadoras = comboOperadoras;
+	}
+
+	public List<ImovelModel> getImoveisExistentes() {
+		return imoveisExistentes;
+	}
+
+	public void setImoveisExistentes(List<ImovelModel> imoveisExistentes) {
+		this.imoveisExistentes = imoveisExistentes;
 	}
 
 	@Override

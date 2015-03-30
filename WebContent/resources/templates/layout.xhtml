@@ -1,0 +1,58 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:ts="http://java.sun.com/jsf/composite/components">
+
+
+	<p:outputLabel for="" value="" />
+
+	<p:commandButton id="" value="" icon="" action="" process="" update="" />
+
+	<p:inputText id="" value="" maxlength="" styleClass="" />
+
+	<p:inputTextarea id="" value="" rows="3" maxlength="" styleClass="" />
+
+	<h:selectOneMenu id="" value="" style="">
+		<f:selectItem itemLabel="Selecione" itemValue="" />
+		<f:selectItems value="" />
+	</h:selectOneMenu>
+
+	<ts:calendar id="" pattern="dd/MM/yyyy" value="" />
+
+	<p:selectBooleanCheckbox id="" value="" />
+
+	<p:autoComplete id="" value="" var="" itemLabel="" itemValue="" completeMethod="" scrollHeight="200" queryDelay="300" converter="" autocomplete="true" minQueryLength="2" styleClass="autoComplete90">
+		<p:ajax event="query" global="false" />
+	</p:autoComplete>
+
+	<h:panelGrid columns="3" columnClasses="coluna47, coluna6, coluna47" style="width: 95%">
+		<ts:calendar id="dataInicial" value="" />
+		<h:outputText value="a" />
+		<ts:calendar id="dataFinal" value="" />
+	</h:panelGrid>
+
+	<p:dialog dynamic="true" modal="true" resizable="false" closeOnEscape="true" widgetVar="dlgVisitante" header="Pesquisa de Visitantes" styleClass="dialog70">
+
+		<h:panelGroup id="pgVisitantes">
+
+			<p:scrollPanel id="spVisitantes" mode="native" styleClass="scrollPanelDialog">
+
+				<h:panelGrid style="width: 100%">
+
+
+				</h:panelGrid>
+
+				<script type="text/javascript">
+					$(document).ready(function() {
+						$("div[id*=spVisitantes]").height($(window).height() * 0.7 - 120);
+					});
+				</script>
+
+			</p:scrollPanel>
+
+			<p:panel style="margin: 5px;">
+				<p:commandButton type="button" value="Fechar" icon="ui-icon-close" onclick="dlgVisitante.hide();" />
+			</p:panel>
+
+		</h:panelGroup>
+
+	</p:dialog>
+
+</ui:composition>

@@ -1,10 +1,13 @@
 package br.com.sysfar.imobileweb.model;
 
 import java.util.Date;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class ImovelModel extends BaseModel {
 
+	private String codigo;
+	
 	private TipoImovelModel tipoImovelModel;
 
 	private Boolean flagPiscinaPrivativa;
@@ -148,6 +151,22 @@ public class ImovelModel extends BaseModel {
 	private Date dataCaptacao;
 
 	private ProprietarioModel proprietarioModel;
+	
+	private List<String> bairrosPesquisa;
+	private Double valorMin;
+	private Double valorMax;
+	private Double valorCondominioMin;
+	private Double valorCondominioMax;
+	private Integer quartosMin;
+	private Integer quartosMax;
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
 
 	public TipoImovelModel getTipoImovelModel() {
 		return tipoImovelModel;
@@ -724,4 +743,60 @@ public class ImovelModel extends BaseModel {
 	public void setEdificioModel(EdificioModel edificioModel) {
 		this.edificioModel = edificioModel;
 	}
+
+	public List<String> getBairrosPesquisa() {
+		return bairrosPesquisa;
+	}
+
+	public void setBairrosPesquisa(List<String> bairrosPesquisa) {
+		this.bairrosPesquisa = bairrosPesquisa;
+	}
+
+	public Double getValorMin() {
+		return valorMin;
+	}
+
+	public void setValorMin(Double valorMin) {
+		this.valorMin = valorMin;
+	}
+
+	public Double getValorMax() {
+		return valorMax;
+	}
+
+	public void setValorMax(Double valorMax) {
+		this.valorMax = valorMax;
+	}
+
+	public Double getValorCondominioMin() {
+		return valorCondominioMin;
+	}
+
+	public void setValorCondominioMin(Double valorCondominioMin) {
+		this.valorCondominioMin = valorCondominioMin;
+	}
+
+	public Double getValorCondominioMax() {
+		return valorCondominioMax;
+	}
+
+	public void setValorCondominioMax(Double valorCondominioMax) {
+		this.valorCondominioMax = valorCondominioMax;
+	}
+
+	public Integer getQuartosMin() {
+		return quartosMin;
+	}
+
+	public void setQuartosMin(Integer quartosMin) {
+		this.quartosMin = quartosMin;
+	}
+
+	public Integer getQuartosMax() {
+		return quartosMax;
+	}
+
+	public void setQuartosMax(Integer quartosMax) {
+		this.quartosMax = quartosMax;
+	} 
 }
