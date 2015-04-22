@@ -14,6 +14,7 @@ import br.com.sysfar.imobileweb.model.ProprietarioModel;
 import br.com.sysfar.imobileweb.model.StatusAtividadeModel;
 import br.com.sysfar.imobileweb.model.StatusCaptacaoModel;
 import br.com.sysfar.imobileweb.model.StatusClienteModel;
+import br.com.sysfar.imobileweb.model.TipoAtualizacaoImovelModel;
 import br.com.sysfar.imobileweb.model.TipoFachadaModel;
 import br.com.sysfar.imobileweb.model.TipoImovelModel;
 import br.com.sysfar.imobileweb.model.TipoPisoModel;
@@ -191,6 +192,16 @@ public final class ComboDAO {
 		broker.setSQL("SELECT ID, DESCRICAO FROM STATUS_CLIENTE WHERE FLAG_ATIVO ORDER BY DESCRICAO");
 
 		return broker.getCollectionBean(StatusClienteModel.class, "id", "descricao");
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TipoAtualizacaoImovelModel> pesquisarTipoAtualizacaoImovel() {
+		
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+		
+		broker.setSQL("SELECT ID, DESCRICAO FROM TIPO_ATUALIZACAO_IMOVEL WHERE FLAG_ATIVO ORDER BY DESCRICAO");
+		
+		return broker.getCollectionBean(TipoAtualizacaoImovelModel.class, "id", "descricao");
 	}
 
 }

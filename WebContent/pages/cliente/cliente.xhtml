@@ -9,12 +9,19 @@
 
 		<p:fieldset style="width: 98%">
 
-			<h:panelGrid columns="2" columnClasses="coluna70, coluna30" style="width: 80%; margin-bottom: 10px">
+			<h:panelGrid columns="4" columnClasses="coluna45, coluna15, coluna12, coluna28" style="width: 90%; margin-bottom: 10px">
 
 				<p:outputLabel for="itNome" value="Nome" />
+				<p:outputLabel for="somOrigem" value="Origem" />
+				<p:outputLabel for="dataInicial" value="1º Contato" />
 				<p:outputLabel for="somStatus" value="Status atual" />
 				
-				<p:inputText id="itNome" value="#{mbeanModel.nome}" required="true" maxlength="100" styleClass="coluna90" />
+				<p:inputText id="itNome" value="#{mbeanModel.nome}" required="true" maxlength="100" styleClass="coluna95" />
+				<h:selectOneMenu id="somOrigem" value="#{mbeanModel.origemModel.id}" styleClass="coluna90">
+					<f:selectItem itemValue="" itemLabel="Não selecionado" />
+					<f:selectItems value="#{mbean.comboOrigens}" />
+				</h:selectOneMenu>
+				<ts:calendar id="dataInicial" value="#{mbeanModel.dataInicial}" />
 				<h:selectOneMenu id="somStatus" value="#{mbeanModel.statusAtualModel.id}" disabled="true" styleClass="coluna90">
 					<f:selectItem itemValue="" itemLabel="Não selecionado" />
 					<f:selectItems value="#{mbean.comboStatusCliente}" />
@@ -27,11 +34,13 @@
 				<p:dataGrid columns="2" var="contato" value="#{mbeanModel.contatos}" rowIndexVar="index" styleClass="gridNoBorder">
 
 					<p:column>
-						<h:panelGrid columns="3" columnClasses="coluna20, coluna20, coluna60">
+						<h:panelGrid columns="4" columnClasses="coluna20, coluna20, coluna20, coluna40">
+							<h:outputText value="Nome #{index + 1}" />
 							<h:outputText value="Telefone #{index + 1}" />
 							<h:outputText value="Operadora #{index + 1}" />
 							<h:outputText value="E-mail #{index + 1}" />
 
+							<p:inputText id="itNome" value="#{contato.nome}" maxlength="100" styleClass="coluna90" />
 							<p:inputText id="itTelefone" value="#{contato.telefone}" maxlength="15" styleClass="coluna90 telefone" />
 							<h:selectOneMenu value="#{contato.operadoraModel.id}" styleClass="coluna95">
 								<f:selectItem itemLabel="selecione" itemValue="" />
@@ -52,19 +61,19 @@
 			<h:panelGrid style="width: 100%">
 
 				<h:outputText value="Observações" />
-				<p:inputTextarea value="#{mbeanModel.observacoes}" rows="7" styleClass="coluna98" />
+				<p:inputTextarea value="#{mbeanModel.observacoes}" rows="7" autoResize="false" styleClass="coluna98" />
 
 				<p:commandButton value="Adicionar Status" icon="ui-icon-plus" action="#{mbean.instanciarClienteStatus}" oncomplete="dlgStatus.show()" update="pgStatus" rendered="#{!empty mbeanModel.id}" />
 
 				<p:dataTable id="dtStatus" value="#{mbeanModel.status}" var="linha" emptyMessage="Nenhum status adicionado" rendered="#{!empty mbeanModel.id}">
 
-					<p:column headerText="Data" styleClass="coluna10">
+					<p:column headerText="Data" styleClass="coluna15">
 						<h:outputText value="#{linha.data}">
-							<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" />
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" />
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="Responsável" styleClass="coluna40">
+					<p:column headerText="Responsável" styleClass="coluna30">
 						<h:outputText value="#{linha.usuarioCadastroModel.nome}" />
 					</p:column>
 
@@ -76,11 +85,32 @@
 						<h:outputText value="#{linha.observacao}" />
 					</p:column>
 
+					<p:column headerText="" styleClass="coluna1">
+						<div align="center">
+							<p:commandLink title="Clique aqui para alterar o status" action="#{mbean.obterStatus(linha)}" process="@this" update=":tabview:frmTabCadastro:pgStatus" oncomplete="dlgStatus.show()">
+								<h:graphicImage value="../resources/images/doc.png" style="border: 0px" />
+							</p:commandLink>
+						</div>
+					</p:column>
+
+					<p:column headerText="" styleClass="coluna1">
+						<div align="center">
+							<p:commandLink title="Clique aqui para remover o status" styleClass="ui-icon cancelar16" process="@this" oncomplete="cdExcluirStatus.show()">
+								<f:setPropertyActionListener target="#{clienteFaces.clienteStatusSelecionadoModel}" value="#{linha}" />
+							</p:commandLink>
+						</div>
+					</p:column>
+
 				</p:dataTable>
 
 			</h:panelGrid>
 
 		</p:fieldset>
+		
+		<p:confirmDialog message="Confirma exclusão do status?" header="Aviso" severity="alert" widgetVar="cdExcluirStatus">
+			<p:commandButton value="Sim" onclick="PF('cdExcluirStatus').hide()" action="#{mbean.removeStatus}" process="@this" update="dtStatus" />
+			<p:commandButton type="button" value="Não" onclick="PF('cdExcluirStatus').hide()" />
+		</p:confirmDialog>
 
 		<p:outputPanel autoUpdate="true">
 			<script type="text/javascript">
@@ -90,13 +120,21 @@
 
 		<p:fieldset legend="Perfil" style="width: 98%">
 
-			<h:panelGrid columns="7" columnClasses="coluna25, coluna12, coluna12, coluna12, coluna12, coluna5, coluna15" style="width: 100%">
+			<h:panelGrid columns="5" columnClasses="coluna20, coluna20, coluna20, coluna20, coluna20" style="width: 100%">
 
 				<p:fieldset legend="Valor">
 					<h:panelGrid columns="3" columnClasses="coluna49, coluna2, coluna49" styleClass="coluna98">
 						<pe:inputNumber value="#{mbeanModel.clientePerfilModel.valorMin}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 90%; text-align:right" />
 						<h:outputText value="a" />
 						<pe:inputNumber value="#{mbeanModel.clientePerfilModel.valorMax}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 90%; text-align:right" />
+					</h:panelGrid>
+				</p:fieldset>
+
+				<p:fieldset legend="Condomínio">
+					<h:panelGrid columns="3" columnClasses="coluna49, coluna2, coluna49" styleClass="coluna98">
+						<pe:inputNumber value="#{mbeanModel.clientePerfilModel.valorCondominioMin}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 90%; text-align:right" />
+						<h:outputText value="a" />
+						<pe:inputNumber value="#{mbeanModel.clientePerfilModel.valorCondominioMax}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 90%; text-align:right" />
 					</h:panelGrid>
 				</p:fieldset>
 
@@ -132,10 +170,6 @@
 					</h:panelGrid>
 				</p:fieldset>
 
-				<p:fieldset legend="Infraestrutura">
-					<p:selectBooleanCheckbox value="#{mbeanModel.clientePerfilModel.flagInfraestrutura}" />
-				</p:fieldset>
-
 				<p:fieldset legend="Tipo do Imóvel">
 					<h:selectOneMenu value="#{mbeanModel.clientePerfilModel.tipoImovelModel.id}" styleClass="coluna90">
 						<f:selectItem itemLabel="Não selecionado" itemValue="" />
@@ -143,16 +177,97 @@
 					</h:selectOneMenu>
 				</p:fieldset>
 
+				<p:fieldset legend="Posição do Sol">
+					<h:selectOneMenu value="#{mbeanModel.clientePerfilModel.posicaoSolModel.id}" styleClass="coluna90">
+						<f:selectItem itemLabel="Não selecionado" itemValue="" />
+						<f:selectItems value="#{mbean.comboPosicaoSol}" />
+					</h:selectOneMenu>
+				</p:fieldset>
+
+				<p:fieldset legend="Infraestrutura">
+					<p:selectBooleanCheckbox value="#{mbeanModel.clientePerfilModel.flagInfraestrutura}" />
+				</p:fieldset>
+
 			</h:panelGrid>
 
 			<p:fieldset legend="Bairros">
 				<p:selectManyCheckbox value="#{mbean.bairrosSelecionados}" layout="grid" columns="12">
-					<f:selectItems value="#{mbean.comboBairros}" var="bairro" itemLabel="#{bairro.descricao}" itemValue="#{bairro}" />
+					<f:selectItems value="#{mbean.comboBairros}" var="bairro" itemLabel="#{bairro.descricao}" itemValue="#{bairro.descricao}" />
 				</p:selectManyCheckbox>
 			</p:fieldset>
 
 		</p:fieldset>
 
+		<p:fieldset legend="Imóveis do Perfil" toggleable="true" style="width: 98%">
+			
+			<p:dataTable value="#{mbeanModel.imoveisPerfil}" var="linha" emptyMessage="Nenhum imóvel do estoque se enquadra no perfil do cliente">
+			
+				<p:column headerText="Código" styleClass="coluna05">
+					<p:commandLink ajax="false" action="#{mbean.redirecionarImovel(linha)}">
+						<h:outputText value="#{linha.codigo}" />
+					</p:commandLink>
+				</p:column>
+		
+				<p:column headerText="Tipo" styleClass="coluna10">
+					<p:commandLink ajax="false" action="#{mbean.redirecionarImovel(linha)}">
+						<h:outputText value="#{linha.tipoImovelModel.descricao}" />
+					</p:commandLink>
+				</p:column>
+		
+				<p:column headerText="Captador" styleClass="coluna20">
+					<p:commandLink ajax="false" action="#{mbean.redirecionarImovel(linha)}">
+						<h:outputText value="#{linha.captadorModel.nome}" />
+					</p:commandLink>
+				</p:column>
+		
+				<p:column headerText="Quartos" styleClass="coluna05">
+					<p:commandLink ajax="false" action="#{mbean.redirecionarImovel(linha)}">
+						<h:outputText value="#{linha.quartos}" />
+					</p:commandLink>
+				</p:column>
+		
+				<p:column headerText="Suítes" styleClass="coluna05">
+					<p:commandLink ajax="false" action="#{mbean.redirecionarImovel(linha)}">
+						<h:outputText value="#{linha.suites}" />
+					</p:commandLink>
+				</p:column>
+		
+				<p:column headerText="Garagens" styleClass="coluna05">
+					<p:commandLink ajax="false" action="#{mbean.redirecionarImovel(linha)}">
+						<h:outputText value="#{linha.qtdVagasEstacionamento}" />
+					</p:commandLink>
+				</p:column>
+		
+				<p:column headerText="Metragem" styleClass="coluna05">
+					<p:commandLink ajax="false" action="#{mbean.redirecionarImovel(linha)}">
+						<h:outputText value="#{linha.areaPrivativa}" />
+					</p:commandLink>
+				</p:column>
+		
+				<p:column headerText="Bairro" styleClass="coluna15">
+					<p:commandLink ajax="false" action="#{mbean.redirecionarImovel(linha)}">
+						<h:outputText value="#{linha.bairroModel.descricao}" />
+					</p:commandLink>
+				</p:column>
+		
+				<p:column headerText="Edifício" styleClass="coluna20">
+					<p:commandLink ajax="false" action="#{mbean.redirecionarImovel(linha)}">
+						<h:outputText value="#{linha.edificioModel.descricao}" />
+					</p:commandLink>
+				</p:column>
+		
+				<p:column headerText="Valor" styleClass="coluna05">
+					<p:commandLink ajax="false" action="#{mbean.redirecionarImovel(linha)}">
+						<h:outputText value="#{linha.valor}">
+							<f:convertNumber type="number" pattern="#,###,##0.##" locale="pt_BR" />
+						</h:outputText>
+					</p:commandLink>
+				</p:column>
+				
+			</p:dataTable>
+			
+		</p:fieldset>
+		
 		<p:dialog id="dialogStatus" modal="true" closeOnEscape="true" widgetVar="dlgStatus" header="Adicionar Status" styleClass="dialog50">
 
 			<h:panelGroup id="pgStatus">
@@ -164,7 +279,7 @@
 						<h:outputText value="Data" />
 						<h:outputText value="Status" />
 
-						<ts:calendar value="#{mbean.clienteStatusModel.data}" />
+						<ts:calendar value="#{mbean.clienteStatusModel.data}" pattern="dd/MM/yyyy HH:mm" />
 						<h:selectOneMenu value="#{mbean.clienteStatusModel.statusClienteModel.id}" styleClass="coluna40">
 							<f:selectItem itemValue="" itemLabel="Não selecionado" />
 							<f:selectItems value="#{mbean.comboStatusCliente}" />
@@ -187,7 +302,8 @@
 				</p:scrollPanel>
 
 				<p:panel style="margin: 5px;">
-					<p:commandButton value="Gravar" icon="salvar" action="#{mbean.addStatus}" update="dtStatus" oncomplete="handleRequest(dlgStatus, args);" />
+					<p:commandButton value="Gravar" icon="salvar" action="#{mbean.inserirStatus}" update="dtStatus" oncomplete="handleRequest(dlgStatus, args);" rendered="#{empty mbean.clienteStatusModel.id}"/>
+					<p:commandButton value="Gravar" icon="salvar" action="#{mbean.alterarStatus}" update="dtStatus" oncomplete="handleRequest(dlgStatus, args);" rendered="#{!empty mbean.clienteStatusModel.id}"/>
 					<p:commandButton type="button" value="Fechar" icon="ui-icon-close" onclick="dlgStatus.hide();" />
 				</p:panel>
 
@@ -199,11 +315,17 @@
 
 	<ui:define name="pesquisaCampos">
 
-		<h:panelGrid columns="3" columnClasses="coluna30, coluna50, coluna20" style="width: 70%">
+		<h:panelGrid columns="4" columnClasses="coluna20, coluna20, coluna40, coluna20" style="width: 80%">
 
+			<h:outputText value="Origem" />
 			<h:outputText value="Responsável" />
 			<h:outputText value="Dados do cliente" />
 			<h:outputText value="Status" />
+			
+			<h:selectOneMenu id="somStatus" value="#{mbeanPesquisaModel.origemModel.id}" styleClass="coluna90">
+				<f:selectItem itemValue="" itemLabel="Não selecionado" />
+				<f:selectItems value="#{mbean.comboOrigens}" />
+			</h:selectOneMenu>
 			<h:selectOneMenu value="#{mbeanPesquisaModel.usuarioCadastroModel.id}" styleClass="coluna90">
 				<f:selectItem itemValue="" itemLabel="Não selecionado" />
 				<f:selectItems value="#{mbean.comboResponsavel}" />
@@ -220,7 +342,7 @@
 
 	<ui:define name="colunasTabela">
 
-		<p:column headerText="Data" styleClass="coluna15">
+		<p:column headerText="Data" styleClass="coluna12">
 			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
 				<h:outputText value="#{linha.dataCadastro}">
 					<ui:include src="/resources/templates/include_gmt_format.xhtml" />
@@ -229,14 +351,21 @@
 			</p:commandLink>
 		</p:column>
 
-		<p:column headerText="Responsável" styleClass="coluna20">
+		<p:column headerText="Status" styleClass="coluna10">
+			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
+				<h:outputText value="#{linha.statusAtualModel.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+			</p:commandLink>
+		</p:column>
+
+		<p:column headerText="Responsável" styleClass="coluna30">
 			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
 				<h:outputText value="#{linha.usuarioCadastroModel.nome}" />
 				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
 			</p:commandLink>
 		</p:column>
 
-		<p:column headerText="Nome" styleClass="coluna30">
+		<p:column headerText="Nome" styleClass="coluna40">
 			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
 				<h:outputText value="#{linha.nome}" />
 				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />

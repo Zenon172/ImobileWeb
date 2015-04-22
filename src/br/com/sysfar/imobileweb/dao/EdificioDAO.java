@@ -3,6 +3,7 @@ package br.com.sysfar.imobileweb.dao;
 import java.sql.Timestamp;
 import java.util.List;
 
+import br.com.sysfar.imobileweb.model.CondominioModel;
 import br.com.sysfar.imobileweb.model.EdificioModel;
 import br.com.sysfar.imobileweb.util.Utilitario;
 import br.com.topsys.database.TSDataBaseBrokerIf;
@@ -29,6 +30,16 @@ public final class EdificioDAO implements CrudDAO<EdificioModel> {
 
 		return broker.getCollectionBean(EdificioModel.class, "id", "descricao", "condominioModel.id", "condominioModel.descricao", "qtdPavimentos", "qtdApartamentosAndar");
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<EdificioModel> pesquisar(final CondominioModel model) {
+		
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+		
+		broker.setSQL("SELECT ID, DESCRICAO, CONDOMINIO_ID, (SELECT C.DESCRICAO FROM CONDOMINIO C WHERE C.ID = E.CONDOMINIO_ID), QTD_PAVIMENTOS, QTD_APARTAMENTOS_ANDAR FROM EDIFICIO E WHERE E.CONDOMINIO_ID = ? ORDER BY E.DESCRICAO", model.getId());
+		
+		return broker.getCollectionBean(EdificioModel.class, "id", "descricao", "condominioModel.id", "condominioModel.descricao", "qtdPavimentos", "qtdApartamentosAndar");
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<EdificioModel> pesquisarCombo() {
@@ -44,12 +55,17 @@ public final class EdificioDAO implements CrudDAO<EdificioModel> {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
+		return this.inserir(model, broker);
+	}
+	
+	public EdificioModel inserir(final EdificioModel model, TSDataBaseBrokerIf broker) throws TSApplicationException {
+		
 		model.setId(broker.getSequenceNextValue("edificio_id_seq"));
-
+		
 		broker.setSQL("INSERT INTO EDIFICIO (ID, DESCRICAO, CONDOMINIO_ID, QTD_PAVIMENTOS, QTD_APARTAMENTOS_ANDAR, USUARIO_CADASTRO_ID, DATA_CADASTRO) VALUES (?, ?, ?, ?, ?, ?, ?)", model.getId(), model.getDescricao(), model.getCondominioModel().getId(), model.getQtdPavimentos(), model.getQtdApartamentosAndar(), model.getUsuarioCadastroModel().getId(), new Timestamp(model.getDataCadastro().getTime()));
-
+		
 		broker.execute();
-
+		
 		return model;
 	}
 
@@ -61,6 +77,15 @@ public final class EdificioDAO implements CrudDAO<EdificioModel> {
 
 		broker.execute();
 
+		return model;
+	}
+	
+	public EdificioModel alterar(final EdificioModel model, TSDataBaseBrokerIf broker) throws TSApplicationException {
+		
+		broker.setSQL("UPDATE EDIFICIO SET DESCRICAO = ?, CONDOMINIO_ID = ?, QTD_PAVIMENTOS = ?, QTD_APARTAMENTOS_ANDAR = ?, USUARIO_CADASTRO_ID = ?, DATA_CADASTRO = ? WHERE ID = ?", model.getDescricao(), model.getCondominioModel().getId(), model.getQtdPavimentos(), model.getQtdApartamentosAndar(), model.getUsuarioCadastroModel().getId(), new Timestamp(model.getDataCadastro().getTime()), model.getId());
+		
+		broker.execute();
+		
 		return model;
 	}
 

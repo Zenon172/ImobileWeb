@@ -26,6 +26,10 @@ public class ClientePerfilModel implements Serializable {
 	
 	private Double valorMax;
 	
+	private Double valorCondominioMin;
+	
+	private Double valorCondominioMax;
+	
 	private Integer suiteMin;
 	
 	private Integer suiteMax;
@@ -37,6 +41,8 @@ public class ClientePerfilModel implements Serializable {
 	private Boolean flagInfraestrutura;
 	
 	private TipoImovelModel tipoImovelModel;
+	
+	private PosicaoSolModel posicaoSolModel;
 
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -102,6 +108,22 @@ public class ClientePerfilModel implements Serializable {
 		this.valorMax = valorMax;
 	}
 
+	public Double getValorCondominioMin() {
+		return valorCondominioMin;
+	}
+
+	public void setValorCondominioMin(Double valorCondominioMin) {
+		this.valorCondominioMin = valorCondominioMin;
+	}
+
+	public Double getValorCondominioMax() {
+		return valorCondominioMax;
+	}
+
+	public void setValorCondominioMax(Double valorCondominioMax) {
+		this.valorCondominioMax = valorCondominioMax;
+	}
+
 	public Integer getSuiteMin() {
 		return suiteMin;
 	}
@@ -156,6 +178,14 @@ public class ClientePerfilModel implements Serializable {
 
 	public void setBairros(List<ClientePerfilBairroModel> bairros) {
 		this.bairros = bairros;
+	}
+
+	public PosicaoSolModel getPosicaoSolModel() {
+		return posicaoSolModel;
+	}
+
+	public void setPosicaoSolModel(PosicaoSolModel posicaoSolModel) {
+		this.posicaoSolModel = posicaoSolModel;
 	}
 
 	@Override

@@ -6,25 +6,33 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.context.RequestContext;
 
+import br.com.sysfar.imobileweb.dao.ClienteDAO;
 import br.com.sysfar.imobileweb.dao.ComboDAO;
 import br.com.sysfar.imobileweb.dao.CrudDAO;
+import br.com.sysfar.imobileweb.dao.EdificioDAO;
 import br.com.sysfar.imobileweb.dao.ImovelDAO;
 import br.com.sysfar.imobileweb.dao.ProprietarioDAO;
+import br.com.sysfar.imobileweb.dao.UsuarioDAO;
 import br.com.sysfar.imobileweb.model.BairroModel;
 import br.com.sysfar.imobileweb.model.CaptacaoContatoModel;
 import br.com.sysfar.imobileweb.model.CaptacaoModel;
+import br.com.sysfar.imobileweb.model.ClienteModel;
+import br.com.sysfar.imobileweb.model.CondominioModel;
 import br.com.sysfar.imobileweb.model.ConstrutoraModel;
 import br.com.sysfar.imobileweb.model.EdificioModel;
+import br.com.sysfar.imobileweb.model.ImovelAtualizacaoModel;
 import br.com.sysfar.imobileweb.model.ImovelModel;
+import br.com.sysfar.imobileweb.model.MenuModel;
 import br.com.sysfar.imobileweb.model.OperadoraModel;
 import br.com.sysfar.imobileweb.model.PosicaoSolModel;
 import br.com.sysfar.imobileweb.model.ProprietarioContatoModel;
 import br.com.sysfar.imobileweb.model.ProprietarioModel;
+import br.com.sysfar.imobileweb.model.TipoAtualizacaoImovelModel;
 import br.com.sysfar.imobileweb.model.TipoFachadaModel;
 import br.com.sysfar.imobileweb.model.TipoImovelModel;
 import br.com.sysfar.imobileweb.model.TipoPisoModel;
@@ -35,17 +43,22 @@ import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.util.TSFacesUtil;
 
-@ViewScoped
+@SessionScoped
 @SuppressWarnings("serial")
 @ManagedBean(name = "imovelFaces")
 public class ImovelFaces extends CrudFaces<ImovelModel> {
 
 	private ImovelDAO imovelDAO;
 	private ComboDAO comboDAO;
+	private EdificioDAO edificioDAO;
 	private ProprietarioDAO proprietarioDAO;
+	private ClienteDAO clienteDAO;
+	private UsuarioDAO usuarioDAO;
 
 	private List<SelectItem> comboTipoImovel;
+	private List<SelectItem> comboCondominio;
 	private List<SelectItem> comboEdificio;
+	private List<SelectItem> comboEdificioPesquisa;
 	private List<SelectItem> comboBairro;
 	private List<SelectItem> comboConstrutora;
 	private List<SelectItem> comboTipoPiso;
@@ -54,8 +67,12 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 	private List<SelectItem> comboCaptador;
 	private List<SelectItem> comboProprietario;
 	private List<SelectItem> comboOperadoras;
+	private List<SelectItem> comboTipoAtualizacaoImovel;
 
 	private List<BairroModel> bairros;
+
+	private ImovelAtualizacaoModel imovelAtualizacaoModel;
+	private ImovelAtualizacaoModel imovelAtualizacaoSelecionadoModel;
 
 	@Override
 	@PostConstruct
@@ -64,6 +81,7 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 		this.crudModel = new ImovelModel();
 		this.crudModel.setTipoImovelModel(new TipoImovelModel());
 		this.crudModel.setEdificioModel(new EdificioModel());
+		this.crudModel.getEdificioModel().setCondominioModel(new CondominioModel());
 		this.crudModel.setBairroModel(new BairroModel());
 		this.crudModel.setConstrutoraModel(new ConstrutoraModel());
 		this.crudModel.setTipoPisoSalaModel(new TipoPisoModel());
@@ -79,6 +97,8 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 
 		this.crudPesquisaModel = new ImovelModel();
 		this.crudPesquisaModel.setTipoImovelModel(new TipoImovelModel());
+		this.crudPesquisaModel.setEdificioModel(new EdificioModel());
+		this.crudPesquisaModel.getEdificioModel().setCondominioModel(new CondominioModel());
 		this.crudPesquisaModel.setCaptadorModel(new UsuarioModel());
 		this.crudPesquisaModel.setProprietarioModel(new ProprietarioModel());
 		this.crudPesquisaModel.setBairrosPesquisa(new ArrayList<String>());
@@ -86,8 +106,14 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 		this.imovelDAO = new ImovelDAO();
 		this.comboDAO = new ComboDAO();
 		this.proprietarioDAO = new ProprietarioDAO();
-
+		this.clienteDAO = new ClienteDAO();
+		this.edificioDAO = new EdificioDAO();
+		this.usuarioDAO = new UsuarioDAO();
+		
 		this.iniciarCombos();
+		this.instanciarAtualizacao();
+
+		super.setManterCampos(true);
 
 		CaptacaoModel captacaoModel = (CaptacaoModel) TSFacesUtil.getObjectInSession(Constantes.SESSION_CAPTACAO_ATUAL);
 
@@ -98,6 +124,19 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 			TSFacesUtil.removeObjectInSession(Constantes.SESSION_CAPTACAO_ATUAL);
 
 		}
+
+		Long imovelId = (Long) TSFacesUtil.getObjectInSession(Constantes.SESSION_IMOVEL_ATUAL_ID);
+
+		if (!TSUtil.isEmpty(imovelId)) {
+
+			this.crudModel.setId(imovelId);
+
+			this.detailEvent();
+
+			TSFacesUtil.removeObjectInSession(Constantes.SESSION_IMOVEL_ATUAL_ID);
+
+		}
+
 	}
 
 	private void gerarViaCaptacao(CaptacaoModel captacao) {
@@ -128,16 +167,25 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 
 	private void iniciarCombos() {
 		this.comboTipoImovel = super.initCombo(this.comboDAO.pesquisarTipoImovel(), "id", "descricao");
-		this.comboEdificio = super.initCombo(this.comboDAO.pesquisarEdificio(), "id", "descricao");
+		this.comboCondominio = super.initCombo(this.comboDAO.pesquisarCondominio(), "id", "descricao");
 		this.comboBairro = super.initCombo(this.comboDAO.pesquisarBairro(), "id", "descricao");
 		this.comboConstrutora = super.initCombo(this.comboDAO.pesquisarConstrutora(), "id", "descricao");
 		this.comboTipoPiso = super.initCombo(this.comboDAO.pesquisarTipoPiso(), "id", "descricao");
 		this.comboTipoFachada = super.initCombo(this.comboDAO.pesquisarTipoFachada(), "id", "descricao");
 		this.comboPosicaoSol = super.initCombo(this.comboDAO.pesquisarPosicaoSol(), "id", "descricao");
 		this.comboCaptador = super.initCombo(this.comboDAO.pesquisarCaptador(), "id", "nome");
+		this.comboTipoAtualizacaoImovel = super.initCombo(this.comboDAO.pesquisarTipoAtualizacaoImovel(), "id", "descricao");
 		this.iniciarComboProprietario();
 		this.comboOperadoras = super.initCombo(this.comboDAO.pesquisarOperadoras(), "id", "descricao");
 		this.bairros = this.comboDAO.pesquisarBairro();
+	}
+
+	public void carregarComboEdificio() {
+		this.comboEdificio = super.initCombo(this.edificioDAO.pesquisar(this.crudModel.getEdificioModel().getCondominioModel()), "id", "descricao");
+	}
+
+	public void carregarComboCondominio() {
+		this.comboEdificioPesquisa = super.initCombo(this.edificioDAO.pesquisar(this.crudPesquisaModel.getEdificioModel().getCondominioModel()), "id", "descricao");
 	}
 
 	private void iniciarComboProprietario() {
@@ -275,12 +323,31 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 	@Override
 	protected void preInsert() {
 
+		UsuarioModel usuario = this.usuarioDAO.obter(this.crudModel.getCaptadorModel());
+
+		this.crudModel.setCodigo(usuario.getCodigo() + Utilitario.lpad(String.valueOf((usuario.getQtdImoveis() + 1)), "0", 3));
+
 		if (TSUtil.isEmpty(this.crudModel.getProprietarioModel().getId())) {
 
 			this.salvarProprietario();
 
 		}
 
+	}
+	
+	@Override
+	protected void posInsert() {
+
+		try {
+			
+			this.usuarioDAO.addQtdImoveis(this.crudModel.getCaptadorModel());
+			
+		} catch (TSApplicationException e) {
+			
+			super.throwException(e);
+			
+		}
+		
 	}
 
 	@Override
@@ -290,8 +357,135 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 	}
 
 	@Override
+	protected void posPersist() throws TSApplicationException {
+		this.detailEvent();
+	}
+
+	@Override
+	protected void posDetail() {
+		this.crudModel.setClientesPerfil(this.clienteDAO.pesquisarPerfil(this.crudModel));
+		this.crudModel.setAtualizacoes(this.imovelDAO.pesquisarAtualizacoes(this.crudModel));
+	}
+
+	public String instanciarAtualizacao() {
+		this.imovelAtualizacaoModel = new ImovelAtualizacaoModel();
+		this.imovelAtualizacaoModel.setTipoAtualizacaoImovelModel(new TipoAtualizacaoImovelModel());
+		this.imovelAtualizacaoModel.setImovelModel(this.crudModel);
+		this.imovelAtualizacaoModel.setData(new Date());
+		return null;
+	}
+
+	public String obterAtualizacao(ImovelAtualizacaoModel model) {
+
+		this.imovelAtualizacaoModel = this.imovelDAO.obterAtualizacao(model);
+
+		return null;
+	}
+
+	private boolean validaCamposAtualizacao() {
+
+		boolean valida = true;
+
+		if (TSUtil.isEmpty(this.imovelAtualizacaoModel.getData())) {
+			valida = false;
+			super.addErrorMessage("Data: Campo obrigatório");
+		}
+
+		if (TSUtil.isEmpty(this.imovelAtualizacaoModel.getTipoAtualizacaoImovelModel().getId())) {
+			valida = false;
+			super.addErrorMessage("Tipo: Campo obrigatório");
+		}
+
+		return valida;
+
+	}
+
+	public String inserirAtualizacao() {
+
+		if (!this.validaCamposAtualizacao()) {
+			return null;
+		}
+
+		this.imovelAtualizacaoModel.setDataCadastro(new Date());
+		this.imovelAtualizacaoModel.setUsuarioCadastroModel(Utilitario.getUsuarioLogado());
+
+		try {
+
+			this.imovelDAO.inserir(this.imovelAtualizacaoModel);
+
+			this.crudModel.setAtualizacoes(this.imovelDAO.pesquisarAtualizacoes(this.crudModel));
+
+			super.addInfoMessageKey(Constantes.OPERACAO_SUCESSO);
+
+			RequestContext.getCurrentInstance().addCallbackParam("valido", true);
+
+		} catch (TSApplicationException e) {
+
+			super.throwException(e);
+
+		}
+
+		return null;
+	}
+
+	public String alterarAtualizacao() {
+
+		if (!this.validaCamposAtualizacao()) {
+			return null;
+		}
+
+		try {
+
+			this.imovelDAO.alterar(this.imovelAtualizacaoModel);
+
+			this.crudModel.setAtualizacoes(this.imovelDAO.pesquisarAtualizacoes(this.crudModel));
+
+			super.addInfoMessageKey(Constantes.OPERACAO_SUCESSO);
+
+			RequestContext.getCurrentInstance().addCallbackParam("valido", true);
+
+		} catch (TSApplicationException e) {
+
+			super.throwException(e);
+
+		}
+
+		return null;
+	}
+
+	public String removeAtualizacao() {
+
+		try {
+
+			this.imovelDAO.excluir(this.imovelAtualizacaoSelecionadoModel);
+
+			this.crudModel.getAtualizacoes().remove(this.imovelAtualizacaoSelecionadoModel);
+
+			super.addInfoMessageKey(Constantes.OPERACAO_SUCESSO);
+
+		} catch (TSApplicationException e) {
+
+			super.throwException(e);
+
+		}
+
+		return null;
+	}
+
+	@Override
 	protected CrudDAO<ImovelModel> getCrudDAO() {
 		return this.imovelDAO;
+	}
+
+	public String redirecionarCliente(ClienteModel model) {
+
+		TSFacesUtil.addObjectInSession(Constantes.SESSION_CLIENTE_ATUAL_ID, model.getId());
+
+		TSFacesUtil.removeManagedBeanInSession(Constantes.CLIENTE_FACES);
+
+		MenuFaces menuFaces = (MenuFaces) TSFacesUtil.getManagedBean(Constantes.MENU_FACES);
+
+		return menuFaces.escolherMenu(new MenuModel(Constantes.MENU_CLIENTE));
 	}
 
 	public List<SelectItem> getComboTipoImovel() {
@@ -380,6 +574,46 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 
 	public void setComboOperadoras(List<SelectItem> comboOperadoras) {
 		this.comboOperadoras = comboOperadoras;
+	}
+
+	public List<SelectItem> getComboCondominio() {
+		return comboCondominio;
+	}
+
+	public void setComboCondominio(List<SelectItem> comboCondominio) {
+		this.comboCondominio = comboCondominio;
+	}
+
+	public List<SelectItem> getComboEdificioPesquisa() {
+		return comboEdificioPesquisa;
+	}
+
+	public void setComboEdificioPesquisa(List<SelectItem> comboEdificioPesquisa) {
+		this.comboEdificioPesquisa = comboEdificioPesquisa;
+	}
+
+	public ImovelAtualizacaoModel getImovelAtualizacaoModel() {
+		return imovelAtualizacaoModel;
+	}
+
+	public void setImovelAtualizacaoModel(ImovelAtualizacaoModel imovelAtualizacaoModel) {
+		this.imovelAtualizacaoModel = imovelAtualizacaoModel;
+	}
+
+	public ImovelAtualizacaoModel getImovelAtualizacaoSelecionadoModel() {
+		return imovelAtualizacaoSelecionadoModel;
+	}
+
+	public void setImovelAtualizacaoSelecionadoModel(ImovelAtualizacaoModel imovelAtualizacaoSelecionadoModel) {
+		this.imovelAtualizacaoSelecionadoModel = imovelAtualizacaoSelecionadoModel;
+	}
+
+	public List<SelectItem> getComboTipoAtualizacaoImovel() {
+		return comboTipoAtualizacaoImovel;
+	}
+
+	public void setComboTipoAtualizacaoImovel(List<SelectItem> comboTipoAtualizacaoImovel) {
+		this.comboTipoAtualizacaoImovel = comboTipoAtualizacaoImovel;
 	}
 
 }

@@ -11,6 +11,8 @@ public class ImovelModel extends BaseModel {
 	private TipoImovelModel tipoImovelModel;
 
 	private Boolean flagPiscinaPrivativa;
+	
+	private Boolean flagInfraestrutura;
 
 	private Double valor;
 
@@ -61,10 +63,16 @@ public class ImovelModel extends BaseModel {
 	private Integer wcEmpregadas;
 
 	private Integer armariosBanheiros;
+	
+	private Boolean flagArmariosBanheiro;
 
 	private Integer armariosCozinhas;
+	
+	private Boolean flagArmariosCozinha;
 
 	private Integer armariosQuartos;
+	
+	private Boolean flagArmariosQuartos;
 
 	private Integer closets;
 
@@ -125,6 +133,10 @@ public class ImovelModel extends BaseModel {
 	private String descricaoMobilia;
 
 	private Integer qtdVagasEstacionamento;
+	
+	private Integer qtdVagasCobertas;
+	
+	private Integer qtdVagasSoltas;
 
 	private Boolean flagUtilizouFgts;
 
@@ -152,6 +164,8 @@ public class ImovelModel extends BaseModel {
 
 	private ProprietarioModel proprietarioModel;
 	
+	private List<ImovelAtualizacaoModel> atualizacoes;
+	
 	private List<String> bairrosPesquisa;
 	private Double valorMin;
 	private Double valorMax;
@@ -159,6 +173,8 @@ public class ImovelModel extends BaseModel {
 	private Double valorCondominioMax;
 	private Integer quartosMin;
 	private Integer quartosMax;
+	
+	private List<ClienteModel> clientesPerfil;
 
 	public String getCodigo() {
 		return codigo;
@@ -798,5 +814,70 @@ public class ImovelModel extends BaseModel {
 
 	public void setQuartosMax(Integer quartosMax) {
 		this.quartosMax = quartosMax;
-	} 
+	}
+
+	public Boolean getFlagArmariosBanheiro() {
+		return flagArmariosBanheiro;
+	}
+
+	public void setFlagArmariosBanheiro(Boolean flagArmariosBanheiro) {
+		this.flagArmariosBanheiro = flagArmariosBanheiro;
+	}
+
+	public Boolean getFlagArmariosCozinha() {
+		return flagArmariosCozinha;
+	}
+
+	public void setFlagArmariosCozinha(Boolean flagArmariosCozinha) {
+		this.flagArmariosCozinha = flagArmariosCozinha;
+	}
+
+	public Boolean getFlagArmariosQuartos() {
+		return flagArmariosQuartos;
+	}
+
+	public void setFlagArmariosQuartos(Boolean flagArmariosQuartos) {
+		this.flagArmariosQuartos = flagArmariosQuartos;
+	}
+
+	public Integer getQtdVagasCobertas() {
+		return qtdVagasCobertas;
+	}
+
+	public void setQtdVagasCobertas(Integer qtdVagasCobertas) {
+		this.qtdVagasCobertas = qtdVagasCobertas;
+	}
+
+	public Integer getQtdVagasSoltas() {
+		return qtdVagasSoltas;
+	}
+
+	public void setQtdVagasSoltas(Integer qtdVagasSoltas) {
+		this.qtdVagasSoltas = qtdVagasSoltas;
+	}
+
+	public Boolean getFlagInfraestrutura() {
+		return flagInfraestrutura;
+	}
+
+	public void setFlagInfraestrutura(Boolean flagInfraestrutura) {
+		this.flagInfraestrutura = flagInfraestrutura;
+	}
+
+	public List<ClienteModel> getClientesPerfil() {
+		return clientesPerfil;
+	}
+
+	public void setClientesPerfil(List<ClienteModel> clientesPerfil) {
+		this.clientesPerfil = clientesPerfil;
+	}
+
+	public List<ImovelAtualizacaoModel> getAtualizacoes() {
+		return atualizacoes;
+	}
+
+	public void setAtualizacoes(List<ImovelAtualizacaoModel> atualizacoes) {
+		this.atualizacoes = atualizacoes;
+	}
+
 }

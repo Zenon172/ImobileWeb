@@ -30,13 +30,20 @@
 
 			</h:panelGrid>
 
-			<h:panelGrid style="width: 60%">
+			<h:panelGrid columns="4" columnClasses="coluna25, coluna25, coluna25, coluna25" style="width: 60%">
 
 				<p:outputLabel for="omGrupo" value="Grupo" />
-				<h:selectOneMenu id="omGrupo" value="#{mbeanModel.grupoModel.id}" required="true">
+				<p:outputLabel for="itCodigo" value="Código" />
+				<p:outputLabel for="itQtdImoveis" value="Qtd. Imóveis" />
+				<h:outputText value="Ativo?" />
+				
+				<h:selectOneMenu id="omGrupo" value="#{mbeanModel.grupoModel.id}" required="true" styleClass="coluna90">
 					<f:selectItem itemLabel="Selecione" itemValue="" />
 					<f:selectItems value="#{mbean.grupos}" />
 				</h:selectOneMenu>
+				<p:inputText id="itCodigo" value="#{mbeanModel.codigo}" required="true" maxlength="5" styleClass="coluna90" />
+				<p:inputText id="itQtdImoveis" value="#{mbeanModel.qtdImoveis}" required="true" maxlength="5" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna90" />
+				<p:selectBooleanCheckbox value="#{mbeanModel.flagAtivo}" />
 
 			</h:panelGrid>
 
@@ -48,6 +55,9 @@
 
 		<h:outputText value="Nome" />
 		<p:inputText value="#{mbeanPesquisaModel.nome}" styleClass="coluna50" />
+
+		<h:outputText value="Ativo?" />
+		<p:selectBooleanCheckbox value="#{mbeanPesquisaModel.flagAtivo}" />
 
 	</ui:define>
 

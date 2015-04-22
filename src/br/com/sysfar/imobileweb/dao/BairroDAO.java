@@ -18,6 +18,15 @@ public final class BairroDAO implements CrudDAO<BairroModel> {
 
 		return (BairroModel) broker.getObjectBean(BairroModel.class, "id", "descricao");
 	}
+	
+	public BairroModel obter(final String descricao) {
+		
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+		
+		broker.setSQL("SELECT ID, DESCRICAO FROM BAIRRO WHERE DESCRICAO = ?", descricao);
+		
+		return (BairroModel) broker.getObjectBean(BairroModel.class, "id", "descricao");
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<BairroModel> pesquisar(final BairroModel model) {

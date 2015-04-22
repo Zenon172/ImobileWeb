@@ -127,16 +127,16 @@ public final class CaptacaoDAO implements CrudDAO<CaptacaoModel> {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		broker.setSQL("SELECT CC.ID, CC.CAPTACAO_ID, CC.TELEFONE, CC.EMAIL, CC.OPERADORA_ID FROM CAPTACAO_CONTATO CC WHERE CC.CAPTACAO_ID = ? ORDER BY CC.ID", model.getId());
+		broker.setSQL("SELECT CC.ID, CC.CAPTACAO_ID, CC.NOME, CC.TELEFONE, CC.EMAIL, CC.OPERADORA_ID FROM CAPTACAO_CONTATO CC WHERE CC.CAPTACAO_ID = ? ORDER BY CC.ID", model.getId());
 
-		return broker.getCollectionBean(CaptacaoContatoModel.class, "id", "captacaoModel.id", "telefone", "email", "operadoraModel.id");
+		return broker.getCollectionBean(CaptacaoContatoModel.class, "id", "captacaoModel.id", "nome", "telefone", "email", "operadoraModel.id");
 	}
 
 	public void inserir(final CaptacaoContatoModel model, TSDataBaseBrokerIf broker) throws TSApplicationException {
 
 		model.setId(broker.getSequenceNextValue("captacao_contato_id_seq"));
 
-		broker.setSQL("INSERT INTO CAPTACAO_CONTATO (ID, CAPTACAO_ID, TELEFONE, EMAIL, OPERADORA_ID) VALUES (?, ?, ?, ?, ?)", model.getId(), model.getCaptacaoModel().getId(), model.getTelefone(), model.getEmail(), model.getOperadoraModel().getId());
+		broker.setSQL("INSERT INTO CAPTACAO_CONTATO (ID, CAPTACAO_ID, NOME, TELEFONE, EMAIL, OPERADORA_ID) VALUES (?, ?, ?, ?, ?, ?)", model.getId(), model.getCaptacaoModel().getId(), model.getNome(), model.getTelefone(), model.getEmail(), model.getOperadoraModel().getId());
 
 		broker.execute();
 
@@ -144,7 +144,7 @@ public final class CaptacaoDAO implements CrudDAO<CaptacaoModel> {
 
 	public void alterar(final CaptacaoContatoModel model, TSDataBaseBrokerIf broker) throws TSApplicationException {
 
-		broker.setSQL("UPDATE CAPTACAO_CONTATO SET TELEFONE = ?, EMAIL = ?, OPERADORA_ID = ? WHERE ID = ?", model.getTelefone(), model.getEmail(), model.getOperadoraModel().getId(), model.getId());
+		broker.setSQL("UPDATE CAPTACAO_CONTATO SET NOME = ?, TELEFONE = ?, EMAIL = ?, OPERADORA_ID = ? WHERE ID = ?", model.getNome(), model.getTelefone(), model.getEmail(), model.getOperadoraModel().getId(), model.getId());
 
 		broker.execute();
 

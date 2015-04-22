@@ -20,11 +20,13 @@
 			<p:dataGrid columns="2" var="contato" value="#{mbeanModel.contatos}" rowIndexVar="index">
 
 				<p:column>
-					<h:panelGrid columns="3" columnClasses="coluna20, coluna20, coluna60">
+					<h:panelGrid columns="4" columnClasses="coluna20, coluna20, coluna20, coluna40">
+						<h:outputText value="Nome #{index + 1}" />
 						<h:outputText value="Telefone #{index + 1}" />
 						<h:outputText value="Operadora #{index + 1}" />
 						<h:outputText value="E-mail #{index + 1}" />
-
+						
+						<p:inputText id="itNome" value="#{contato.nome}" maxlength="100" styleClass="coluna90" />
 						<p:inputText id="itTelefone" value="#{contato.telefone}" maxlength="15" styleClass="coluna90 telefone">
 							<p:ajax global="false" event="change" listener="#{mbean.validarTelefoneDuplicidade(contato.telefone)}" process="@this" />
 						</p:inputText>

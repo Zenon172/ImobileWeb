@@ -2,25 +2,17 @@ package br.com.sysfar.imobileweb.model;
 
 import java.io.Serializable;
 
+import br.com.sysfar.imobileweb.util.Constantes;
 import br.com.topsys.util.TSUtil;
 
 @SuppressWarnings("serial")
-public class StatusClienteModel implements Serializable {
+public class TipoRespostaModel implements Serializable {
 
 	private Long id;
 
 	private String descricao;
 
-	private Boolean flagAtivo;
-	
-	private Boolean flagFinalizado;
-
-	public StatusClienteModel(Boolean flagAtivo) {
-		super();
-		this.flagAtivo = flagAtivo;
-	}
-
-	public StatusClienteModel() {
+	public TipoRespostaModel() {
 		super();
 	}
 
@@ -39,21 +31,25 @@ public class StatusClienteModel implements Serializable {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-
-	public Boolean getFlagAtivo() {
-		return flagAtivo;
+	
+	public boolean isNumerico(){
+		return Constantes.TIPO_RESPOSTA_INTEIRO.equals(this.id);
 	}
-
-	public void setFlagAtivo(Boolean flagAtivo) {
-		this.flagAtivo = flagAtivo;
+	
+	public boolean isPontoFlutuante(){
+		return Constantes.TIPO_RESPOSTA_PONTO_FLUTUANTE.equals(this.id);
 	}
-
-	public Boolean getFlagFinalizado() {
-		return flagFinalizado;
+	
+	public boolean isTexto(){
+		return Constantes.TIPO_RESPOSTA_TEXTO.equals(this.id);
 	}
-
-	public void setFlagFinalizado(Boolean flagFinalizado) {
-		this.flagFinalizado = flagFinalizado;
+	
+	public boolean isInputText(){
+		return Constantes.TIPO_RESPOSTA_INPUT_TEXT.equals(this.id);
+	}
+	
+	public boolean isBooleano(){
+		return Constantes.TIPO_RESPOSTA_BOOLEAN.equals(this.id);
 	}
 
 	@Override
@@ -72,7 +68,7 @@ public class StatusClienteModel implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		StatusClienteModel other = (StatusClienteModel) obj;
+		TipoRespostaModel other = (TipoRespostaModel) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

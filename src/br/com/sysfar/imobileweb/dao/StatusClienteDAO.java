@@ -14,9 +14,9 @@ public final class StatusClienteDAO implements CrudDAO<StatusClienteModel> {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		broker.setSQL("SELECT ID, DESCRICAO, FLAG_ATIVO FROM STATUS_CLIENTE WHERE ID = ?", model.getId());
+		broker.setSQL("SELECT ID, DESCRICAO, FLAG_ATIVO, FLAG_FINALIZADO FROM STATUS_CLIENTE WHERE ID = ?", model.getId());
 
-		return (StatusClienteModel) broker.getObjectBean(StatusClienteModel.class, "id", "descricao", "flagAtivo");
+	return (StatusClienteModel) broker.getObjectBean(StatusClienteModel.class, "id", "descricao", "flagAtivo", "flagFinalizado");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -24,7 +24,7 @@ public final class StatusClienteDAO implements CrudDAO<StatusClienteModel> {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		broker.setSQL("SELECT ID, DESCRICAO, FLAG_ATIVO FROM STATUS_CLIENTE WHERE SEM_ACENTOS(DESCRICAO) ILIKE SEM_ACENTOS(COALESCE(?, DESCRICAO)) AND FLAG_ATIVO = ? ORDER BY DESCRICAO", Utilitario.getStringIlike(model.getDescricao(), true), model.getFlagAtivo());
+		broker.setSQL("SELECT ID, DESCRICAO, FLAG_ATIVO FROM STATUS_CLIENTE WHERE SEM_ACENTOS(DESCRICAO) ILIKE SEM_ACENTOS(COALESCE(?, DESCRICAO)) AND FLAG_ATIVO = ? AND COALESCE(FLAG_FINALIZADO, FALSE) = ? ORDER BY DESCRICAO", Utilitario.getStringIlike(model.getDescricao(), true), model.getFlagAtivo(), model.getFlagFinalizado());
 
 		return broker.getCollectionBean(StatusClienteModel.class, "id", "descricao", "flagAtivo");
 	}
@@ -35,7 +35,7 @@ public final class StatusClienteDAO implements CrudDAO<StatusClienteModel> {
 
 		model.setId(broker.getSequenceNextValue("status_cliente_id_seq"));
 
-		broker.setSQL("INSERT INTO STATUS_CLIENTE (ID, DESCRICAO, FLAG_ATIVO) VALUES (?, ?, ?)", model.getId(), model.getDescricao(), model.getFlagAtivo());
+		broker.setSQL("INSERT INTO STATUS_CLIENTE (ID, DESCRICAO, FLAG_ATIVO, FLAG_FINALIZADO) VALUES (?, ?, ?, ?)", model.getId(), model.getDescricao(), model.getFlagAtivo(), model.getFlagFinalizado());
 
 		broker.execute();
 
@@ -46,7 +46,7 @@ public final class StatusClienteDAO implements CrudDAO<StatusClienteModel> {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		broker.setSQL("UPDATE STATUS_CLIENTE SET DESCRICAO = ?, FLAG_ATIVO = ? WHERE ID = ?", model.getDescricao(), model.getFlagAtivo(), model.getId());
+		broker.setSQL("UPDATE STATUS_CLIENTE SET DESCRICAO = ?, FLAG_ATIVO = ?, FLAG_FINALIZADO = ? WHERE ID = ?", model.getDescricao(), model.getFlagAtivo(), model.getFlagFinalizado(), model.getId());
 
 		broker.execute();
 

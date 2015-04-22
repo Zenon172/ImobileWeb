@@ -1,8 +1,8 @@
 <ui:composition template="/resources/templates/templateCRUD.xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
 
-	<ui:param name="mbean" value="${statusClienteFaces}" />
-	<ui:param name="mbeanModel" value="${statusClienteFaces.crudModel}" />
-	<ui:param name="mbeanPesquisaModel" value="${statusClienteFaces.crudPesquisaModel}" />
+	<ui:param name="mbean" value="${tipoAtualizacaoImovelFaces}" />
+	<ui:param name="mbeanModel" value="${tipoAtualizacaoImovelFaces.crudModel}" />
+	<ui:param name="mbeanPesquisaModel" value="${tipoAtualizacaoImovelFaces.crudPesquisaModel}" />
 	<ui:param name="possuiDadosCadastro" value="false" />
 
 	<ui:define name="cadastro">
@@ -13,9 +13,6 @@
 
 				<p:outputLabel for="itDescricao" value="Descrição" />
 				<p:inputText id="itDescricao" value="#{mbeanModel.descricao}" required="true" maxlength="100" styleClass="coluna90" />
-				
-				<h:outputText value="Finalizado?" />
-				<p:selectBooleanCheckbox value="#{mbeanModel.flagFinalizado}" />
 				
 				<h:outputText value="Ativo?" />
 				<p:selectBooleanCheckbox value="#{mbeanModel.flagAtivo}" />
@@ -31,9 +28,6 @@
 		<h:outputText value="Descrição" />
 		<p:inputText value="#{mbeanPesquisaModel.descricao}" styleClass="coluna50" />
 		
-		<h:outputText value="Finalizado?" />
-		<p:selectBooleanCheckbox value="#{mbeanPesquisaModel.flagFinalizado}" />
-				
 		<h:outputText value="Ativo?" />
 		<p:selectBooleanCheckbox value="#{mbeanPesquisaModel.flagAtivo}" />
 

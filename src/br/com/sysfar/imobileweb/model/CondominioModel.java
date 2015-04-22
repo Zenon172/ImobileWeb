@@ -1,5 +1,7 @@
 package br.com.sysfar.imobileweb.model;
 
+import java.util.List;
+
 @SuppressWarnings("serial")
 public class CondominioModel extends BaseModel {
 
@@ -8,6 +10,8 @@ public class CondominioModel extends BaseModel {
 	private Integer qtdTorres;
 	
 	private BairroModel bairroModel;
+	
+	private List<EdificioModel> edificios;
 
 	public String getDescricao() {
 		return descricao;
@@ -31,5 +35,13 @@ public class CondominioModel extends BaseModel {
 
 	public void setBairroModel(BairroModel bairroModel) {
 		this.bairroModel = bairroModel;
+	}
+
+	public List<EdificioModel> getEdificios() {
+		return edificios;
+	}
+
+	public void setEdificios(List<EdificioModel> edificios) {
+		this.edificios = edificios;
 	}
 }

@@ -76,5 +76,19 @@ public class Utilitario {
 	public static boolean isPeriodoInvalido(Date dataInicial, Date dataFinal) {
 		return dataFinal.before(dataInicial);
 	}
+	
+	public static String lpad(String valueToPad, String filler, int size) {
+		StringBuilder builder = new StringBuilder();
+
+		if (valueToPad == null) {
+			valueToPad = "";
+		}
+
+		while (builder.length() + valueToPad.length() < size) {
+			builder.append(filler);
+		}
+		builder.append(valueToPad);
+		return builder.toString();
+	}
 
 }

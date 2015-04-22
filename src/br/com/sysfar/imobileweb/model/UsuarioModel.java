@@ -3,6 +3,8 @@ package br.com.sysfar.imobileweb.model;
 @SuppressWarnings("serial")
 public class UsuarioModel extends BaseModel {
 
+	private String codigo;
+	
 	private String nome;
 
 	private String email;
@@ -15,11 +17,17 @@ public class UsuarioModel extends BaseModel {
 
 	private GrupoModel grupoModel;
 	
+	private Long qtdImoveis;
+	
 	public UsuarioModel() {
 	}
 	
 	public UsuarioModel(Long id) {
 		this.id = id;
+	}
+	
+	public UsuarioModel(Boolean flagAtivo) {
+		this.flagAtivo = flagAtivo;
 	}
 
 	public String getNome() {
@@ -68,5 +76,21 @@ public class UsuarioModel extends BaseModel {
 
 	public void setGrupoModel(GrupoModel grupoModel) {
 		this.grupoModel = grupoModel;
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
+	public Long getQtdImoveis() {
+		return qtdImoveis;
+	}
+
+	public void setQtdImoveis(Long qtdImoveis) {
+		this.qtdImoveis = qtdImoveis;
 	}
 }

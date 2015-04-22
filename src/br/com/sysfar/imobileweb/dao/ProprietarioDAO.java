@@ -160,16 +160,16 @@ public final class ProprietarioDAO implements CrudDAO<ProprietarioModel> {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		broker.setSQL("SELECT PC.ID, PC.PROPRIETARIO_ID, PC.TELEFONE, PC.EMAIL, PC.FLAG_RESPONSAVEL_VENDA, PC.OPERADORA_ID FROM PROPRIETARIO_CONTATO PC WHERE PC.PROPRIETARIO_ID = ? AND PC.FLAG_RESPONSAVEL_VENDA = ? ORDER BY PC.ID", model.getId(), flagResponsavelVenda);
+		broker.setSQL("SELECT PC.ID, PC.PROPRIETARIO_ID, PC.NOME, PC.TELEFONE, PC.EMAIL, PC.FLAG_RESPONSAVEL_VENDA, PC.OPERADORA_ID FROM PROPRIETARIO_CONTATO PC WHERE PC.PROPRIETARIO_ID = ? AND PC.FLAG_RESPONSAVEL_VENDA = ? ORDER BY PC.ID", model.getId(), flagResponsavelVenda);
 
-		return broker.getCollectionBean(ProprietarioContatoModel.class, "id", "proprietarioModel.id", "telefone", "email", "flagResponsavelVenda", "operadoraModel.id");
+		return broker.getCollectionBean(ProprietarioContatoModel.class, "id", "proprietarioModel.id", "nome", "telefone", "email", "flagResponsavelVenda", "operadoraModel.id");
 	}
 
 	public void inserir(final ProprietarioContatoModel model, TSDataBaseBrokerIf broker) throws TSApplicationException {
 
 		model.setId(broker.getSequenceNextValue("proprietario_contato_id_seq"));
 
-		broker.setSQL("INSERT INTO PROPRIETARIO_CONTATO (ID, PROPRIETARIO_ID, TELEFONE, EMAIL, OPERADORA_ID, FLAG_RESPONSAVEL_VENDA) VALUES (?, ?, ?, ?, ?, ?)", model.getId(), model.getProprietarioModel().getId(), model.getTelefone(), model.getEmail(), model.getOperadoraModel().getId(), model.getFlagResponsavelVenda());
+		broker.setSQL("INSERT INTO PROPRIETARIO_CONTATO (ID, PROPRIETARIO_ID, NOME, TELEFONE, EMAIL, OPERADORA_ID, FLAG_RESPONSAVEL_VENDA) VALUES (?, ?, ?, ?, ?, ?, ?)", model.getId(), model.getProprietarioModel().getId(), model.getNome(), model.getTelefone(), model.getEmail(), model.getOperadoraModel().getId(), model.getFlagResponsavelVenda());
 
 		broker.execute();
 
@@ -177,7 +177,7 @@ public final class ProprietarioDAO implements CrudDAO<ProprietarioModel> {
 
 	public void alterar(final ProprietarioContatoModel model, TSDataBaseBrokerIf broker) throws TSApplicationException {
 
-		broker.setSQL("UPDATE PROPRIETARIO_CONTATO SET TELEFONE = ?, EMAIL = ?, OPERADORA_ID = ? WHERE ID = ?", model.getTelefone(), model.getEmail(), model.getOperadoraModel().getId(), model.getId());
+		broker.setSQL("UPDATE PROPRIETARIO_CONTATO SET NOME = ?, TELEFONE = ?, EMAIL = ?, OPERADORA_ID = ? WHERE ID = ?", model.getNome(), model.getTelefone(), model.getEmail(), model.getOperadoraModel().getId(), model.getId());
 
 		broker.execute();
 

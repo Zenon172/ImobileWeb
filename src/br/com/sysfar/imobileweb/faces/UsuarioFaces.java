@@ -35,9 +35,11 @@ public class UsuarioFaces extends CrudFaces<UsuarioModel> {
 
 		this.crudModel = new UsuarioModel();
 		this.crudModel.setGrupoModel(new GrupoModel());
+		this.crudModel.setFlagAtivo(true);
 
 		this.crudPesquisaModel = new UsuarioModel();
 		this.crudPesquisaModel.setGrupoModel(new GrupoModel());
+		this.crudPesquisaModel.setFlagAtivo(true);
 
 		this.senha = null;
 		this.repetirSenha = null;

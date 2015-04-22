@@ -5,17 +5,22 @@ import java.io.Serializable;
 import br.com.topsys.util.TSUtil;
 
 @SuppressWarnings("serial")
-public class ContatoModel implements Serializable {
+public class TipoAtualizacaoImovelModel implements Serializable {
 
 	private Long id;
-	
-	private String nome;
-	
-	private String telefone;
 
-	private String email;
+	private String descricao;
+
+	private Boolean flagAtivo;
 	
-	private OperadoraModel operadoraModel;
+	public TipoAtualizacaoImovelModel(Boolean flagAtivo) {
+		super();
+		this.flagAtivo = flagAtivo;
+	}
+
+	public TipoAtualizacaoImovelModel() {
+		super();
+	}
 
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -25,36 +30,20 @@ public class ContatoModel implements Serializable {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
-	public String getTelefone() {
-		return telefone;
+	public Boolean getFlagAtivo() {
+		return flagAtivo;
 	}
 
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public OperadoraModel getOperadoraModel() {
-		return operadoraModel;
-	}
-
-	public void setOperadoraModel(OperadoraModel operadoraModel) {
-		this.operadoraModel = operadoraModel;
+	public void setFlagAtivo(Boolean flagAtivo) {
+		this.flagAtivo = flagAtivo;
 	}
 
 	@Override
@@ -73,7 +62,7 @@ public class ContatoModel implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ContatoModel other = (ContatoModel) obj;
+		TipoAtualizacaoImovelModel other = (TipoAtualizacaoImovelModel) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -81,4 +70,5 @@ public class ContatoModel implements Serializable {
 			return false;
 		return true;
 	}
+
 }

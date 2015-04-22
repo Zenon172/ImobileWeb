@@ -1,5 +1,6 @@
 package br.com.sysfar.imobileweb.model;
 
+import java.util.Date;
 import java.util.List;
 
 @SuppressWarnings("serial")
@@ -9,7 +10,11 @@ public class ClienteModel extends BaseModel {
 
 	private String email;
 	
+	private String telefones;
+	
 	private String observacoes;
+	
+	private OrigemModel origemModel;
 	
 	private StatusClienteModel statusAtualModel;
 	
@@ -18,7 +23,20 @@ public class ClienteModel extends BaseModel {
 	private List<ClienteStatusModel> status;
 	
 	private ClientePerfilModel clientePerfilModel;
+	
+	private List<ImovelModel> imoveisPerfil;
 
+	private Date dataInicial;
+	
+	private Date dataUltimoContato;
+	
+	public ClienteModel() {
+	}
+	
+	public ClienteModel(UsuarioModel usuarioResponsavel) {
+		this.usuarioCadastroModel = usuarioResponsavel;
+	}
+	
 	public String getNome() {
 		return nome;
 	}
@@ -73,5 +91,45 @@ public class ClienteModel extends BaseModel {
 
 	public void setStatusAtualModel(StatusClienteModel statusAtualModel) {
 		this.statusAtualModel = statusAtualModel;
+	}
+
+	public List<ImovelModel> getImoveisPerfil() {
+		return imoveisPerfil;
+	}
+
+	public void setImoveisPerfil(List<ImovelModel> imoveisPerfil) {
+		this.imoveisPerfil = imoveisPerfil;
+	}
+
+	public OrigemModel getOrigemModel() {
+		return origemModel;
+	}
+
+	public void setOrigemModel(OrigemModel origemModel) {
+		this.origemModel = origemModel;
+	}
+
+	public Date getDataInicial() {
+		return dataInicial;
+	}
+
+	public void setDataInicial(Date dataInicial) {
+		this.dataInicial = dataInicial;
+	}
+
+	public Date getDataUltimoContato() {
+		return dataUltimoContato;
+	}
+
+	public void setDataUltimoContato(Date dataUltimoContato) {
+		this.dataUltimoContato = dataUltimoContato;
+	}
+
+	public String getTelefones() {
+		return telefones;
+	}
+
+	public void setTelefones(String telefones) {
+		this.telefones = telefones;
 	}
 }

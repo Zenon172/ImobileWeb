@@ -8,21 +8,52 @@
 
 		<p:fieldset style="width: 98%">
 
-			<h:panelGrid style="width: 40%">
+			<h:panelGrid columns="2" columnClasses="coluna40_2, coluna60_2" style="width: 100%">
 
-				<p:outputLabel for="itDescricao" value="Descrição" />
-				<p:inputText id="itDescricao" value="#{mbeanModel.descricao}" required="true" maxlength="100" styleClass="coluna90" />
-				
-				<p:outputLabel for="itQtdTorres" value="Qtd. de Torres" />
-				<p:inputText id="itQtdTorres" value="#{mbeanModel.qtdTorres}" maxlength="3" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna20" />
-				
-				<p:outputLabel for="somBairro" value="Bairro" />
-				<h:selectOneMenu id="somBairro" value="#{mbeanModel.bairroModel.id}" required="true" styleClass="coluna40">
-					<f:selectItem itemValue="" itemLabel="Não Selecionado" />
-					<f:selectItems value="#{mbean.comboBairro}" />
-				</h:selectOneMenu>
+				<h:panelGrid style="width: 100%">
+
+					<p:outputLabel for="itDescricao" value="Descrição" />
+					<p:inputText id="itDescricao" value="#{mbeanModel.descricao}" required="true" maxlength="100" styleClass="coluna90" />
+
+					<p:outputLabel for="itQtdTorres" value="Qtd. de Torres" rendered="false" />
+					<p:inputText id="itQtdTorres" value="#{mbeanModel.qtdTorres}" maxlength="3" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" rendered="false" styleClass="coluna20" />
+
+					<p:outputLabel for="somBairro" value="Bairro" />
+					<h:selectOneMenu id="somBairro" value="#{mbeanModel.bairroModel.id}" required="true" styleClass="coluna40">
+						<f:selectItem itemValue="" itemLabel="Não Selecionado" />
+						<f:selectItems value="#{mbean.comboBairro}" />
+					</h:selectOneMenu>
+
+				</h:panelGrid>
+
+				<p:fieldset legend="Edifícios">
+
+					<h:panelGrid style="width: 100%">
+
+						<p:commandButton value="Adicionar" icon="ui-icon-plus" action="#{mbean.addEdificio}" process="@this, dtEdificios" update="dtEdificios" />
+
+						<p:dataTable id="dtEdificios" value="#{mbeanModel.edificios}" var="linha" rowIndexVar="index" emptyMessage="Nenhum edifício adicionado">
+
+							<p:column headerText="Descrição" styleClass="coluna50">
+								<p:inputText value="#{linha.descricao}" required="true" label="Descrição do edifício na linha #{index+1}" maxlength="100" styleClass="coluna97" />
+							</p:column>
+
+							<p:column headerText="Qtd. Pavimentos" styleClass="coluna25">
+								<p:inputText value="#{linha.qtdPavimentos}" maxlength="3" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna95" />
+							</p:column>
+
+							<p:column headerText="Apt. por andar" styleClass="coluna25">
+								<p:inputText value="#{linha.qtdApartamentosAndar}" maxlength="3" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna95" />
+							</p:column>
+
+						</p:dataTable>
+
+					</h:panelGrid>
+
+				</p:fieldset>
 
 			</h:panelGrid>
+
 
 		</p:fieldset>
 
@@ -32,7 +63,7 @@
 
 		<h:outputText value="Descrição" />
 		<p:inputText value="#{mbeanPesquisaModel.descricao}" styleClass="coluna40" />
-		
+
 		<h:outputFormat value="Bairro" />
 		<h:selectOneMenu value="#{mbeanPesquisaModel.bairroModel.id}" styleClass="coluna20">
 			<f:selectItem itemValue="" itemLabel="Não Selecionado" />
