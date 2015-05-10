@@ -17,15 +17,17 @@
 				
 				<p:fieldset legend="Imovel #{varStatus.index+1}">
 				
-					<h:panelGrid columns="3">
+					<h:panelGrid columns="4" columnClasses="coluna5, coluna20, coluna15, coluna60" style="width: 100%">
 						
+						<h:outputText value="Ativo?" />
 						<h:outputText value="Tipo" />
 						<h:outputText value="Posição do Sol" />
 						<h:outputText value="Valor" />
 					
+						<p:selectBooleanCheckbox value="#{linha.flagAtivo}" disabled="true" />
 						<p:inputText value="#{linha.tipoImovelModel.descricao}" disabled="true" styleClass="coluna90" />
 						<p:inputText value="#{linha.posicaoSolModel.descricao}" disabled="true" styleClass="coluna90" />
-						<p:inputText value="#{linha.valor}" disabled="true" styleClass="coluna90">
+						<p:inputText value="#{linha.valor}" disabled="true" styleClass="coluna20">
 							<f:convertNumber type="currency" locale="pt_BR" currencySymbol="R$" />
 						</p:inputText>
 						

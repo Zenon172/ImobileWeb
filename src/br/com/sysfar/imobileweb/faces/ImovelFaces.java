@@ -79,6 +79,7 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 	protected void clearFields() {
 
 		this.crudModel = new ImovelModel();
+		this.crudModel.setFlagAtivo(Boolean.TRUE);
 		this.crudModel.setTipoImovelModel(new TipoImovelModel());
 		this.crudModel.setEdificioModel(new EdificioModel());
 		this.crudModel.getEdificioModel().setCondominioModel(new CondominioModel());
@@ -96,6 +97,7 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 		this.crudModel.getProprietarioModel().setContatosResponsavelVenda(new ArrayList<ProprietarioContatoModel>());
 
 		this.crudPesquisaModel = new ImovelModel();
+		this.crudPesquisaModel.setFlagAtivo(Boolean.TRUE);
 		this.crudPesquisaModel.setTipoImovelModel(new TipoImovelModel());
 		this.crudPesquisaModel.setEdificioModel(new EdificioModel());
 		this.crudPesquisaModel.getEdificioModel().setCondominioModel(new CondominioModel());

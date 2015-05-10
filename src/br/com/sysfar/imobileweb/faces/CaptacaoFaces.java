@@ -14,6 +14,7 @@ import org.primefaces.context.RequestContext;
 import br.com.sysfar.imobileweb.dao.AtividadeDAO;
 import br.com.sysfar.imobileweb.dao.CaptacaoDAO;
 import br.com.sysfar.imobileweb.dao.ComboDAO;
+import br.com.sysfar.imobileweb.dao.CorretorDAO;
 import br.com.sysfar.imobileweb.dao.CrudDAO;
 import br.com.sysfar.imobileweb.dao.ImovelDAO;
 import br.com.sysfar.imobileweb.dao.UsuarioDAO;
@@ -21,6 +22,8 @@ import br.com.sysfar.imobileweb.model.AtividadeModel;
 import br.com.sysfar.imobileweb.model.BairroModel;
 import br.com.sysfar.imobileweb.model.CaptacaoContatoModel;
 import br.com.sysfar.imobileweb.model.CaptacaoModel;
+import br.com.sysfar.imobileweb.model.CorretorContatoModel;
+import br.com.sysfar.imobileweb.model.CorretorModel;
 import br.com.sysfar.imobileweb.model.ImovelModel;
 import br.com.sysfar.imobileweb.model.MenuModel;
 import br.com.sysfar.imobileweb.model.OperadoraModel;
@@ -46,6 +49,7 @@ public class CaptacaoFaces extends CrudFaces<CaptacaoModel> {
 	private ComboDAO comboDAO;
 	private AtividadeDAO atividadeDAO;
 	private ImovelDAO imovelDAO;
+	private CorretorDAO corretorDAO;
 
 	private List<SelectItem> comboTipoImovel;
 	private List<SelectItem> comboBairro;
@@ -88,6 +92,7 @@ public class CaptacaoFaces extends CrudFaces<CaptacaoModel> {
 		this.comboDAO = new ComboDAO();
 		this.atividadeDAO = new AtividadeDAO();
 		this.imovelDAO = new ImovelDAO();
+		this.corretorDAO = new CorretorDAO();
 
 		this.comboTipoImovel = super.initCombo(this.comboDAO.pesquisarTipoImovel(), "id", "descricao");
 		this.comboBairro = super.initCombo(this.comboDAO.pesquisarBairro(), "id", "descricao");
@@ -250,6 +255,10 @@ public class CaptacaoFaces extends CrudFaces<CaptacaoModel> {
 
 				super.addErrorMessage("Existe um proprietário com este telefone");
 
+			} else if (this.corretorDAO.isExisteCorretor(telefone.substring(5))) {
+
+				super.addErrorMessage("Existe um corretor com este telefone");
+
 			}
 
 		}
@@ -268,6 +277,10 @@ public class CaptacaoFaces extends CrudFaces<CaptacaoModel> {
 			} else if (this.imovelDAO.isExisteImovel(email)) {
 
 				super.addErrorMessage("Existe um proprietário com este e-mail");
+
+			} else if (this.corretorDAO.isExisteCorretor(email)) {
+
+				super.addErrorMessage("Existe um corretor com este e-mail");
 
 			}
 
@@ -380,6 +393,60 @@ public class CaptacaoFaces extends CrudFaces<CaptacaoModel> {
 
 		}
 
+		return null;
+	}
+	
+	public String cadastrarCorretor(){
+		
+		if(TSUtil.isEmpty(this.crudModel.getContato())){
+			super.addErrorMessage("Anunciante: Campo obrigatório");
+			return null;
+		}
+		
+		CorretorModel corretor = new CorretorModel();
+		corretor.setNome(this.crudModel.getContato());
+		corretor.setContatos(new ArrayList<CorretorContatoModel>());
+		
+		for(CaptacaoContatoModel captacaoContatoModel : this.crudModel.getContatos()){
+			
+			if(!TSUtil.isEmpty(captacaoContatoModel.getTelefone()) || !TSUtil.isEmpty(captacaoContatoModel.getEmail())){
+				
+				CorretorContatoModel corretorContatoModel = new CorretorContatoModel();
+				
+				corretorContatoModel.setCorretorModel(corretor);
+				corretorContatoModel.setNome(captacaoContatoModel.getNome());
+				corretorContatoModel.setTelefone(captacaoContatoModel.getTelefone());
+				corretorContatoModel.setEmail(captacaoContatoModel.getEmail());
+				corretorContatoModel.setOperadoraModel(captacaoContatoModel.getOperadoraModel());
+				
+				corretor.getContatos().add(corretorContatoModel);
+				
+			}
+			
+		}
+		
+		if(TSUtil.isEmpty(corretor.getContatos())){
+			super.addErrorMessage("Ao menos um contato é obrigatório");
+			return null;
+		}
+		
+		try {
+			
+			corretor.setDataCadastro(new Date());
+			corretor.setUsuarioCadastroModel(Utilitario.getUsuarioLogado());
+			
+			this.corretorDAO.inserir(corretor);
+			
+			this.clearFields();
+			
+			super.addInfoMessageKey(Constantes.OPERACAO_SUCESSO);
+			
+		} catch (TSApplicationException e) {
+			
+			super.throwException(e);
+			
+		}
+		
 		return null;
 	}
 

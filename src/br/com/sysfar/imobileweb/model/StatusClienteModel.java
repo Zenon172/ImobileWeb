@@ -14,6 +14,8 @@ public class StatusClienteModel implements Serializable {
 	private Boolean flagAtivo;
 	
 	private Boolean flagFinalizado;
+	
+	private Boolean flagEnviarEmailDesatualizado;
 
 	public StatusClienteModel(Boolean flagAtivo) {
 		super();
@@ -54,6 +56,14 @@ public class StatusClienteModel implements Serializable {
 
 	public void setFlagFinalizado(Boolean flagFinalizado) {
 		this.flagFinalizado = flagFinalizado;
+	}
+
+	public Boolean getFlagEnviarEmailDesatualizado() {
+		return flagEnviarEmailDesatualizado;
+	}
+
+	public void setFlagEnviarEmailDesatualizado(Boolean flagEnviarEmailDesatualizado) {
+		this.flagEnviarEmailDesatualizado = flagEnviarEmailDesatualizado;
 	}
 
 	@Override

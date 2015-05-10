@@ -14,9 +14,9 @@ public final class StatusClienteDAO implements CrudDAO<StatusClienteModel> {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		broker.setSQL("SELECT ID, DESCRICAO, FLAG_ATIVO, FLAG_FINALIZADO FROM STATUS_CLIENTE WHERE ID = ?", model.getId());
+		broker.setSQL("SELECT ID, DESCRICAO, FLAG_ATIVO, FLAG_FINALIZADO, FLAG_ENVIAR_EMAIL_DESATUALIZADO FROM STATUS_CLIENTE WHERE ID = ?", model.getId());
 
-	return (StatusClienteModel) broker.getObjectBean(StatusClienteModel.class, "id", "descricao", "flagAtivo", "flagFinalizado");
+		return (StatusClienteModel) broker.getObjectBean(StatusClienteModel.class, "id", "descricao", "flagAtivo", "flagFinalizado", "flagEnviarEmailDesatualizado");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -35,7 +35,7 @@ public final class StatusClienteDAO implements CrudDAO<StatusClienteModel> {
 
 		model.setId(broker.getSequenceNextValue("status_cliente_id_seq"));
 
-		broker.setSQL("INSERT INTO STATUS_CLIENTE (ID, DESCRICAO, FLAG_ATIVO, FLAG_FINALIZADO) VALUES (?, ?, ?, ?)", model.getId(), model.getDescricao(), model.getFlagAtivo(), model.getFlagFinalizado());
+		broker.setSQL("INSERT INTO STATUS_CLIENTE (ID, DESCRICAO, FLAG_ATIVO, FLAG_FINALIZADO, FLAG_ENVIAR_EMAIL_DESATUALIZADO) VALUES (?, ?, ?, ?, ?)", model.getId(), model.getDescricao(), model.getFlagAtivo(), model.getFlagFinalizado(), model.getFlagEnviarEmailDesatualizado());
 
 		broker.execute();
 
@@ -46,7 +46,7 @@ public final class StatusClienteDAO implements CrudDAO<StatusClienteModel> {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 
-		broker.setSQL("UPDATE STATUS_CLIENTE SET DESCRICAO = ?, FLAG_ATIVO = ?, FLAG_FINALIZADO = ? WHERE ID = ?", model.getDescricao(), model.getFlagAtivo(), model.getFlagFinalizado(), model.getId());
+		broker.setSQL("UPDATE STATUS_CLIENTE SET DESCRICAO = ?, FLAG_ATIVO = ?, FLAG_FINALIZADO = ?, FLAG_ENVIAR_EMAIL_DESATUALIZADO = ? WHERE ID = ?", model.getDescricao(), model.getFlagAtivo(), model.getFlagFinalizado(), model.getFlagEnviarEmailDesatualizado(), model.getId());
 
 		broker.execute();
 

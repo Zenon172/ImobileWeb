@@ -41,6 +41,15 @@
 				</p:column>
 
 			</p:dataGrid>
+			
+			<div align="right">
+				<p:commandButton value="Adicionar Corretor" icon="ui-icon-plus" process="@this, fsContatos" oncomplete="if(!args.validationFailed){cdCorretor.show()}" style="margin-top: 5px"/>
+			</div>
+			
+			<p:confirmDialog message="Confirma o cadastro do CORRETOR?" header="Aviso" severity="alert" widgetVar="cdCorretor" modal="true">
+				<p:commandButton value="Sim" process="@this" oncomplete="cdCorretor.hide()" action="#{mbean.cadastrarCorretor}" />
+				<p:commandButton type="button" value="Não" onclick="cdCorretor.hide()" />
+			</p:confirmDialog>
 
 			<p:outputPanel autoUpdate="true">
 				<script type="text/javascript">

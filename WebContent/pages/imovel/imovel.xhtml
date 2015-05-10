@@ -11,14 +11,16 @@
 
 			<p:fieldset legend="Dados do imóvel" style="margin-top: 5px;">
 
-				<h:panelGrid columns="5" columnClasses="coluna10, coluna25, coluna20, coluna10, coluna35" style="width: 100%">
+				<h:panelGrid columns="6" columnClasses="coluna5, coluna10, coluna25, coluna20, coluna10, coluna30" style="width: 100%">
 
+					<p:outputLabel for="flagAtivo" value="Ativo?" />
 					<p:outputLabel for="codigo" value="Código" />
 					<p:outputLabel for="somTipoImovel" value="Tipo" />
 					<h:outputText value="Posição do sol" />
 					<p:outputLabel for="itValor" value="Valor" />
 					<h:outputText value="" />
 
+					<p:selectBooleanCheckbox id="flagAtivo" value="#{mbeanModel.flagAtivo}" />
 					<p:inputText id="codigo" value="#{mbeanModel.codigo}" maxlength="10" disabled="true" styleClass="coluna90" />
 					<h:selectOneMenu id="somTipoImovel" value="#{mbeanModel.tipoImovelModel.id}" required="true" styleClass="coluna95">
 						<f:selectItem itemValue="" itemLabel="Não Selecionado" />
@@ -257,7 +259,7 @@
 							<f:selectItem itemValue="" itemLabel="Não Selecionado" />
 							<f:selectItems value="#{mbean.comboProprietario}" />
 						</h:selectOneMenu>
-						<p:commandButton icon="ui-icon-clipboard" action="#{mbean.carregarProprietario}" process="@this, fsInformacoesGerenciais" update=":tabview:formProprietario:pgDadosProprietario" oncomplete="dlgDadosProprietario.show()" style="margin-left: 5px" />
+						<p:commandButton icon="ui-icon-clipboard" action="#{mbean.carregarProprietario}" process="@this, fsInformacoesGerenciais" update=":tabview:formProprietario:pgDadosProprietario" oncomplete="if(!args.validationFailed){dlgDadosProprietario.show()}" style="margin-left: 5px" />
 					</h:panelGroup>
 
 				</h:panelGrid>
@@ -468,14 +470,16 @@
 
 		<p:fieldset>
 
-			<h:panelGrid columns="5" columnClasses="coluna10, coluna15, coluna20, coluna40, coluna20" style="width: 90%">
+			<h:panelGrid columns="6" columnClasses="coluna5, coluna10, coluna15, coluna20, coluna40, coluna15" style="width: 90%">
 
+				<h:outputText value="Ativo?" />
 				<h:outputText value="Código" />
 				<h:outputText value="Tipo" />
 				<h:outputText value="Captador" />
 				<h:outputText value="Proprietário" />
 				<h:outputText value="Condomínio" />
 
+				<p:selectBooleanCheckbox value="#{mbeanPesquisaModel.flagAtivo}" />
 				<p:inputText value="#{mbeanPesquisaModel.codigo}" styleClass="coluna90" />
 				<h:selectOneMenu value="#{mbeanPesquisaModel.tipoImovelModel.id}" styleClass="coluna95">
 					<f:selectItem itemValue="" itemLabel="Não Selecionado" />

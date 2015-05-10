@@ -1,0 +1,92 @@
+<ui:composition template="/resources/templates/templateCRUD.xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xmlns:ts="http://java.sun.com/jsf/composite/components" xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<ui:param name="mbean" value="${corretorFaces}" />
+	<ui:param name="mbeanModel" value="${corretorFaces.crudModel}" />
+	<ui:param name="mbeanPesquisaModel" value="${corretorFaces.crudPesquisaModel}" />
+	<ui:param name="possuiDadosCadastro" value="false" />
+
+	<ui:define name="cadastro">
+
+		<p:fieldset style="width: 98%">
+
+			<h:panelGrid style="width: 40%;">
+
+				<p:outputLabel for="itNome" value="Nome" />
+				<p:inputText id="itNome" value="#{mbeanModel.nome}" required="true" maxlength="100" styleClass="coluna95" />
+
+			</h:panelGrid>
+
+			<h:panelGrid style="width: 100%; margin-left: -8px">
+
+				<p:dataGrid columns="2" var="contato" value="#{mbeanModel.contatos}" rowIndexVar="index" styleClass="gridNoBorder">
+
+					<p:column>
+						<h:panelGrid columns="4" columnClasses="coluna20, coluna20, coluna20, coluna40">
+							<h:outputText value="Nome #{index + 1}" />
+							<h:outputText value="Telefone #{index + 1}" />
+							<h:outputText value="Operadora #{index + 1}" />
+							<h:outputText value="E-mail #{index + 1}" />
+
+							<p:inputText id="itNome" value="#{contato.nome}" maxlength="100" styleClass="coluna90" />
+							<p:inputText id="itTelefone" value="#{contato.telefone}" maxlength="15" styleClass="coluna90 telefone" />
+							<h:selectOneMenu value="#{contato.operadoraModel.id}" styleClass="coluna95">
+								<f:selectItem itemLabel="selecione" itemValue="" />
+								<f:selectItems value="#{mbean.comboOperadoras}" />
+							</h:selectOneMenu>
+							<p:inputText id="itEmail" value="#{contato.email}" maxlength="100" styleClass="coluna90" />
+						</h:panelGrid>
+					</p:column>
+
+				</p:dataGrid>
+
+			</h:panelGrid>
+
+		</p:fieldset>
+		
+		<p:outputPanel autoUpdate="true">
+			<script type="text/javascript">
+				$(".telefone").mask("(00) 0000-00009");
+			</script>
+		</p:outputPanel>
+
+	</ui:define>
+
+	<ui:define name="pesquisaCampos">
+
+		<h:panelGrid style="width: 80%">
+
+			<h:outputText value="Dados do corretor" />
+			<p:inputText value="#{mbeanPesquisaModel.nome}" styleClass="coluna90" />
+
+		</h:panelGrid>
+
+	</ui:define>
+
+	<ui:define name="colunasTabela">
+
+		<p:column headerText="Data" styleClass="coluna12">
+			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
+				<h:outputText value="#{linha.dataCadastro}">
+					<ui:include src="/resources/templates/include_gmt_format.xhtml" />
+				</h:outputText>
+				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+			</p:commandLink>
+		</p:column>
+
+		<p:column headerText="Responsável" styleClass="coluna30">
+			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
+				<h:outputText value="#{linha.usuarioCadastroModel.nome}" />
+				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+			</p:commandLink>
+		</p:column>
+
+		<p:column headerText="Nome" styleClass="coluna40">
+			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
+				<h:outputText value="#{linha.nome}" />
+				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+			</p:commandLink>
+		</p:column>
+
+	</ui:define>
+
+</ui:composition>
