@@ -26,6 +26,7 @@ import br.com.sysfar.imobileweb.model.ImovelModel;
 import br.com.sysfar.imobileweb.model.MenuModel;
 import br.com.sysfar.imobileweb.model.OperadoraModel;
 import br.com.sysfar.imobileweb.model.OrigemModel;
+import br.com.sysfar.imobileweb.model.PosicaoSolModel;
 import br.com.sysfar.imobileweb.model.StatusClienteModel;
 import br.com.sysfar.imobileweb.model.TipoImovelModel;
 import br.com.sysfar.imobileweb.model.UsuarioModel;
@@ -112,6 +113,7 @@ public class ClienteFaces extends CrudFaces<ClienteModel> {
 		model.setBairros(new ArrayList<ClientePerfilBairroModel>());
 		model.setClienteModel(this.crudModel);
 		model.setTipoImovelModel(new TipoImovelModel());
+		model.setPosicaoSolModel(new PosicaoSolModel());
 
 		return model;
 	}

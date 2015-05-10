@@ -1,6 +1,7 @@
 package br.com.sysfar.imobileweb.servlet;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,16 +25,15 @@ import br.com.sysfar.imobileweb.jobs.ClienteJob;
 public class InicialServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	
+	private Logger logger = Logger.getLogger(this.getClass().getName());
        
     public InicialServlet() {
-        super();
-    }
-    
-    @Override
-    public void init() throws ServletException {
-    	
-    	System.out.println("Funcionou");
-    	
+        
+    	super();
+        
+    	logger.info("--- construtor executado ---");
+        
     	SchedulerFactory sf = new StdSchedulerFactory();
     	Scheduler sched;
     	
@@ -45,7 +45,7 @@ public class InicialServlet extends HttpServlet {
 	    	
 			CronTrigger trigger = TriggerBuilder.newTrigger()
 					 .withIdentity("clienteTrigger", "cliente")
-					 .withSchedule(CronScheduleBuilder.cronSchedule("0 45 19 * * ? *"))
+					 .withSchedule(CronScheduleBuilder.cronSchedule("0 30 7 * * ? *"))
 					 .build();
 			
 	    	sched.scheduleJob(job, trigger);
@@ -57,7 +57,11 @@ public class InicialServlet extends HttpServlet {
 			e.printStackTrace();
 			
 		}
-    	 
+		
+    }
+    
+    @Override
+    public void init() throws ServletException {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

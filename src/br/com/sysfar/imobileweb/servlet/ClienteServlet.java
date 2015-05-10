@@ -56,7 +56,7 @@ public class ClienteServlet extends HttpServlet {
 
 		}
 
-		System.out.println("enviando email para clientes");
+		System.out.println("enviado email para corretores");
 
 	}
 
