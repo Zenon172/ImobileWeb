@@ -39,7 +39,7 @@
 						<h:outputText value="____________" style="color:lightgray" />
 
 						<p:commandButton id="btnDesconectar" global="false" icon="logout48" action="#{menuFaces.logout}" style="margin-top:5px; width: 64px; height:64px" />
-						<p:tooltip for="btnDesconectar" value="Desconectar o usuário #{sessionScope.usuarioLogado.nome} do sistema." />
+						<pe:tooltip for="btnDesconectar" value="Desconectar o usuário #{sessionScope.usuarioLogado.nome} do sistema." />
 
 						<ui:include src="menu_novo.xhtml" />
 
@@ -145,6 +145,19 @@
 			$(window).resize(function() {
 				redimensionarDashBoard();
 			});
+			
+			$(".telefone").mask("(00) 0000-00009");
+			$('.telefone').focusout(function(){
+			    var phone, element;
+			    element = $(this);
+			    element.unmask();
+			    phone = element.val().replace(/\D/g, '');
+			    if(phone.length > 10) {
+			        element.mask("(99) 99999-9999");
+			    } else {
+			        element.mask("(99) 9999-99999");
+			    }
+			}).trigger('focusout');
 		</script>
 
 	</h:body>

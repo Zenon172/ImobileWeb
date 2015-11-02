@@ -101,7 +101,7 @@ public class ImobileFilter implements Filter {
 
 		} else {
 
-			if (uri.equals("/login.xhtml") || uri.equals("/loginExpirado.xhtml")) {
+			if (uri.equals("/painelChamadas.xhtml") || uri.equals("/login.xhtml") || uri.equals("/loginExpirado.xhtml")) {
 
 				try {
 
@@ -124,9 +124,9 @@ public class ImobileFilter implements Filter {
 					}
 
 				} catch (Exception e) {
-
+					
 					((HttpServletResponse) response).sendRedirect(r.getContextPath() + "/pages/login.xhtml");
-
+					
 				}
 
 			} else {

@@ -247,7 +247,7 @@ public class CaptacaoFaces extends CrudFaces<CaptacaoModel> {
 
 		if (!TSUtil.isEmpty(telefone) && telefone.length() >= 14) {
 
-			if (this.captacaoDAO.isExisteCaptacaoSimilar(telefone.substring(5))) {
+			if (this.captacaoDAO.isExisteCaptacaoSimilar(telefone.length() == 14 ? telefone.substring(5) : telefone.substring(6))) {
 
 				super.addErrorMessage("O telefone informado já foi encontrado em outra captação");
 
