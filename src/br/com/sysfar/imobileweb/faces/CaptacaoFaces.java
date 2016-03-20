@@ -170,22 +170,22 @@ public class CaptacaoFaces extends CrudFaces<CaptacaoModel> {
 
 		if (TSUtil.isEmpty(this.crudModel.getId()) && this.flagValidarCaptacaoDuplicada) {
 
-			if(!this.validarCaptacaoDuplicada()){
-				
+			if (!this.validarCaptacaoDuplicada()) {
+
 				valida = false;
 				super.addErrorMessage("Captações similares foram encontradas");
-				
+
 			}
-			
-			if(!this.validarImovelExistente()){
+
+			if (!this.validarImovelExistente()) {
 
 				valida = false;
 				super.addErrorMessage("Imóveis do estoque foram encontrados");
 
 			}
-			
+
 		}
-		
+
 		RequestContext.getCurrentInstance().addCallbackParam("validationFailed", valida);
 
 		return valida;
@@ -245,6 +245,8 @@ public class CaptacaoFaces extends CrudFaces<CaptacaoModel> {
 
 	public String validarTelefoneDuplicidade(String telefone) {
 
+		telefone = Utilitario.getTelefoneFormatado9digito(telefone);
+
 		if (!TSUtil.isEmpty(telefone) && telefone.length() >= 14) {
 
 			if (this.captacaoDAO.isExisteCaptacaoSimilar(telefone.length() == 14 ? telefone.substring(5) : telefone.substring(6))) {
@@ -292,7 +294,7 @@ public class CaptacaoFaces extends CrudFaces<CaptacaoModel> {
 	public String gerarImovel() {
 
 		this.detail();
-		
+
 		TSFacesUtil.addObjectInSession(Constantes.SESSION_CAPTACAO_ATUAL, this.crudModel);
 
 		MenuModel menuModel = new MenuModel();
@@ -395,58 +397,58 @@ public class CaptacaoFaces extends CrudFaces<CaptacaoModel> {
 
 		return null;
 	}
-	
-	public String cadastrarCorretor(){
-		
-		if(TSUtil.isEmpty(this.crudModel.getContato())){
+
+	public String cadastrarCorretor() {
+
+		if (TSUtil.isEmpty(this.crudModel.getContato())) {
 			super.addErrorMessage("Anunciante: Campo obrigatório");
 			return null;
 		}
-		
+
 		CorretorModel corretor = new CorretorModel();
 		corretor.setNome(this.crudModel.getContato());
 		corretor.setContatos(new ArrayList<CorretorContatoModel>());
-		
-		for(CaptacaoContatoModel captacaoContatoModel : this.crudModel.getContatos()){
-			
-			if(!TSUtil.isEmpty(captacaoContatoModel.getTelefone()) || !TSUtil.isEmpty(captacaoContatoModel.getEmail())){
-				
+
+		for (CaptacaoContatoModel captacaoContatoModel : this.crudModel.getContatos()) {
+
+			if (!TSUtil.isEmpty(captacaoContatoModel.getTelefone()) || !TSUtil.isEmpty(captacaoContatoModel.getEmail())) {
+
 				CorretorContatoModel corretorContatoModel = new CorretorContatoModel();
-				
+
 				corretorContatoModel.setCorretorModel(corretor);
 				corretorContatoModel.setNome(captacaoContatoModel.getNome());
 				corretorContatoModel.setTelefone(captacaoContatoModel.getTelefone());
 				corretorContatoModel.setEmail(captacaoContatoModel.getEmail());
 				corretorContatoModel.setOperadoraModel(captacaoContatoModel.getOperadoraModel());
-				
+
 				corretor.getContatos().add(corretorContatoModel);
-				
+
 			}
-			
+
 		}
-		
-		if(TSUtil.isEmpty(corretor.getContatos())){
+
+		if (TSUtil.isEmpty(corretor.getContatos())) {
 			super.addErrorMessage("Ao menos um contato é obrigatório");
 			return null;
 		}
-		
+
 		try {
-			
+
 			corretor.setDataCadastro(new Date());
 			corretor.setUsuarioCadastroModel(Utilitario.getUsuarioLogado());
-			
+
 			this.corretorDAO.inserir(corretor);
-			
+
 			this.clearFields();
-			
+
 			super.addInfoMessageKey(Constantes.OPERACAO_SUCESSO);
-			
+
 		} catch (TSApplicationException e) {
-			
+
 			super.throwException(e);
-			
+
 		}
-		
+
 		return null;
 	}
 

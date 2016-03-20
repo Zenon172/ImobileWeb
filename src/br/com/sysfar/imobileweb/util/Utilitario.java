@@ -1,7 +1,10 @@
 package br.com.sysfar.imobileweb.util;
 
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
+
+import javax.swing.text.MaskFormatter;
 
 import br.com.sysfar.imobileweb.model.UsuarioModel;
 import br.com.topsys.util.TSUtil;
@@ -89,6 +92,42 @@ public class Utilitario {
 		}
 		builder.append(valueToPad);
 		return builder.toString();
+	}
+	
+	public static String format(String campo, String pattern) {
+		
+		MaskFormatter mask;
+		
+		try {
+			
+			mask = new MaskFormatter(pattern);
+				
+			mask.setValueContainsLiteralCharacters(false);
+			
+			campo = mask.valueToString(campo);
+			
+		} catch (ParseException e) {
+			
+			e.printStackTrace();
+			
+		}
+		
+		return campo;
+		
+	}
+	
+	public static String getTelefoneFormatado9digito(String telefone) {
+		
+		if(TSUtil.removerNaoDigitos(telefone).length() > 10){
+		
+			return format(TSUtil.removerNaoDigitos(telefone), "(##) #####-####");
+			
+		} else {
+		
+			return format(TSUtil.removerNaoDigitos(telefone), "(##) ####-####");
+		
+		}
+			
 	}
 
 }

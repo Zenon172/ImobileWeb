@@ -17,9 +17,9 @@ import br.com.sysfar.imobileweb.util.Constantes;
 public class ImobileFilter implements Filter {
 
 	private static final String AJAX = "XMLHttpRequest";
+	private FilterConfig filterConfig = null;
 
-	@Override
-	public void destroy() {
+	public ImobileFilter() {
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class ImobileFilter implements Filter {
 
 		} else {
 
-			if (uri.equals("/painelChamadas.xhtml") || uri.equals("/login.xhtml") || uri.equals("/loginExpirado.xhtml")) {
+			if (uri.equals("/login.xhtml") || uri.equals("/loginExpirado.xhtml")) {
 
 				try {
 
@@ -148,8 +148,27 @@ public class ImobileFilter implements Filter {
 
 	}
 
+	public FilterConfig getFilterConfig() {
+		return (this.filterConfig);
+	}
+
+	public void setFilterConfig(FilterConfig filterConfig) {
+		this.filterConfig = filterConfig;
+	}
+
+	@Override
+	public void destroy() {
+	}
+
+	@Override
+	public void init(FilterConfig filterConfig) {
+		System.getProperties().put("org.apache.el.parser.COERCE_TO_ZERO", "false");
+	}
+
 	private boolean isAjaxRequest(HttpServletRequest request) {
+
 		return AJAX.equals(request.getHeader("X-Requested-With"));
+
 	}
 
 	private String redirectAjaxRequest(HttpServletRequest request, String page) {
@@ -157,11 +176,6 @@ public class ImobileFilter implements Filter {
 		sb.append("<?xml version='1.0' encoding='UTF-8'?>");
 		sb.append("<partial-response><redirect url=\"").append(request.getContextPath()).append(page).append("\"/></partial-response>");
 		return sb.toString();
-	}
-
-	@Override
-	public void init(FilterConfig arg0) throws ServletException {
-		System.getProperties().put("org.apache.el.parser.COERCE_TO_ZERO", "false");
 	}
 
 }
