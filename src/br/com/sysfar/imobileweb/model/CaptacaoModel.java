@@ -10,6 +10,8 @@ public class CaptacaoModel extends BaseModel {
 
 	private TipoImovelModel tipoImovelModel;
 
+	private String titulo;
+	
 	private String descricao;
 
 	private Double valor;
@@ -35,6 +37,10 @@ public class CaptacaoModel extends BaseModel {
 	private ImovelModel imovelGeradoModel;
 	
 	private List<AtividadeModel> atividades;
+	
+	private Boolean flagOportunidade;
+	
+	private Boolean flagSemLiquidez;
 	
 	private Date dataInicial;
 	private Date dataFinal;
@@ -166,4 +172,29 @@ public class CaptacaoModel extends BaseModel {
 	public void setAtividades(List<AtividadeModel> atividades) {
 		this.atividades = atividades;
 	}
+
+	public Boolean getFlagOportunidade() {
+		return flagOportunidade;
+	}
+
+	public void setFlagOportunidade(Boolean flagOportunidade) {
+		this.flagOportunidade = flagOportunidade;
+	}
+
+	public Boolean getFlagSemLiquidez() {
+		return flagSemLiquidez;
+	}
+
+	public void setFlagSemLiquidez(Boolean flagSemLiquidez) {
+		this.flagSemLiquidez = flagSemLiquidez;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
 }

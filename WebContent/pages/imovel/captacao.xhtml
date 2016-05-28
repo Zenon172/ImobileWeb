@@ -70,7 +70,7 @@
 
 		</p:fieldset>
 
-		<p:fieldset legend="Dados do Imóvel" id="fsCadastro" style="width: 98%">
+		<p:fieldset id="fsDadosImovel" legend="Dados do Imóvel" style="width: 98%">
 
 			<h:panelGrid columns="7" columnClasses="coluna25, coluna11, coluna15, coluna15, coluna15, coluna10, coluna15" style="width: 100%">
 
@@ -107,21 +107,38 @@
 				<pe:inputNumber id="itValor" value="#{mbeanModel.valor}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 90%; text-align:right" />
 
 			</h:panelGrid>
-
-			<h:panelGrid style="width: 100%">
-
-				<p:outputLabel for="itLink" value="Link" />
-				<p:inputText id="itLink" value="#{mbeanModel.link}" styleClass="coluna99" />
-
-				<p:outputLabel for="itaDescricao" value="Descrição" />
-				<p:inputTextarea id="itaDescricao" value="#{mbeanModel.descricao}" rows="10" autoResize="false" styleClass="coluna99" />
-
-			</h:panelGrid>
-
+			
 			<h:panelGrid style="width: 100%">
 
 				<p:outputLabel for="itaObservacao" value="Observação" />
 				<p:inputTextarea id="itaObservacao" value="#{mbeanModel.observacao}" rows="5" autoResize="false" styleClass="coluna99" />
+
+			</h:panelGrid>
+			
+			<h:panelGrid columns="2" columnClasses="coluna10, coluna90" style="width: 100%">
+				
+				<h:outputText value="Oportunidade" />
+				<h:outputText value="Sem liquidez" />
+				
+				<p:selectBooleanCheckbox value="#{mbeanModel.flagOportunidade}" />
+				<p:selectBooleanCheckbox value="#{mbeanModel.flagSemLiquidez}" />
+				
+			</h:panelGrid>
+
+		</p:fieldset>
+		
+		<p:fieldset id="fsDadosAnuncio" legend="Dados do Anúncio" style="width: 98%">
+		
+			<h:panelGrid style="width: 100%">
+
+				<p:outputLabel for="itLink" value="Link" />
+				<p:inputText id="itLink" value="#{mbeanModel.link}" styleClass="coluna99" />
+				
+				<p:outputLabel for="itTitulo" value="Título" />
+				<p:inputText id="itTitulo" value="#{mbeanModel.titulo}" maxlength="200" styleClass="coluna99" />
+
+				<p:outputLabel for="itaDescricao" value="Descrição" />
+				<p:inputTextarea id="itaDescricao" value="#{mbeanModel.descricao}" rows="10" autoResize="false" styleClass="coluna99" />
 
 			</h:panelGrid>
 
@@ -233,7 +250,7 @@
 		<p:commandButton type="button" value="Gerar Imóvel" title="Criar um imóvel no sistema através dessa captação" icon="ui-icon-refresh" onclick="PF('cdCadastrarGerarImovel').show()" rendered="#{!empty mbeanModel.id and empty mbeanModel.imovelGeradoModel.id and menuFaces.menuModel.flagAlterar}" style="margin-left: 5px;" />
 
 		<p:confirmDialog message="Confirmar a INCLUSÃO do registro?" header="Aviso" severity="alert" widgetVar="cdCadastrarCRUD2" rendered="#{menuFaces.menuModel.flagInserir}">
-			<p:commandButton process="@form" value="Sim" onclick="PF('cdCadastrarCRUD2').hide()" action="#{mbean.insertEvent}" oncomplete="abrirDialog(dlgCaptacoesExistentes, args)" update="fsContatos fsCadastro panelGroupCaptacoesSimilares" />
+			<p:commandButton process="@form" value="Sim" onclick="PF('cdCadastrarCRUD2').hide()" action="#{mbean.insertEvent}" oncomplete="abrirDialog(dlgCaptacoesExistentes, args)" update="fsContatos fsDadosImovel fsDadosAnuncio panelGroupCaptacoesSimilares" />
 			<p:commandButton type="button" value="Não" onclick="PF('cdCadastrarCRUD2').hide()" />
 		</p:confirmDialog>
 

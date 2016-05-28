@@ -13,6 +13,12 @@
 
 				<p:outputLabel for="itDescricao" value="Descrição" />
 				<p:inputText id="itDescricao" value="#{mbeanModel.descricao}" required="true" maxlength="100" styleClass="coluna90" />
+				
+				<p:outputLabel for="somCidade" value="Cidade" />
+				<h:selectOneMenu id="somCidade" value="#{mbeanModel.cidadeModel.id}" styleClass="coluna30">
+					<f:selectItem itemValue="" itemLabel="Não Selecionado" />
+					<f:selectItems value="#{mbean.comboCidade}" />
+				</h:selectOneMenu>
 
 			</h:panelGrid>
 
@@ -24,12 +30,25 @@
 
 		<h:outputText value="Descrição" />
 		<p:inputText value="#{mbeanPesquisaModel.descricao}" styleClass="coluna50" />
+		
+		<p:outputLabel for="somCidadePesquisa" value="Cidade" />
+		<h:selectOneMenu id="somCidadePesquisa" value="#{mbeanPesquisaModel.cidadeModel.id}" styleClass="coluna15">
+			<f:selectItem itemValue="" itemLabel="Não Selecionado" />
+			<f:selectItems value="#{mbean.comboCidade}" />
+		</h:selectOneMenu>
 
 	</ui:define>
 
 	<ui:define name="colunasTabela">
 
-		<p:column headerText="Descrição" styleClass="coluna60">
+		<p:column headerText="Cidade" styleClass="coluna40">
+			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
+				<h:outputText value="#{linha.cidadeModel.nome}" />
+				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+			</p:commandLink>
+		</p:column>
+
+		<p:column headerText="Descrição" styleClass="coluna50">
 			<p:commandLink ajax="false" action="#{mbean.detailEvent}">
 				<h:outputText value="#{linha.descricao}" />
 				<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />

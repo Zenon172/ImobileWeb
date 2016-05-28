@@ -42,7 +42,7 @@ public class EdificioFaces extends CrudFaces<EdificioModel> {
 		this.comboCondominio = super.initCombo(this.comboDAO.pesquisarCondominio(), "id", "descricao");
 
 	}
-
+	
 	@Override
 	protected void prePersist() {
 		this.crudModel.setUsuarioCadastroModel(Utilitario.getUsuarioLogado());

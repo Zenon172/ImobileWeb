@@ -3,6 +3,7 @@ package br.com.sysfar.imobileweb.dao;
 import java.util.List;
 
 import br.com.sysfar.imobileweb.model.BairroModel;
+import br.com.sysfar.imobileweb.model.CidadeModel;
 import br.com.sysfar.imobileweb.model.CondominioModel;
 import br.com.sysfar.imobileweb.model.ConstrutoraModel;
 import br.com.sysfar.imobileweb.model.EdificioModel;
@@ -60,6 +61,16 @@ public final class ComboDAO {
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
 		
 		broker.setSQL("SELECT ID, DESCRICAO FROM CONDOMINIO ORDER BY DESCRICAO");
+		
+		return broker.getCollectionBean(CondominioModel.class, "id", "descricao");
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<CondominioModel> pesquisarCondominio(BairroModel model) {
+		
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+		
+		broker.setSQL("SELECT ID, DESCRICAO FROM CONDOMINIO C WHERE C.BAIRRO_ID = ? ORDER BY DESCRICAO", model.getId());
 		
 		return broker.getCollectionBean(CondominioModel.class, "id", "descricao");
 	}
@@ -202,6 +213,16 @@ public final class ComboDAO {
 		broker.setSQL("SELECT ID, DESCRICAO FROM TIPO_ATUALIZACAO_IMOVEL WHERE FLAG_ATIVO ORDER BY DESCRICAO");
 		
 		return broker.getCollectionBean(TipoAtualizacaoImovelModel.class, "id", "descricao");
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<CidadeModel> pesquisarCidade() {
+
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+
+		broker.setSQL("SELECT ID, NOME FROM CIDADE ORDER BY NOME");
+
+		return broker.getCollectionBean(CidadeModel.class, "id", "nome");
 	}
 
 }

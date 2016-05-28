@@ -20,6 +20,8 @@ public class ImovelModel extends BaseModel {
 
 	private String complemento;
 	
+	private CondominioModel condominioModel;
+	
 	private EdificioModel edificioModel;
 
 	private Integer andar;
@@ -121,6 +123,10 @@ public class ImovelModel extends BaseModel {
 	private Boolean flagGasIndividual;
 
 	private Boolean flagGeradorProprio;
+	
+	private Boolean flagVariasVagas;
+	
+	private Boolean flagNaoAnunciar;
 
 	private PosicaoSolModel posicaoSolModel;
 
@@ -136,6 +142,8 @@ public class ImovelModel extends BaseModel {
 	
 	private Integer qtdVagasCobertas;
 	
+	private Integer qtdVagasDescobertas;
+	
 	private Integer qtdVagasSoltas;
 
 	private Boolean flagUtilizouFgts;
@@ -148,7 +156,7 @@ public class ImovelModel extends BaseModel {
 
 	private Boolean flagHabitado;
 
-	private Double comissao;
+	private String comissao;
 
 	private String motivoVenda;
 
@@ -688,11 +696,11 @@ public class ImovelModel extends BaseModel {
 		this.flagHabitado = flagHabitado;
 	}
 
-	public Double getComissao() {
+	public String getComissao() {
 		return comissao;
 	}
 
-	public void setComissao(Double comissao) {
+	public void setComissao(String comissao) {
 		this.comissao = comissao;
 	}
 
@@ -878,6 +886,38 @@ public class ImovelModel extends BaseModel {
 
 	public void setAtualizacoes(List<ImovelAtualizacaoModel> atualizacoes) {
 		this.atualizacoes = atualizacoes;
+	}
+
+	public CondominioModel getCondominioModel() {
+		return condominioModel;
+	}
+
+	public void setCondominioModel(CondominioModel condominioModel) {
+		this.condominioModel = condominioModel;
+	}
+
+	public Boolean getFlagVariasVagas() {
+		return flagVariasVagas;
+	}
+
+	public void setFlagVariasVagas(Boolean flagVariasVagas) {
+		this.flagVariasVagas = flagVariasVagas;
+	}
+
+	public Boolean getFlagNaoAnunciar() {
+		return flagNaoAnunciar;
+	}
+
+	public void setFlagNaoAnunciar(Boolean flagNaoAnunciar) {
+		this.flagNaoAnunciar = flagNaoAnunciar;
+	}
+
+	public Integer getQtdVagasDescobertas() {
+		return qtdVagasDescobertas;
+	}
+
+	public void setQtdVagasDescobertas(Integer qtdVagasDescobertas) {
+		this.qtdVagasDescobertas = qtdVagasDescobertas;
 	}
 
 }

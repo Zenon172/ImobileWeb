@@ -5,19 +5,17 @@ import java.io.Serializable;
 import br.com.topsys.util.TSUtil;
 
 @SuppressWarnings("serial")
-public class BairroModel implements Serializable {
+public class CidadeModel implements Serializable {
 
 	private Long id;
 
-	private String descricao;
-	
-	private CidadeModel cidadeModel;
+	private String nome;
 
-	public BairroModel() {
+	public CidadeModel() {
 		super();
 	}
 
-	public BairroModel(Long id) {
+	public CidadeModel(Long id) {
 		super();
 		this.id = id;
 	}
@@ -30,20 +28,12 @@ public class BairroModel implements Serializable {
 		this.id = id;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public CidadeModel getCidadeModel() {
-		return cidadeModel;
-	}
-
-	public void setCidadeModel(CidadeModel cidadeModel) {
-		this.cidadeModel = cidadeModel;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	@Override
@@ -62,7 +52,7 @@ public class BairroModel implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		BairroModel other = (BairroModel) obj;
+		CidadeModel other = (CidadeModel) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

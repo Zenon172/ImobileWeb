@@ -81,6 +81,7 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 		this.crudModel = new ImovelModel();
 		this.crudModel.setFlagAtivo(Boolean.TRUE);
 		this.crudModel.setTipoImovelModel(new TipoImovelModel());
+		this.crudModel.setCondominioModel(new CondominioModel());
 		this.crudModel.setEdificioModel(new EdificioModel());
 		this.crudModel.getEdificioModel().setCondominioModel(new CondominioModel());
 		this.crudModel.setBairroModel(new BairroModel());
@@ -99,6 +100,7 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 		this.crudPesquisaModel = new ImovelModel();
 		this.crudPesquisaModel.setFlagAtivo(Boolean.TRUE);
 		this.crudPesquisaModel.setTipoImovelModel(new TipoImovelModel());
+		this.crudPesquisaModel.setCondominioModel(new CondominioModel());
 		this.crudPesquisaModel.setEdificioModel(new EdificioModel());
 		this.crudPesquisaModel.getEdificioModel().setCondominioModel(new CondominioModel());
 		this.crudPesquisaModel.setCaptadorModel(new UsuarioModel());
@@ -169,7 +171,6 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 
 	private void iniciarCombos() {
 		this.comboTipoImovel = super.initCombo(this.comboDAO.pesquisarTipoImovel(), "id", "descricao");
-		this.comboCondominio = super.initCombo(this.comboDAO.pesquisarCondominio(), "id", "descricao");
 		this.comboBairro = super.initCombo(this.comboDAO.pesquisarBairro(), "id", "descricao");
 		this.comboConstrutora = super.initCombo(this.comboDAO.pesquisarConstrutora(), "id", "descricao");
 		this.comboTipoPiso = super.initCombo(this.comboDAO.pesquisarTipoPiso(), "id", "descricao");
@@ -183,11 +184,15 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 	}
 
 	public void carregarComboEdificio() {
-		this.comboEdificio = super.initCombo(this.edificioDAO.pesquisar(this.crudModel.getEdificioModel().getCondominioModel()), "id", "descricao");
+		this.comboEdificio = super.initCombo(this.edificioDAO.pesquisar(this.crudModel.getCondominioModel()), "id", "descricao");
+	}
+	
+	public void carregarComboCondominio() {
+		this.comboCondominio = super.initCombo(this.comboDAO.pesquisarCondominio(this.crudModel.getBairroModel()), "id", "descricao");
 	}
 
-	public void carregarComboCondominio() {
-		this.comboEdificioPesquisa = super.initCombo(this.edificioDAO.pesquisar(this.crudPesquisaModel.getEdificioModel().getCondominioModel()), "id", "descricao");
+	public void carregarComboEdificioPesquisa() {
+		this.comboEdificioPesquisa = super.initCombo(this.edificioDAO.pesquisar(this.crudPesquisaModel.getCondominioModel()), "id", "descricao");
 	}
 
 	private void iniciarComboProprietario() {
@@ -367,6 +372,7 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 	protected void posDetail() {
 		this.crudModel.setClientesPerfil(this.clienteDAO.pesquisarPerfil(this.crudModel));
 		this.crudModel.setAtualizacoes(this.imovelDAO.pesquisarAtualizacoes(this.crudModel));
+		this.carregarComboCondominio();
 	}
 
 	public String instanciarAtualizacao() {
