@@ -264,7 +264,7 @@
 							<f:selectItem itemValue="" itemLabel="Não Selecionado" />
 							<f:selectItems value="#{mbean.comboProprietario}" />
 						</h:selectOneMenu>
-						<p:commandButton icon="ui-icon-clipboard" action="#{mbean.carregarProprietario}" process="@this, fsInformacoesGerenciais" update=":tabview:formProprietario:pgDadosProprietario" oncomplete="if(!args.validationFailed){dlgDadosProprietario.show()}" style="margin-left: 5px" />
+						<p:commandButton icon="ui-icon-clipboard" action="#{mbean.carregarProprietario}" process="@this, fsInformacoesGerenciais" update=":tabview:formProprietario:pgDadosProprietario" oncomplete="if(!args.validationFailed){PF('dlgDadosProprietario').show()}" style="margin-left: 5px" />
 					</h:panelGroup>
 
 				</h:panelGrid>
@@ -288,7 +288,7 @@
 
 		<p:fieldset id="fsAtualizacoes" legend="Atualizações" rendered="#{!empty mbeanModel.id}">
 
-			<p:commandButton value="Adicionar" icon="ui-icon-plus" action="#{mbean.instanciarAtualizacao}" oncomplete="dlgAtualizacao.show()" update="pgAtualizacao" />
+			<p:commandButton value="Adicionar" icon="ui-icon-plus" action="#{mbean.instanciarAtualizacao}" oncomplete="PF('dlgAtualizacao').show()" update="pgAtualizacao" />
 
 			<p:dataTable id="dtAtualizacoes" value="#{mbeanModel.atualizacoes}" var="linha" emptyMessage="Nenhuma atualização adicionada" style="margin-top:5px">
 
@@ -312,7 +312,7 @@
 
 				<p:column headerText="" styleClass="coluna1">
 					<div align="center">
-						<p:commandLink title="Clique aqui para alterar a atualização" action="#{mbean.obterAtualizacao(linha)}" process="@this" update=":tabview:frmTabCadastro:pgAtualizacao" oncomplete="dlgAtualizacao.show()">
+						<p:commandLink title="Clique aqui para alterar a atualização" action="#{mbean.obterAtualizacao(linha)}" process="@this" update=":tabview:frmTabCadastro:pgAtualizacao" oncomplete="PF('dlgAtualizacao').show()">
 							<h:graphicImage value="../resources/images/doc.png" style="border: 0px" />
 						</p:commandLink>
 					</div>
@@ -320,7 +320,7 @@
 
 				<p:column headerText="" styleClass="coluna1">
 					<div align="center">
-						<p:commandLink title="Clique aqui para remover a atualização" styleClass="ui-icon cancelar16" process="@this" oncomplete="cdExcluirAtualizacao.show()">
+						<p:commandLink title="Clique aqui para remover a atualização" styleClass="ui-icon cancelar16" process="@this" oncomplete="PF('cdExcluirAtualizacao').show()">
 							<f:setPropertyActionListener target="#{imovelFaces.imovelAtualizacaoSelecionadoModel}" value="#{linha}" />
 						</p:commandLink>
 					</div>
@@ -411,7 +411,7 @@
 				<p:panel style="margin: 5px;">
 					<p:commandButton value="Gravar" icon="salvar" action="#{mbean.inserirAtualizacao}" update="dtAtualizacoes" oncomplete="handleRequest(dlgAtualizacao, args);" rendered="#{empty mbean.imovelAtualizacaoModel.id}"/>
 					<p:commandButton value="Gravar" icon="salvar" action="#{mbean.alterarAtualizacao}" update="dtAtualizacoes" oncomplete="handleRequest(dlgAtualizacao, args);" rendered="#{!empty mbean.imovelAtualizacaoModel.id}"/>
-					<p:commandButton type="button" value="Fechar" icon="ui-icon-close" onclick="dlgAtualizacao.hide();" />
+					<p:commandButton type="button" value="Fechar" icon="ui-icon-close" onclick="PF('dlgAtualizacao').hide();" />
 				</p:panel>
 
 			</h:panelGroup>
@@ -454,7 +454,7 @@
 
 					<p:panel style="margin: 5px;">
 						<p:commandButton value="Gravar" icon="salvar" action="#{mbean.salvarProprietario}" process="@this, pgDadosProprietario" update="pgDadosProprietario, :tabview:frmTabCadastro:fsInformacoesGerenciais" oncomplete="handleRequest(dlgDadosProprietario, args)" />
-						<p:commandButton type="button" value="Fechar" icon="ui-icon-close" onclick="dlgDadosProprietario.hide();" />
+						<p:commandButton type="button" value="Fechar" icon="ui-icon-close" onclick="PF('dlgDadosProprietario').hide();" />
 					</p:panel>
 
 				</h:panelGroup>

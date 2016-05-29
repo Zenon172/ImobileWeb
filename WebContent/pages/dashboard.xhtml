@@ -74,7 +74,7 @@
 						<h:panelGroup style="position: absolute; right: 20px; top: 4px">
 							<h:inputText id="textoBusca2" value="#{menuFaces.buscaPesquisaGlobalModel.textoBusca}" style="width: 250px; margin-top: 0px; margin-right: 20px; border-radius: 4px; border: 1px solid #cbc7bd; padding-left: 5px;" onkeypress="if (event.keyCode == 13) { $('#btnPesquisarProntuario').click() }" rendered="#{sessionScope.usuarioLogado.usuarioFuncaoModel.funcaoModel.flagEspecialidade}" />
 							<p:watermark value="Buscar informações dos Prontuários" for="textoBusca2" />
-							<p:commandLink onclick="fecharDialogMsg();" title="visualizar caixa de entrada" action="#{mensagemViewFaces.lerMensagem}" process="@this" update="spCaixaEntrada" oncomplete="dlgCaixaEntrada.show()">
+							<p:commandLink onclick="fecharDialogMsg();" title="visualizar caixa de entrada" action="#{mensagemViewFaces.lerMensagem}" process="@this" update="spCaixaEntrada" oncomplete="PF('dlgCaixaEntrada').show()">
 								<h:outputText value="(#{mensagemViewFaces.mensagemModel.qtdNaoLida}) " />
 								<h:graphicImage value="../resources/images/carta.png" style="vertical-align: middle; border-radius: 6px;" />
 							</p:commandLink>
@@ -84,7 +84,7 @@
 							<p:commandLink onclick="fecharDialogMsg();" title="fechar" process="@this" global="false" styleClass="ui-icon cancelar16" style="position: absolute; top: 0px; right: 0px; margin: 5px;">
 								<f:setPropertyActionListener target="#{mensagemViewFaces.informacao}" value="" />
 							</p:commandLink>
-							<p:commandLink action="#{mensagemViewFaces.lerMensagem}" process="@this" update="caixaEntrada spMensagens" onclick="fecharDialogMsg();" oncomplete="if(args.abrirDialogMensagem){dlgMensagens.show();}else{dlgCaixaEntrada.show();}">
+							<p:commandLink action="#{mensagemViewFaces.lerMensagem}" process="@this" update="caixaEntrada spMensagens" onclick="fecharDialogMsg();" oncomplete="if(args.abrirDialogMensagem){PF('dlgMensagens').show();}else{dlgCaixaEntrada.show();}">
 								<h:outputText value="#{mensagemViewFaces.informacao}" title="clique para ler a mensagem" style="margin-top: 50px" />
 							</p:commandLink>
 						</h:panelGroup>
@@ -124,7 +124,7 @@
 
 		<p:growl id="msgCadastro" globalOnly="false" showDetail="true" showSummary="false" autoUpdate="true" escape="false" />
 
-		<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();" rendered="#{!menuFaces.telaPossuiSchedule}" />
+		<p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" rendered="#{!menuFaces.telaPossuiSchedule}" />
 
 		<p:dialog modal="true" widgetVar="statusDialog" header="Processando solicitação..." draggable="false" closable="false" resizable="false" width="225">
 			<p:graphicImage value="../resources/images/ajax-loader.gif" style="border: 0px;width:200px;height:25px" />

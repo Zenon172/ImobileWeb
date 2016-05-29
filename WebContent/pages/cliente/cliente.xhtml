@@ -63,7 +63,7 @@
 				<h:outputText value="Observações" />
 				<p:inputTextarea value="#{mbeanModel.observacoes}" rows="7" autoResize="false" styleClass="coluna98" />
 
-				<p:commandButton value="Adicionar Status" icon="ui-icon-plus" action="#{mbean.instanciarClienteStatus}" oncomplete="dlgStatus.show()" update="pgStatus" rendered="#{!empty mbeanModel.id}" />
+				<p:commandButton value="Adicionar Status" icon="ui-icon-plus" action="#{mbean.instanciarClienteStatus}" oncomplete="PF('dlgStatus').show()" update="pgStatus" rendered="#{!empty mbeanModel.id}" />
 
 				<p:dataTable id="dtStatus" value="#{mbeanModel.status}" var="linha" emptyMessage="Nenhum status adicionado" rendered="#{!empty mbeanModel.id}">
 
@@ -87,7 +87,7 @@
 
 					<p:column headerText="" styleClass="coluna1">
 						<div align="center">
-							<p:commandLink title="Clique aqui para alterar o status" action="#{mbean.obterStatus(linha)}" process="@this" update=":tabview:frmTabCadastro:pgStatus" oncomplete="dlgStatus.show()">
+							<p:commandLink title="Clique aqui para alterar o status" action="#{mbean.obterStatus(linha)}" process="@this" update=":tabview:frmTabCadastro:pgStatus" oncomplete="PF('dlgStatus').show()">
 								<h:graphicImage value="../resources/images/doc.png" style="border: 0px" />
 							</p:commandLink>
 						</div>
@@ -95,7 +95,7 @@
 
 					<p:column headerText="" styleClass="coluna1">
 						<div align="center">
-							<p:commandLink title="Clique aqui para remover o status" styleClass="ui-icon cancelar16" process="@this" oncomplete="cdExcluirStatus.show()">
+							<p:commandLink title="Clique aqui para remover o status" styleClass="ui-icon cancelar16" process="@this" oncomplete="PF('cdExcluirStatus').show()">
 								<f:setPropertyActionListener target="#{clienteFaces.clienteStatusSelecionadoModel}" value="#{linha}" />
 							</p:commandLink>
 						</div>
@@ -304,7 +304,7 @@
 				<p:panel style="margin: 5px;">
 					<p:commandButton value="Gravar" icon="salvar" action="#{mbean.inserirStatus}" update="dtStatus" oncomplete="handleRequest(dlgStatus, args);" rendered="#{empty mbean.clienteStatusModel.id}"/>
 					<p:commandButton value="Gravar" icon="salvar" action="#{mbean.alterarStatus}" update="dtStatus" oncomplete="handleRequest(dlgStatus, args);" rendered="#{!empty mbean.clienteStatusModel.id}"/>
-					<p:commandButton type="button" value="Fechar" icon="ui-icon-close" onclick="dlgStatus.hide();" />
+					<p:commandButton type="button" value="Fechar" icon="ui-icon-close" onclick="PF('dlgStatus').hide();" />
 				</p:panel>
 
 			</h:panelGroup>

@@ -43,7 +43,7 @@
 			</p:dataGrid>
 			
 			<div align="right">
-				<p:commandButton value="Adicionar Corretor" icon="ui-icon-plus" process="@this, fsContatos" oncomplete="if(!args.validationFailed){cdCorretor.show()}" style="margin-top: 5px"/>
+				<p:commandButton value="Adicionar Corretor" icon="ui-icon-plus" process="@this, fsContatos" oncomplete="if(!args.validationFailed){PF('cdCorretor').show()}" style="margin-top: 5px"/>
 			</div>
 			
 			<p:confirmDialog message="Confirma o cadastro do CORRETOR?" header="Aviso" severity="alert" widgetVar="cdCorretor" modal="true">
@@ -148,7 +148,7 @@
 
 			<h:panelGrid id="pgListaAtividade" style="width: 100%">
 
-				<p:commandButton type="button" value="Adicionar" icon="ui-icon-plus" onclick="dlgAtividade.show()" />
+				<p:commandButton type="button" value="Adicionar" icon="ui-icon-plus" onclick="PF('dlgAtividade').show()" />
 
 				<p:dataTable value="#{mbeanModel.atividades}" var="linha" emptyMessage="Nenhuma atividade registrada">
 

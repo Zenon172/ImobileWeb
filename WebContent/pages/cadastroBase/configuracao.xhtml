@@ -53,11 +53,11 @@
 
 				</p:dataTable>
 
-				<p:commandButton type="button" icon="salvar" value="Alterar Configurações" onclick="cdAlterarCRUD.show()" />
+				<p:commandButton type="button" icon="salvar" value="Alterar Configurações" onclick="PF('cdAlterarCRUD').show()" />
 
 				<p:confirmDialog message="Confirmar a ALTERAÇÃO do registro?" header="Aviso" severity="alert" widgetVar="cdAlterarCRUD">
-					<p:commandButton value="Sim" onclick="cdAlterarCRUD.hide()" action="#{mbean.updateEvent}" update="@form" />
-					<p:commandButton type="button" value="Não" onclick="cdAlterarCRUD.hide()" />
+					<p:commandButton value="Sim" onclick="PF('cdAlterarCRUD').hide()" action="#{mbean.updateEvent}" update="@form" />
+					<p:commandButton type="button" value="Não" onclick="PF('cdAlterarCRUD').hide()" />
 				</p:confirmDialog>
 
 			</p:tab>

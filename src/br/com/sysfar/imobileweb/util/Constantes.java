@@ -2,12 +2,14 @@ package br.com.sysfar.imobileweb.util;
 
 public class Constantes {
 
+	public static final String PASTA_RELATORIO = "relatorios";
 	public static final String OPERACAO_SUCESSO = "OPERACAO_SUCESSO";
 	
 	public static final String SESSION_USUARIO_LOGADO = "usuarioLogado";
 	public static final String SESSION_CAPTACAO_ATUAL = "captacaoAtual";
 	public static final String SESSION_IMOVEL_ATUAL_ID = "imovelAtualId";
 	public static final String SESSION_CLIENTE_ATUAL_ID = "clienteAtualId";
+	public static final String SESSION_FLAG_ACESSO_JAR = "flagAcessoJar";
 	
 	public static final String MENU_FACES = "menuFaces";
 	public static final String IMOVEL_FACES = "imovelFaces";

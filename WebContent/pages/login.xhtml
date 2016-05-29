@@ -43,7 +43,7 @@
 								<p:password value="#{loginFaces.usuarioModel.senha}" style="width: 96%;" autocomplete="off" />
 
 								<h:panelGroup />
-								<p:commandLink onclick="dlgTrocarSenha.show()">
+								<p:commandLink onclick="PF('dlgTrocarSenha').show()">
 									<h:outputText value="Trocar senha" style="font-size: 10px; text-decoration: underline;" />
 								</p:commandLink>
 
@@ -112,15 +112,15 @@
 					<p:outputLabel for="confirmeNovaTrocaSenha" value="Confirme nova senha" />
 					<p:password id="confirmeNovaTrocaSenha" value="#{loginFaces.novaSenhaConfirmacao}" required="true" style="width: 97%;" />
 
-					<p:commandButton type="button" value="Alterar" icon="salvar" onclick="cdAlterar.show()" />
+					<p:commandButton type="button" value="Alterar" icon="salvar" onclick="PF('cdAlterar').show()" />
 
 				</h:panelGrid>
 
 			</p:dialog>
 
 			<p:confirmDialog message="Confirma alteração do registro?" header="Aviso" severity="alert" widgetVar="cdAlterar" modal="true">
-				<p:commandButton process="@form" update="pgTrocarSenha" value="Sim" onclick="cdAlterar.hide()" action="#{loginFaces.trocarSenha}" />
-				<p:commandButton type="button" value="Não" onclick="cdAlterar.hide()" />
+				<p:commandButton process="@form" update="pgTrocarSenha" value="Sim" onclick="PF('cdAlterar').hide()" action="#{loginFaces.trocarSenha}" />
+				<p:commandButton type="button" value="Não" onclick="PF('cdAlterar').hide()" />
 			</p:confirmDialog>
 
 		</h:form>

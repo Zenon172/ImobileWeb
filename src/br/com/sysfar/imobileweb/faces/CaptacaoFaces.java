@@ -1,8 +1,11 @@
 package br.com.sysfar.imobileweb.faces;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -450,6 +453,30 @@ public class CaptacaoFaces extends CrudFaces<CaptacaoModel> {
 		}
 
 		return null;
+	}
+	
+	public String imprimir() {
+
+		try {
+
+			Map<String, Object> parametros = new HashMap<String, Object>();
+
+			parametros.put("SUBREPORT_DIR", TSFacesUtil.getServletContext().getRealPath("WEB-INF" + File.separator + Constantes.PASTA_RELATORIO) + File.separator);
+
+			br.com.sysfar.imobileweb.util.JasperUtil jasperUtil = new br.com.sysfar.imobileweb.util.JasperUtil();
+
+			jasperUtil.gerarRelatorio("teste.jasper", parametros);
+
+		} catch (Exception ex) {
+
+			ex.printStackTrace();
+
+			this.addErrorMessage("Houve um erro ao imprimir relatório, contate o administrador do sistema");
+
+		}
+
+		return null;
+
 	}
 
 	public List<SelectItem> getComboTipoImovel() {

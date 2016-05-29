@@ -1252,7 +1252,7 @@ body {
 }
 
 .esquerda {
-	width: 74px;
+	width: 82px;
 	height: 100%;
 	float: left;
 	position: absolute;
@@ -1262,7 +1262,7 @@ body {
 	height: 100%;
 	border: 1px solid #d9d6c4;
 	position: relative;
-	margin-left: 82px;
+	margin-left: 90px;
 	right: 0px;
 	top: 0px;
 	bottom: 44px;

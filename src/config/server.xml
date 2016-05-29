@@ -1,3 +1,4 @@
 <Context docBase="ImobileWeb" path="/ImobileWeb" reloadable="true" source="org.eclipse.jst.jee.server:ImobileWeb">
 	<Resource auth="Container" driverClassName="org.postgresql.Driver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/ImobileDS" password="15rt01" type="javax.sql.DataSource" url="jdbc:postgresql://localhost:5432/imobile" username="postgres" validationQuery="select version();"/>
+	<Resource auth="Container" driverClassName="org.postgresql.Driver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/RelaTecDS" password="15rt01" type="javax.sql.DataSource" url="jdbc:postgresql://localhost:5432/relatec_imobile" username="postgres" validationQuery="select version();"/>
 </Context>

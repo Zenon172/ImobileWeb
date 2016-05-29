@@ -4,6 +4,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import br.com.relatec.util.ConstantesRelatec;
 import br.com.sysfar.imobileweb.dao.UsuarioDAO;
 import br.com.sysfar.imobileweb.model.UsuarioModel;
 import br.com.sysfar.imobileweb.util.Constantes;
@@ -44,6 +45,8 @@ public final class LoginFaces extends TSMainFaces {
 		TSFacesUtil.getRequest().getSession().invalidate();
 
 		TSFacesUtil.addObjectInSession(Constantes.SESSION_USUARIO_LOGADO, usuario);
+		TSFacesUtil.addObjectInSession(ConstantesRelatec.GRUPO_LOGADO_ID, usuario.getGrupoModel().getId());
+		TSFacesUtil.addObjectInSession(Constantes.SESSION_FLAG_ACESSO_JAR, true);
 
 		return "logar";
 

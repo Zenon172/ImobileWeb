@@ -28,8 +28,8 @@
 
 			<p:panel>
 				<p:schedule id="schedule" timeFormat="HH:mm{ - HH:mm}" value="#{atividadeFaces.lazyEventModel}" editable="true" widgetVar="myschedule" allDaySlot="false" draggable="false" resizable="false" locale="pt_BR" timeZone="America/Recife" axisFormat="HH:00" style="margin-top: 10px">
-					<p:ajax event="eventSelect" listener="#{atividadeFaces.onEventSelect}" oncomplete="dlgAtividade.show();" update="pgAtividades" />
-					<p:ajax event="dateSelect" listener="#{atividadeFaces.onDateSelect}" oncomplete="dlgAtividade.show();" update="pgAtividades" />
+					<p:ajax event="eventSelect" listener="#{atividadeFaces.onEventSelect}" oncomplete="PF('dlgAtividade').show();" update="pgAtividades" />
+					<p:ajax event="dateSelect" listener="#{atividadeFaces.onDateSelect}" oncomplete="PF('dlgAtividade').show();" update="pgAtividades" />
 				</p:schedule>
 			</p:panel>
 
@@ -83,7 +83,7 @@
 				<p:panel style="margin: 5px;">
 					<p:commandButton value="Gravar" icon="salvar" action="#{atividadeFaces.insertEvent}" process="@this, pgAtividades" update="pgAtividades" oncomplete="handleRequest(dlgAtividade, args)" rendered="#{empty atividadeFaces.crudModel.id}" />
 					<p:commandButton value="Gravar" icon="salvar" action="#{atividadeFaces.updateEvent}" process="@this, pgAtividades" update="pgAtividades" oncomplete="handleRequest(dlgAtividade, args)" rendered="#{!empty atividadeFaces.crudModel.id}" />
-					<p:commandButton type="button" value="Fechar" icon="ui-icon-close" onclick="dlgAtividade.hide();" />
+					<p:commandButton type="button" value="Fechar" icon="ui-icon-close" onclick="PF('dlgAtividade').hide();" />
 				</p:panel>
 
 			</h:panelGroup>
