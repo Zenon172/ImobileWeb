@@ -330,10 +330,6 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 	@Override
 	protected void preInsert() {
 
-		UsuarioModel usuario = this.usuarioDAO.obter(this.crudModel.getCaptadorModel());
-
-		this.crudModel.setCodigo(usuario.getCodigo() + Utilitario.lpad(String.valueOf((usuario.getQtdImoveis() + 1)), "0", 3));
-
 		if (TSUtil.isEmpty(this.crudModel.getProprietarioModel().getId())) {
 
 			this.salvarProprietario();

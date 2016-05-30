@@ -30,7 +30,7 @@
 						<f:selectItem itemValue="" itemLabel="Não Selecionado" />
 						<f:selectItems value="#{mbean.comboPosicaoSol}" />
 					</h:selectOneMenu>
-					<pe:inputNumber id="itValor" value="#{mbeanModel.valor}" required="true" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 90%; text-align:right" />
+					<pe:inputNumber id="itValor" value="#{mbeanModel.valor}" required="true" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" styleClass="autoComplete90" style="text-align:right" />
 					<p:selectBooleanCheckbox itemLabel="Não anunciar" value="#{mbeanModel.flagNaoAnunciar}" />
 
 				</h:panelGrid>
@@ -106,7 +106,7 @@
 						<f:selectItems value="#{mbean.comboTipoPiso}" />
 					</h:selectOneMenu>
 					<p:inputText value="#{mbeanModel.anoConstrucao}" maxlength="4" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna85" />
-					<pe:inputNumber value="#{mbeanModel.areaPrivativa}" decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 90%; text-align:right" />
+					<pe:inputNumber value="#{mbeanModel.areaPrivativa}" decimalSeparator="," thousandSeparator="." maxValue="99999999" styleClass="autoComplete90" style="text-align:right" />
 					<h:selectOneMenu value="#{mbeanModel.tipoFachadaModel.id}" styleClass="coluna90">
 						<f:selectItem itemValue="" itemLabel="Não Selecionado" />
 						<f:selectItems value="#{mbean.comboTipoFachada}" />
@@ -202,7 +202,7 @@
 					
 					<p:inputText value="#{mbeanModel.nomeAdministrador}" maxlength="100" styleClass="coluna95" />
 					<p:inputText value="#{mbeanModel.telefoneAdministrador}" maxlength="15" styleClass="coluna90 telefone" />
-					<pe:inputNumber value="#{mbeanModel.valorCondominio}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 85%; text-align:right" />
+					<pe:inputNumber value="#{mbeanModel.valorCondominio}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" styleClass="autoComplete90" style="text-align:right" />
 					<p:inputText value="#{mbeanModel.qtdVagasEstacionamento}" maxlength="2" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna85" />
 					<p:inputText value="#{mbeanModel.qtdVagasCobertas}" maxlength="2" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna85" />
 					<p:inputText value="#{mbeanModel.qtdVagasDescobertas}" maxlength="2" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" styleClass="coluna85" />
@@ -409,8 +409,8 @@
 				</p:scrollPanel>
 
 				<p:panel style="margin: 5px;">
-					<p:commandButton value="Gravar" icon="salvar" action="#{mbean.inserirAtualizacao}" update="dtAtualizacoes" oncomplete="handleRequest(dlgAtualizacao, args);" rendered="#{empty mbean.imovelAtualizacaoModel.id}"/>
-					<p:commandButton value="Gravar" icon="salvar" action="#{mbean.alterarAtualizacao}" update="dtAtualizacoes" oncomplete="handleRequest(dlgAtualizacao, args);" rendered="#{!empty mbean.imovelAtualizacaoModel.id}"/>
+					<p:commandButton value="Gravar" icon="salvar" action="#{mbean.inserirAtualizacao}" update="dtAtualizacoes" oncomplete="handleRequest('dlgAtualizacao', args);" rendered="#{empty mbean.imovelAtualizacaoModel.id}"/>
+					<p:commandButton value="Gravar" icon="salvar" action="#{mbean.alterarAtualizacao}" update="dtAtualizacoes" oncomplete="handleRequest('dlgAtualizacao', args);" rendered="#{!empty mbean.imovelAtualizacaoModel.id}"/>
 					<p:commandButton type="button" value="Fechar" icon="ui-icon-close" onclick="PF('dlgAtualizacao').hide();" />
 				</p:panel>
 
@@ -453,7 +453,7 @@
 					</p:scrollPanel>
 
 					<p:panel style="margin: 5px;">
-						<p:commandButton value="Gravar" icon="salvar" action="#{mbean.salvarProprietario}" process="@this, pgDadosProprietario" update="pgDadosProprietario, :tabview:frmTabCadastro:fsInformacoesGerenciais" oncomplete="handleRequest(dlgDadosProprietario, args)" />
+						<p:commandButton value="Gravar" icon="salvar" action="#{mbean.salvarProprietario}" process="@this, pgDadosProprietario" update="pgDadosProprietario, :tabview:frmTabCadastro:fsInformacoesGerenciais" oncomplete="handleRequest('dlgDadosProprietario', args)" />
 						<p:commandButton type="button" value="Fechar" icon="ui-icon-close" onclick="PF('dlgDadosProprietario').hide();" />
 					</p:panel>
 
@@ -511,17 +511,17 @@
 
 			<p:fieldset legend="Valor">
 				<h:panelGrid columns="3" columnClasses="coluna49, coluna2, coluna49" styleClass="coluna98">
-					<pe:inputNumber value="#{mbeanPesquisaModel.valorMin}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 90%; text-align:right" />
+					<pe:inputNumber value="#{mbeanPesquisaModel.valorMin}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" styleClass="autoComplete90" style="text-align:right" />
 					<h:outputText value="a" />
-					<pe:inputNumber value="#{mbeanPesquisaModel.valorMax}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 90%; text-align:right" />
+					<pe:inputNumber value="#{mbeanPesquisaModel.valorMax}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" styleClass="autoComplete90" style="text-align:right" />
 				</h:panelGrid>
 			</p:fieldset>
 
 			<p:fieldset legend="Valor do Condomínio">
 				<h:panelGrid columns="3" columnClasses="coluna49, coluna2, coluna49" styleClass="coluna98">
-					<pe:inputNumber value="#{mbeanPesquisaModel.valorCondominioMin}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 90%; text-align:right" />
+					<pe:inputNumber value="#{mbeanPesquisaModel.valorCondominioMin}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" styleClass="autoComplete90" style="text-align:right" />
 					<h:outputText value="a" />
-					<pe:inputNumber value="#{mbeanPesquisaModel.valorCondominioMax}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 90%; text-align:right" />
+					<pe:inputNumber value="#{mbeanPesquisaModel.valorCondominioMax}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" styleClass="autoComplete90" style="text-align:right" />
 				</h:panelGrid>
 			</p:fieldset>
 

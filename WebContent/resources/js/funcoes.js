@@ -326,7 +326,7 @@ function isEmpty(campos) {
 
 function handleRequest(widgerVar, args) {
 	if (args.valido) {
-		widgerVar.hide();
+		PF(widgerVar).hide();
 	}
 
 }
@@ -335,26 +335,10 @@ function abrirDialog(widgerVar, args) {
 
 	if (!args.validationFailed) {
 
-		widgerVar.show();
+		PF(widgerVar).show();
 
 	}
 
-}
-
-function checarExpedicaoProduto(widgetVar, args) {
-
-	if (args.exibir) {
-
-		widgetVar.show();
-
-	}
-
-}
-
-function validarConflito(args) {
-	if (args.flagGrave) {
-		dlgAvisoConflito.show();
-	}
 }
 
 function idUnicoValido(e, tam) {
@@ -400,14 +384,6 @@ function imprimirPdf(arquivo) {
 	}, 700);
 
 	return false;
-}
-
-function atualizarCCIH(widgerVar, args) {
-	if (args.flagRejeitadoCCIH || args.flagPossuiMedicamentoRestrito) {
-		widgerVar.show();
-	} else if ($("#tabTemplateEvolucao\\:tvPrescricaoDetalhe\\:acProduto_input").length) {
-		nextFocus('tabTemplateEvolucao:tvPrescricaoDetalhe:acProduto_input');
-	}
 }
 
 function teclaTab(btnId) {

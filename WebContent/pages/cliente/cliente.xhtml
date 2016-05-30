@@ -124,17 +124,17 @@
 
 				<p:fieldset legend="Valor">
 					<h:panelGrid columns="3" columnClasses="coluna49, coluna2, coluna49" styleClass="coluna98">
-						<pe:inputNumber value="#{mbeanModel.clientePerfilModel.valorMin}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 90%; text-align:right" />
+						<pe:inputNumber value="#{mbeanModel.clientePerfilModel.valorMin}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" styleClass="autoComplete90" style="text-align:right" />
 						<h:outputText value="a" />
-						<pe:inputNumber value="#{mbeanModel.clientePerfilModel.valorMax}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 90%; text-align:right" />
+						<pe:inputNumber value="#{mbeanModel.clientePerfilModel.valorMax}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" styleClass="autoComplete90" style="text-align:right" />
 					</h:panelGrid>
 				</p:fieldset>
 
 				<p:fieldset legend="Condomínio">
 					<h:panelGrid columns="3" columnClasses="coluna49, coluna2, coluna49" styleClass="coluna98">
-						<pe:inputNumber value="#{mbeanModel.clientePerfilModel.valorCondominioMin}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 90%; text-align:right" />
+						<pe:inputNumber value="#{mbeanModel.clientePerfilModel.valorCondominioMin}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" styleClass="autoComplete90" style="text-align:right" />
 						<h:outputText value="a" />
-						<pe:inputNumber value="#{mbeanModel.clientePerfilModel.valorCondominioMax}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 90%; text-align:right" />
+						<pe:inputNumber value="#{mbeanModel.clientePerfilModel.valorCondominioMax}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" styleClass="autoComplete90" style="text-align:right" />
 					</h:panelGrid>
 				</p:fieldset>
 
@@ -302,8 +302,8 @@
 				</p:scrollPanel>
 
 				<p:panel style="margin: 5px;">
-					<p:commandButton value="Gravar" icon="salvar" action="#{mbean.inserirStatus}" update="dtStatus" oncomplete="handleRequest(dlgStatus, args);" rendered="#{empty mbean.clienteStatusModel.id}"/>
-					<p:commandButton value="Gravar" icon="salvar" action="#{mbean.alterarStatus}" update="dtStatus" oncomplete="handleRequest(dlgStatus, args);" rendered="#{!empty mbean.clienteStatusModel.id}"/>
+					<p:commandButton value="Gravar" icon="salvar" action="#{mbean.inserirStatus}" update="dtStatus" oncomplete="handleRequest('dlgStatus', args);" rendered="#{empty mbean.clienteStatusModel.id}"/>
+					<p:commandButton value="Gravar" icon="salvar" action="#{mbean.alterarStatus}" update="dtStatus" oncomplete="handleRequest('dlgStatus', args);" rendered="#{!empty mbean.clienteStatusModel.id}"/>
 					<p:commandButton type="button" value="Fechar" icon="ui-icon-close" onclick="PF('dlgStatus').hide();" />
 				</p:panel>
 

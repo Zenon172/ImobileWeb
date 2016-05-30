@@ -231,7 +231,7 @@
 				</p:scrollPanel>
 
 				<p:panel style="margin: 5px;">
-					<p:commandButton value="Gravar" icon="salvar" action="#{mbean.addAtividade}" process="@this, pgAtividades" update="pgAtividades, pgListaAtividade" oncomplete="handleRequest(dlgAtividade, args)" />
+					<p:commandButton value="Gravar" icon="salvar" action="#{mbean.addAtividade}" process="@this, pgAtividades" update="pgAtividades, pgListaAtividade" oncomplete="handleRequest('dlgAtividade', args)" />
 					<p:commandButton type="button" value="Fechar" icon="ui-icon-close" onclick="dlgAtividade.hide();" />
 				</p:panel>
 
@@ -250,7 +250,7 @@
 		<p:commandButton type="button" value="Gerar Imóvel" title="Criar um imóvel no sistema através dessa captação" icon="ui-icon-refresh" onclick="PF('cdCadastrarGerarImovel').show()" rendered="#{!empty mbeanModel.id and empty mbeanModel.imovelGeradoModel.id and menuFaces.menuModel.flagAlterar}" style="margin-left: 5px;" />
 
 		<p:confirmDialog message="Confirmar a INCLUSÃO do registro?" header="Aviso" severity="alert" widgetVar="cdCadastrarCRUD2" rendered="#{menuFaces.menuModel.flagInserir}">
-			<p:commandButton process="@form" value="Sim" onclick="PF('cdCadastrarCRUD2').hide()" action="#{mbean.insertEvent}" oncomplete="abrirDialog(dlgCaptacoesExistentes, args)" update="fsContatos fsDadosImovel fsDadosAnuncio panelGroupCaptacoesSimilares" />
+			<p:commandButton process="@form" value="Sim" onclick="PF('cdCadastrarCRUD2').hide()" action="#{mbean.insertEvent}" oncomplete="abrirDialog('dlgCaptacoesExistentes', args)" update="fsContatos fsDadosImovel fsDadosAnuncio panelGroupCaptacoesSimilares" />
 			<p:commandButton type="button" value="Não" onclick="PF('cdCadastrarCRUD2').hide()" />
 		</p:confirmDialog>
 
