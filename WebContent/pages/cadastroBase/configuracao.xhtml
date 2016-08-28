@@ -38,7 +38,7 @@
 							<p:inputText value="#{linha.respostaEscolhidaLong}" required="true" maxlength="6" styleClass="integer coluna95" />
 						</p:inplace>
 						<p:inplace rendered="#{linha.tipoRespostaModel.pontoFlutuante}">
-							<pe:inputNumber value="#{linha.respostaEscolhidaDouble}" required="true" decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 95%; text-align:right" />
+							<p:inputNumber value="#{linha.respostaEscolhidaDouble}" required="true" decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 95%; text-align:right" />
 						</p:inplace>
 						<p:inplace rendered="#{linha.tipoRespostaModel.texto}">
 							<p:inputTextarea value="#{linha.respostaEscolhida}" required="true" maxlength="2000" autoResize="false" rows="5" styleClass="coluna95" />
