@@ -4,7 +4,7 @@
 	
 	<script type="text/javascript">
 		function redimensionarOutros() {
-			$("#frm").height($("#scrAreaTrabalho").height());
+			$("#frm").height($(window).height() - 54);
 		}
 		$(document).ready(function() {
 			redimensionarOutros();

@@ -84,12 +84,34 @@ public final class LoginFaces extends TSMainFaces {
 
 	private boolean validaAlterarSenha() {
 
+		boolean valida = true;
+		
+		if (TSUtil.isEmpty(this.usuarioAuxiliarModel.getLogin())){
+			super.addErrorMessage("Usuário: Campo obrigatório");
+			valida = false;
+		}
+		
+		if (TSUtil.isEmpty(this.usuarioAuxiliarModel.getSenha())){
+			super.addErrorMessage("Senha: Campo obrigatório");
+			valida = false;
+		}
+		
+		if (TSUtil.isEmpty(this.novaSenha)){
+			super.addErrorMessage("Nova senha: Campo obrigatório");
+			valida = false;
+		}
+		
+		if (TSUtil.isEmpty(this.novaSenhaConfirmacao)){
+			super.addErrorMessage("Confirmação da nova senha: Campo obrigatório");
+			valida = false;
+		}
+		
 		if (!TSUtil.isEmpty(this.novaSenhaConfirmacao) && !TSUtil.isEmpty(this.novaSenha) && !this.novaSenha.equals(this.novaSenhaConfirmacao)) {
 			this.addErrorMessage("Senhas não conferem");
-			return false;
+			valida = false;
 		}
 
-		return true;
+		return valida;
 
 	}
 

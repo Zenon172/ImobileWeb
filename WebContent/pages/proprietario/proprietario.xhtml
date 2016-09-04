@@ -11,7 +11,7 @@
 			<ui:param name="mbeanProprietarioModel" value="${proprietarioFaces.crudModel}" />
 		</ui:include>
 
-		<p:fieldset legend="Meus Imóveis" toggleable="true" style="width: 98%" rendered="#{!empty mbeanModel.id}">
+		<p:fieldset legend="Meus Imóveis" toggleable="true" rendered="#{!empty mbeanModel.id}">
 
 			<ui:repeat var="linha" value="#{mbeanModel.imoveis}" varStatus="varStatus">
 				
@@ -73,12 +73,6 @@
 			</ui:repeat>
 
 		</p:fieldset>
-
-		<p:outputPanel autoUpdate="true">
-			<script type="text/javascript">
-				
-			</script>
-		</p:outputPanel>
 
 	</ui:define>
 

@@ -1,6 +1,6 @@
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xmlns:ts="http://java.sun.com/jsf/composite/components" xmlns:pe="http://primefaces.org/ui/extensions">
 
-	<p:fieldset legend="Dados do proprietário" style="width: 98%">
+	<p:fieldset legend="Dados do proprietário">
 
 		<h:panelGrid style="width: 100%; margin-bottom: 10px">
 
@@ -20,10 +20,10 @@
 
 					<p:inputText id="itNome" value="#{contato.nome}" maxlength="100" styleClass="coluna90" />
 					<p:inputText id="itTelefone" value="#{contato.telefone}" maxlength="15" styleClass="coluna90 telefone" />
-					<h:selectOneMenu value="#{contato.operadoraModel.id}" styleClass="coluna95">
+					<p:selectOneMenu value="#{contato.operadoraModel.id}" styleClass="coluna95">
 						<f:selectItem itemLabel="selecione" itemValue="" />
 						<f:selectItems value="#{mbean.comboOperadoras}" />
-					</h:selectOneMenu>
+					</p:selectOneMenu>
 					<p:inputText id="itEmail" value="#{contato.email}" maxlength="100" styleClass="coluna90" />
 				</h:panelGrid>
 			</p:column>
@@ -32,7 +32,7 @@
 
 	</p:fieldset>
 
-	<p:fieldset legend="Dados do responsável pela venda" style="width: 98%">
+	<p:fieldset legend="Dados do responsável pela venda">
 
 		<h:panelGrid style="width: 100%; margin-bottom: 10px">
 
@@ -50,10 +50,10 @@
 					<h:outputText value="E-mail #{index + 1}" />
 
 					<p:inputText id="itTelefone" value="#{contato.telefone}" maxlength="15" styleClass="coluna90 telefone" />
-					<h:selectOneMenu value="#{contato.operadoraModel.id}" styleClass="coluna95">
+					<p:selectOneMenu value="#{contato.operadoraModel.id}" styleClass="coluna95">
 						<f:selectItem itemLabel="selecione" itemValue="" />
 						<f:selectItems value="#{mbean.comboOperadoras}" />
-					</h:selectOneMenu>
+					</p:selectOneMenu>
 					<p:inputText id="itEmail" value="#{contato.email}" maxlength="100" styleClass="coluna90" />
 				</h:panelGrid>
 			</p:column>
@@ -62,9 +62,9 @@
 
 	</p:fieldset>
 
-	<p:fieldset legend="Observação" style="width: 98%">
+	<p:fieldset legend="Observação">
 
-		<p:inputTextarea value="#{mbeanProprietarioModel.observacao}" rows="5" styleClass="coluna98" />
+		<p:inputTextarea value="#{mbeanProprietarioModel.observacao}" rows="5" styleClass="coluna100" />
 
 	</p:fieldset>
 

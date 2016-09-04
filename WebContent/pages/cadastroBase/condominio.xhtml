@@ -6,7 +6,7 @@
 
 	<ui:define name="cadastro">
 
-		<p:fieldset style="width: 98%">
+		<p:fieldset>
 
 			<h:panelGrid columns="2" columnClasses="coluna40_2, coluna60_2" style="width: 100%">
 
@@ -19,10 +19,10 @@
 					<p:inputText id="itQtdTorres" value="#{mbeanModel.qtdTorres}" maxlength="3" onkeypress="return Mascara(this,Integer);" onblur="return Mascara(this,Integer);" rendered="false" styleClass="coluna20" />
 
 					<p:outputLabel for="somBairro" value="Bairro" />
-					<h:selectOneMenu id="somBairro" value="#{mbeanModel.bairroModel.id}" required="true" styleClass="coluna40">
+					<p:selectOneMenu id="somBairro" value="#{mbeanModel.bairroModel.id}" required="true" styleClass="coluna40">
 						<f:selectItem itemValue="" itemLabel="Não Selecionado" />
 						<f:selectItems value="#{mbean.comboBairro}" />
-					</h:selectOneMenu>
+					</p:selectOneMenu>
 
 				</h:panelGrid>
 
@@ -30,7 +30,7 @@
 
 					<h:panelGrid style="width: 100%">
 
-						<p:commandButton value="Adicionar" icon="ui-icon-plus" action="#{mbean.addEdificio}" process="@this, dtEdificios" update="dtEdificios" />
+						<p:commandButton value="Adicionar" icon="fa icon-plus-squared white" action="#{mbean.addEdificio}" process="@this, dtEdificios" update="dtEdificios" />
 
 						<p:dataTable id="dtEdificios" value="#{mbeanModel.edificios}" var="linha" rowIndexVar="index" emptyMessage="Nenhum edifício adicionado">
 
@@ -65,10 +65,10 @@
 		<p:inputText value="#{mbeanPesquisaModel.descricao}" styleClass="coluna40" />
 
 		<h:outputFormat value="Bairro" />
-		<h:selectOneMenu value="#{mbeanPesquisaModel.bairroModel.id}" styleClass="coluna20">
+		<p:selectOneMenu value="#{mbeanPesquisaModel.bairroModel.id}" styleClass="coluna20">
 			<f:selectItem itemValue="" itemLabel="Não Selecionado" />
 			<f:selectItems value="#{mbean.comboBairro}" />
-		</h:selectOneMenu>
+		</p:selectOneMenu>
 
 	</ui:define>
 

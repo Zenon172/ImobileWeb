@@ -1,0 +1,634 @@
+.coluna0 {
+	width: 0%;
+}
+
+.coluna1 {
+	width: 1%;
+}
+
+.coluna2 {
+	width: 2%;
+}
+
+.coluna02 {
+	width: 2%;
+	text-align: center;
+}
+
+.coluna3 {
+	width: 3%;
+}
+
+.coluna03 {
+	width: 3%;
+	text-align: center;
+}
+
+.coluna4 {
+	width: 4%;
+}
+
+.coluna5 {
+	width: 5%;
+}
+
+.coluna5_2 {
+	width: 5%;
+	vertical-align: top;
+}
+
+.coluna05 {
+	width: 5%;
+	text-align: center;
+}
+
+.coluna7 {
+	width: 7%;
+}
+
+.coluna6 {
+	width: 6%;
+}
+
+.coluna07 {
+	width: 7%;
+	text-align: center;
+}
+
+.coluna8 {
+	width: 8%;
+}
+
+.coluna9 {
+	width: 9%;
+}
+
+.coluna10 {
+	width: 10%;
+}
+
+.coluna010 {
+	width: 10%;
+	text-align: center;
+}
+
+.coluna10_2 {
+	width: 10%;
+	vertical-align: top;
+}
+
+.coluna10_bottom {
+	width: 10%;
+	vertical-align: bottom;
+}
+
+.coluna11 {
+	width: 11%;
+}
+
+.coluna12 {
+	width: 12%;
+}
+
+.coluna13 {
+	width: 13%;
+}
+
+.coluna14 {
+	width: 14%;
+}
+
+.coluna15 {
+	width: 15%;
+}
+
+.coluna15_2 {
+	width: 15%;
+	vertical-align: top;
+}
+
+.coluna15_3 {
+	width: 15%;
+	vertical-align: bottom;
+}
+
+.coluna015 {
+	width: 15%;
+	text-align: center;
+}
+
+.coluna16 {
+	width: 16%;
+}
+
+.coluna17 {
+	width: 17%;
+}
+
+.coluna18 {
+	width: 18%;
+}
+
+.coluna19 {
+	width: 19%;
+}
+
+.coluna50px {
+	width: 50px;
+}
+
+.coluna20 {
+	width: 20%;
+}
+
+.coluna020 {
+	width: 20%;
+	text-align: center;
+}
+
+.coluna20_2 {
+	width: 20%;
+	vertical-align: top;
+}
+
+.coluna20_bottom {
+	width: 20%;
+	vertical-align: bottom;
+}
+
+.coluna20_3 {
+	width: 20%;
+	min-width: 130px;
+}
+
+.coluna20_right {
+	width: 20%;
+	text-align: right;
+}
+
+.coluna21 {
+	width: 21%;
+}
+
+.coluna22 {
+	width: 22%;
+}
+
+.coluna23 {
+	width: 23%;
+}
+
+.coluna24 {
+	width: 24%;
+}
+
+.coluna25 {
+	width: 25%;
+}
+
+.coluna25right {
+	width: 25%;
+	text-align: right;
+}
+
+.coluna25_2 {
+	width: 25%;
+	vertical-align: top;
+}
+
+.coluna26 {
+	width: 26%;
+}
+
+.coluna27 {
+	width: 27%;
+}
+
+.coluna28 {
+	width: 28%;
+}
+
+.coluna29 {
+	width: 29%;
+}
+
+.coluna030 {
+	width: 30%;
+	text-align: center;
+}
+
+.coluna30 {
+	width: 30%;
+}
+
+.coluna30_2 {
+	width: 30%;
+	vertical-align: top;
+}
+
+.coluna30_bottom {
+	width: 30%;
+	vertical-align: bottom;
+}
+
+.coluna31 {
+	width: 31%;
+}
+
+.coluna32 {
+	width: 32%;
+}
+
+.coluna33 {
+	width: 33%;
+}
+
+.coluna33_2 {
+	width: 33%;
+	text-align: right;
+}
+
+.coluna34 {
+	width: 34%;
+}
+
+.coluna035 {
+	width: 35%;
+	text-align: center;
+}
+
+.coluna35 {
+	width: 35%;
+}
+
+.coluna36 {
+	width: 36%;
+}
+
+.coluna37 {
+	width: 37%;
+}
+
+.coluna38 {
+	width: 38%;
+}
+
+.coluna39 {
+	width: 39%;
+}
+
+.coluna40 {
+	width: 40% !important;
+}
+
+.coluna40_2 {
+	width: 40%;
+	vertical-align: top;
+}
+
+.coluna41 {
+	width: 41% !important;
+}
+
+.coluna42 {
+	width: 42% !important;
+}
+
+.coluna42_2 {
+	width: 42.2%;
+}
+
+.coluna43 {
+	width: 43%;
+}
+
+.coluna44 {
+	width: 44%;
+}
+
+.coluna45 {
+	width: 45%;
+}
+
+.coluna45_2 {
+	width: 45%;
+	vertical-align: top;
+}
+
+.coluna45px {
+	width: 45px;
+}
+
+.coluna46 {
+	width: 46% !important;
+}
+
+.coluna47 {
+	width: 47% !important;
+}
+
+.coluna48 {
+	width: 48% !important;
+}
+
+.coluna49 {
+	width: 49% !important;
+}
+
+.coluna50 {
+	width: 50% !important;
+}
+
+.coluna50_2 {
+	width: 50%;
+	vertical-align: top;
+}
+
+.coluna50_bottom {
+	width: 50%;
+	vertical-align: bottom;
+}
+
+.coluna50px {
+	width: 50px;
+}
+
+.coluna51 {
+	width: 51% !important;
+}
+
+.coluna52 {
+	width: 52% !important;
+}
+
+.coluna53 {
+	width: 53% !important;
+}
+
+.coluna54 {
+	width: 54% !important;
+}
+
+.coluna55 {
+	width: 55% !important;
+}
+
+.coluna55_2 {
+	width: 55%;
+	vertical-align: top;
+}
+
+.coluna56 {
+	width: 56% !important;
+}
+
+.coluna57 {
+	width: 57% !important;
+}
+
+.coluna58 {
+	width: 58% !important;
+}
+
+.coluna59 {
+	width: 59% !important;
+}
+
+.coluna60 {
+	width: 60% !important;
+}
+
+.coluna60_2 {
+	width: 60%;
+	vertical-align: top;
+}
+
+.coluna60_3 {
+	width: 60% !important;
+	text-align: right;
+}
+
+.coluna60px {
+	width: 60px;
+}
+
+.coluna61 {
+	width: 61% !important;
+}
+
+.coluna62 {
+	width: 62% !important;
+}
+
+.coluna63 {
+	width: 63% !important;
+}
+
+.coluna64 {
+	width: 64% !important;
+}
+
+.coluna65 {
+	width: 65% !important;
+}
+
+.coluna65_2 {
+	width: 65% !important;
+	vertical-align: top !important;
+}
+
+.coluna65px {
+	width: 65px;
+}
+
+.coluna66 {
+	width: 66% !important;
+}
+
+.coluna67 {
+	width: 67% !important;
+}
+
+.coluna68 {
+	width: 68% !important;
+}
+
+.coluna69 {
+	width: 69% !important;
+}
+
+.coluna70 {
+	width: 70%;
+}
+
+.coluna70_2 {
+	width: 70%;
+	vertical-align: top;
+}
+
+.coluna71 {
+	width: 71%;
+}
+
+.coluna72 {
+	width: 72%;
+}
+
+.coluna73 {
+	width: 73%;
+}
+
+.coluna74 {
+	width: 74%;
+}
+
+.coluna75 {
+	width: 75%;
+}
+
+.coluna76 {
+	width: 76%;
+}
+
+.coluna77 {
+	width: 77%;
+}
+
+.coluna78 {
+	width: 78%;
+}
+
+.coluna79 {
+	width: 79%;
+}
+
+.coluna80 {
+	width: 80%;
+}
+
+.coluna80_2 {
+	width: 80%;
+	vertical-align: top;
+}
+
+.coluna80_3 {
+	width: 80%;
+	min-width: 400px;
+}
+
+.coluna80_bottom {
+	width: 80%;
+	vertical-align: bottom;
+}
+
+.coluna81 {
+	width: 81%;
+}
+
+.coluna82 {
+	width: 82%;
+}
+
+.coluna83 {
+	width: 83%;
+}
+
+.coluna84 {
+	width: 84%;
+}
+
+.coluna85 {
+	width: 85%;
+}
+
+.coluna85_3 {
+	width: 85%;
+	vertical-align: bottom;
+}
+
+.coluna86 {
+	width: 86%;
+}
+
+.coluna87 {
+	width: 87%;
+}
+
+.coluna88 {
+	width: 88%;
+}
+
+.coluna89 {
+	width: 89%;
+}
+
+.coluna90 {
+	width: 90%;
+}
+
+.coluna90_2 {
+	width: 90%;
+	vertical-align: top;
+}
+
+.coluna90_bottom {
+	width: 90%;
+	vertical-align: bottom;
+}
+
+.coluna91 {
+	width: 91%;
+}
+
+.coluna92 {
+	width: 92%;
+}
+
+.coluna93 {
+	width: 93%;
+}
+
+.coluna94 {
+	width: 94%;
+}
+
+.coluna95 {
+	width: 95%;
+}
+
+.coluna96 {
+	width: 96%;
+}
+
+.coluna97 {
+	width: 97%;
+}
+
+.coluna98 {
+	width: 98%;
+}
+
+.coluna985 {
+	width: 98.5%;
+}
+
+.coluna99 {
+	width: 99%;
+}
+
+.coluna995 {
+	width: 99.5%;
+}
+
+.coluna100 {
+	width: 100%;
+}
+
+.coluna100_2 {
+	width: 100%;
+	vertical-align: top;
+}
+
+*:not(.ui-selectonemenu-trigger):not(.ui-selectonemenu-label):not(.ui-chkbox-box):not(#layout-menubar) {
+	box-sizing: border-box;
+}

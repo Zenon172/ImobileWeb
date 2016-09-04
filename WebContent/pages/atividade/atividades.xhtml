@@ -12,15 +12,15 @@
 					<h:outputText value="Status" />
 					<h:outputText value="" />
 
-					<h:selectOneMenu value="#{atividadeFaces.crudPesquisaModel.responsavelModel.id}" styleClass="coluna95">
+					<p:selectOneMenu value="#{atividadeFaces.crudPesquisaModel.responsavelModel.id}" styleClass="coluna95">
 						<f:selectItem itemLabel="Não selecionado" itemValue="" />
 						<f:selectItems value="#{atividadeFaces.comboResponsavel}" />
-					</h:selectOneMenu>
-					<h:selectOneMenu value="#{atividadeFaces.crudPesquisaModel.statusAtividadeModel.id}" styleClass="coluna95">
+					</p:selectOneMenu>
+					<p:selectOneMenu value="#{atividadeFaces.crudPesquisaModel.statusAtividadeModel.id}" styleClass="coluna95">
 						<f:selectItem itemLabel="Não selecionado" itemValue="" />
 						<f:selectItems value="#{atividadeFaces.comboStatusAtividade}" />
-					</h:selectOneMenu>
-					<p:commandButton value="Pesquisar" icon="ui-icon-search" action="#{atividadeFaces.pesquisar}" oncomplete="PF('myschedule').update()" />
+					</p:selectOneMenu>
+					<p:commandButton value="Pesquisar" icon="fa icon-search white" action="#{atividadeFaces.pesquisar}" oncomplete="PF('myschedule').update()" />
 
 				</h:panelGrid>
 
@@ -48,14 +48,14 @@
 						<h:outputText value="Data Inicial" />
 						<h:outputText value="Data Final" />
 
-						<h:selectOneMenu value="#{atividadeFaces.crudModel.responsavelModel.id}" styleClass="coluna95">
+						<p:selectOneMenu value="#{atividadeFaces.crudModel.responsavelModel.id}" styleClass="coluna95">
 							<f:selectItem itemLabel="Não selecionado" itemValue="" />
 							<f:selectItems value="#{atividadeFaces.comboResponsavel}" />
-						</h:selectOneMenu>
-						<h:selectOneMenu value="#{atividadeFaces.crudModel.statusAtividadeModel.id}" styleClass="coluna95">
+						</p:selectOneMenu>
+						<p:selectOneMenu value="#{atividadeFaces.crudModel.statusAtividadeModel.id}" styleClass="coluna95">
 							<f:selectItem itemLabel="Não selecionado" itemValue="" />
 							<f:selectItems value="#{atividadeFaces.comboStatusAtividade}" />
-						</h:selectOneMenu>
+						</p:selectOneMenu>
 						<ts:calendar value="#{atividadeFaces.crudModel.dataInicial}" pattern="dd/MM/yyyy HH:mm" />
 						<ts:calendar value="#{atividadeFaces.crudModel.dataFinal}" pattern="dd/MM/yyyy HH:mm" />
 
@@ -80,10 +80,10 @@
 
 				</p:scrollPanel>
 
-				<p:panel style="margin: 5px;">
-					<p:commandButton value="Gravar" icon="salvar" action="#{atividadeFaces.insertEvent}" process="@this, pgAtividades" update="pgAtividades" oncomplete="handleRequest('dlgAtividade', args)" rendered="#{empty atividadeFaces.crudModel.id}" />
-					<p:commandButton value="Gravar" icon="salvar" action="#{atividadeFaces.updateEvent}" process="@this, pgAtividades" update="pgAtividades" oncomplete="handleRequest('dlgAtividade', args)" rendered="#{!empty atividadeFaces.crudModel.id}" />
-					<p:commandButton type="button" value="Fechar" icon="ui-icon-close" onclick="PF('dlgAtividade').hide();" />
+				<p:panel style="margin-top: 5px;">
+					<p:commandButton value="Gravar" icon="fa icon-floppy white" action="#{atividadeFaces.insertEvent}" process="@this, pgAtividades" update="pgAtividades" oncomplete="handleRequest('dlgAtividade', args)" rendered="#{empty atividadeFaces.crudModel.id}" />
+					<p:commandButton value="Gravar" icon="fa icon-floppy white" action="#{atividadeFaces.updateEvent}" process="@this, pgAtividades" update="pgAtividades" oncomplete="handleRequest('dlgAtividade', args)" rendered="#{!empty atividadeFaces.crudModel.id}" />
+					<p:commandButton type="button" value="Fechar" icon="fa icon-cancel white" onclick="PF('dlgAtividade').hide();" />
 				</p:panel>
 
 			</h:panelGroup>

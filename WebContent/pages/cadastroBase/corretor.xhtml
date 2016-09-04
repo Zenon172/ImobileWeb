@@ -7,7 +7,7 @@
 
 	<ui:define name="cadastro">
 
-		<p:fieldset style="width: 98%">
+		<p:fieldset>
 
 			<h:panelGrid style="width: 40%;">
 
@@ -29,10 +29,10 @@
 
 							<p:inputText id="itNome" value="#{contato.nome}" maxlength="100" styleClass="coluna90" />
 							<p:inputText id="itTelefone" value="#{contato.telefone}" maxlength="15" styleClass="coluna90 telefone" />
-							<h:selectOneMenu value="#{contato.operadoraModel.id}" styleClass="coluna95">
+							<p:selectOneMenu value="#{contato.operadoraModel.id}" styleClass="coluna95">
 								<f:selectItem itemLabel="selecione" itemValue="" />
 								<f:selectItems value="#{mbean.comboOperadoras}" />
-							</h:selectOneMenu>
+							</p:selectOneMenu>
 							<p:inputText id="itEmail" value="#{contato.email}" maxlength="100" styleClass="coluna90" />
 						</h:panelGrid>
 					</p:column>

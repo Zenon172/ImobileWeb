@@ -1,6 +1,6 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core">
 
-	<p:tabView id="tabview">
+	<p:tabView id="tabview" style="height: calc(100vh - 54px)">
 
 		<p:tab id="tabCadastro" title="Cadastro">
 
@@ -13,51 +13,55 @@
 
 			<h:form id="frmTabCadastro" enctype="#{empty uploadArquivo ? 'application/x-www-form-urlencoded' : 'multipart/form-data'}">
 
-				<h:panelGrid id="pgTabCadastro" style="width: 100%" columns="1">
+				<h:panelGroup id="pgTabCadastro" layout="block" styleClass="borderPanel" style="height: calc(100vh - 174px); overflow-y:auto; overflow-x: hidden; width: 100%;">
 
-					<ui:insert name="atalhos" />
+					<h:panelGrid style="width: 100%" columns="1">
 
-					<p:commandButton type="button" id="btnCancelarCRUD" value="Novo Cadastro" icon="ui-icon-document" onclick="PF('cdCancelarCRUD').show()" style="position: absolute; width: 140px; right: 15px; top: 7.5px" />
+						<ui:insert name="atalhos" />
 
-					<p:fieldset legend="Informações de Cadastro" toggleable="true" collapsed="true" style="width: 98%">
+						<p:commandButton type="button" id="btnCancelarCRUD" value="Novo Cadastro" icon="fa icon-doc" styleClass="GrayButton" onclick="PF('cdCancelarCRUD').show()" style="position: absolute; right: 15px; top: 2px" />
 
-						<h:panelGrid width="100%" columns="5" columnClasses="coluna10, coluna20, coluna25, coluna20, coluna25">
-							<h:outputLabel value="Chave" />
-							<h:outputLabel value="Data Cadastro" />
-							<h:outputLabel value="Usuário Cadastro" />
-							<h:outputLabel value="Data Atualização" />
-							<h:outputLabel value="Usuário Atualização" />
-							<h:inputText disabled="true" style="width: 95%;" value="#{mbeanModel.id}" />
-							<h:inputText disabled="true" style="width: 95%;" value="#{mbeanModel.dataCadastro}" rendered="#{empty possuiDadosCadastro ? 'true' : possuiDadosCadastro}">
-								<ui:include src="/resources/templates/include_gmt_format.xhtml" />
-							</h:inputText>
-							<h:inputText disabled="true" style="width: 95%;" value="#{mbeanModel.usuarioCadastroModel.nome}" rendered="#{empty possuiDadosCadastro ? 'true' : possuiDadosCadastro}" />
-							<h:inputText disabled="true" style="width: 95%;" value="#{mbeanModel.dataAtualizacao}" rendered="#{empty possuiDadosAtualizacao ? 'false' : 'true'}">
-								<ui:include src="/resources/templates/include_gmt_format.xhtml" />
-							</h:inputText>
-							<h:inputText disabled="true" style="width: 95%;" value="#{mbeanModel.usuarioAtualizacaoModel.nome}" rendered="#{empty possuiDadosAtualizacao ? 'false' : 'true'}" />
-							<h:inputText disabled="true" style="width: 95%;" rendered="#{empty possuiDadosAtualizacao ? 'true' : 'false'}" />
-							<h:inputText disabled="true" style="width: 95%;" rendered="#{empty possuiDadosAtualizacao ? 'true' : 'false'}" />
-						</h:panelGrid>
+						<p:fieldset legend="Informações de Cadastro" toggleable="true" collapsed="true">
 
-						<ui:insert name="informacoes" />
+							<h:panelGrid width="100%" columns="5" columnClasses="coluna10, coluna20, coluna25, coluna20, coluna25">
+								<h:outputLabel value="Chave" />
+								<h:outputLabel value="Data Cadastro" />
+								<h:outputLabel value="Usuário Cadastro" />
+								<h:outputLabel value="Data Atualização" />
+								<h:outputLabel value="Usuário Atualização" />
+								<p:inputText disabled="true" style="width: 95%;" value="#{mbeanModel.id}" />
+								<p:inputText disabled="true" style="width: 95%;" value="#{mbeanModel.dataCadastro}" rendered="#{empty possuiDadosCadastro ? 'true' : possuiDadosCadastro}">
+									<ui:include src="/resources/templates/include_gmt_format.xhtml" />
+								</p:inputText>
+								<p:inputText disabled="true" style="width: 95%;" value="#{mbeanModel.usuarioCadastroModel.nome}" rendered="#{empty possuiDadosCadastro ? 'true' : possuiDadosCadastro}" />
+								<p:inputText disabled="true" style="width: 95%;" value="#{mbeanModel.dataAtualizacao}" rendered="#{empty possuiDadosAtualizacao ? 'false' : 'true'}">
+									<ui:include src="/resources/templates/include_gmt_format.xhtml" />
+								</p:inputText>
+								<p:inputText disabled="true" style="width: 95%;" value="#{mbeanModel.usuarioAtualizacaoModel.nome}" rendered="#{empty possuiDadosAtualizacao ? 'false' : 'true'}" />
+								<p:inputText disabled="true" style="width: 95%;" rendered="#{empty possuiDadosAtualizacao ? 'true' : 'false'}" />
+								<p:inputText disabled="true" style="width: 95%;" rendered="#{empty possuiDadosAtualizacao ? 'true' : 'false'}" />
+							</h:panelGrid>
 
-					</p:fieldset>
+							<ui:insert name="informacoes" />
 
-					<ui:insert name="cadastro" />
+						</p:fieldset>
 
-					<p:fieldset rendered="#{empty permissao ? true : permissao}" style="width: 98%">
+						<ui:insert name="cadastro" />
 
-						<p:commandButton type="button" id="btnInserir" value="Gravar" onclick="PF('cdCadastrarCRUD').show()" icon="salvar" style="margin-left: 5px;" rendered="#{!mbean.alterar and menuFaces.menuModel.flagInserir and (empty permissaoInserir ? true : permissaoInserir)}" />
-						<p:commandButton type="button" id="btnAlterar" value="Gravar" icon="salvar" onclick="PF('cdAlterarCRUD').show()" style="margin-left: 5px;" rendered="#{mbean.alterar and menuFaces.menuModel.flagAlterar and (empty permissaoAlterar ? true : permissaoAlterar)}" />
+					</h:panelGrid>
 
-						<ui:insert name="comandosCrudFim" />
+					<ui:insert name="cadastroFim" />
 
-					</p:fieldset>
+				</h:panelGroup>
 
-				</h:panelGrid>
+				<p:fieldset rendered="#{empty permissao ? true : permissao}" style="margin-top: 5px">
 
-				<ui:insert name="cadastroFim" />
+					<p:commandButton type="button" id="btnInserir" value="Gravar" onclick="PF('cdCadastrarCRUD').show()" icon="fa icon-floppy white" style="margin-left: 5px;" rendered="#{!mbean.alterar and menuFaces.menuModel.flagInserir and (empty permissaoInserir ? true : permissaoInserir)}" />
+					<p:commandButton type="button" id="btnAlterar" value="Gravar" icon="fa icon-floppy white" onclick="PF('cdAlterarCRUD').show()" style="margin-left: 5px;" rendered="#{mbean.alterar and menuFaces.menuModel.flagAlterar and (empty permissaoAlterar ? true : permissaoAlterar)}" />
+
+					<ui:insert name="comandosCrudFim" />
+
+				</p:fieldset>
 
 				<p:confirmDialog message="Confirmar a INCLUSÃO do registro?" header="Aviso" severity="alert" widgetVar="cdCadastrarCRUD" rendered="#{menuFaces.menuModel.flagInserir and (empty permissao ? true : permissao) and (empty permissaoInserir ? true : permissaoInserir)}">
 					<p:commandButton ajax="#{empty ajaxFalse ? 'true': !ajaxFalse}" process="@form" value="Sim" onclick="PF('cdCadastrarCRUD').hide()" action="#{mbean.insertEvent}" update="#{autoUpdateCadastro?'@this':'@form'} :tabview :tabview:tabCadastro" />
@@ -79,55 +83,59 @@
 
 		<p:tab id="tabPesquisa" title="Pesquisa">
 
-			<h:form id="frmTabPesquisa" prependId="false">
+			<h:panelGroup layout="block" style="height: calc(100vh - 110px); overflow-y:auto; overflow-x: hidden;">
 
-				<p:fieldset id="fsPesquisaCampos">
+				<h:form id="frmTabPesquisa" prependId="false">
 
-					<h:panelGrid columns="1" style="width: 100%">
+					<p:fieldset id="fsPesquisaCampos">
 
-						<ui:insert name="pesquisaCampos" />
+						<h:panelGrid columns="1" style="width: 100%">
 
-						<h:panelGrid columns="2" columnClasses="coluna15, coluna85">
-							<p:commandButton id="btnPesquisar" value="Pesquisar" icon="ui-icon-search" update="@form" action="#{mbean.findEvent}" style="width: 110px;" />
-							<p:commandButton id="btnLimpar" value="Nova Pesquisa" icon="ui-icon-document" action="#{mbean.limparPesquisa}" style="width: 140px;" process="fsPesquisaCampos" update="gridPesquisa fsPesquisaCampos" />
+							<ui:insert name="pesquisaCampos" />
+
+							<h:panelGrid columns="2" columnClasses="coluna15, coluna85">
+								<p:commandButton id="btnPesquisar" value="Pesquisar" icon="fa icon-search white" update="@form" action="#{mbean.findEvent}" />
+								<p:commandButton id="btnLimpar" value="Nova Pesquisa" icon="fa icon-doc white" action="#{mbean.limparPesquisa}" process="fsPesquisaCampos" update="gridPesquisa fsPesquisaCampos" />
+							</h:panelGrid>
+
 						</h:panelGrid>
 
-					</h:panelGrid>
+					</p:fieldset>
+					<br />
+					<p:fieldset id="fsGridPesquisa">
 
-				</p:fieldset>
-				<br />
-				<p:fieldset id="fsGridPesquisa">
+						<p:dataTable emptyMessage="Nenhum registro encontrado" paginator="true" paginatorAlwaysVisible="false" rows="30" id="gridPesquisa" value="#{mbean.grid}" var="linha">
 
-					<p:dataTable emptyMessage="Nenhum registro encontrado" paginator="true" paginatorAlwaysVisible="false" rows="30" id="gridPesquisa" value="#{mbean.grid}" var="linha">
+							<ui:insert name="colunasTabela" />
 
-						<ui:insert name="colunasTabela" />
+							<p:column headerText="Editar" styleClass="coluna05">
+								<p:commandLink ajax="false" action="#{mbean.detailEvent}">
+									<h:graphicImage value="../resources/images/doc.png" style="border: 0px" />
+									<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+								</p:commandLink>
+							</p:column>
 
-						<p:column headerText="Editar" styleClass="coluna05">
-							<p:commandLink ajax="false" action="#{mbean.detailEvent}">
-								<h:graphicImage value="../resources/images/doc.png" style="border: 0px" />
-								<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
-							</p:commandLink>
-						</p:column>
+							<p:column headerText="Excluir" styleClass="coluna05" rendered="#{menuFaces.menuModel.flagExcluir}">
+								<p:commandLink id="clExcluir" onclick="PF('cdExcluirCRUD').show()" disabled="#{empty permissaoExcluir ? 'false' : !permissaoExcluir}">
+									<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+									<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+								</p:commandLink>
+							</p:column>
 
-						<p:column headerText="Excluir" styleClass="coluna05" rendered="#{menuFaces.menuModel.flagExcluir}">
-							<p:commandLink id="clExcluir" onclick="PF('cdExcluirCRUD').show()" disabled="#{empty permissaoExcluir ? 'false' : !permissaoExcluir}">
-								<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
-								<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
-							</p:commandLink>
-						</p:column>
+							<ui:insert name="colunasFim" />
 
-						<ui:insert name="colunasFim" />
+						</p:dataTable>
 
-					</p:dataTable>
+						<p:confirmDialog message="Confirma exclusão do registro?" header="Aviso" severity="alert" widgetVar="cdExcluirCRUD" rendered="#{menuFaces.menuModel.flagExcluir}">
+							<p:commandButton value="Sim" onclick="PF('cdExcluirCRUD').hide()" action="#{mbean.deleteEvent}" process="@this" update="gridPesquisa :tabview:frmTabCadastro" />
+							<p:commandButton type="button" value="Não" onclick="PF('cdExcluirCRUD').hide()" />
+						</p:confirmDialog>
 
-					<p:confirmDialog message="Confirma exclusão do registro?" header="Aviso" severity="alert" widgetVar="cdExcluirCRUD" rendered="#{menuFaces.menuModel.flagExcluir}">
-						<p:commandButton value="Sim" onclick="PF('cdExcluirCRUD').hide()" action="#{mbean.deleteEvent}" process="@this" update="gridPesquisa :tabview:frmTabCadastro" />
-						<p:commandButton type="button" value="Não" onclick="PF('cdExcluirCRUD').hide()" />
-					</p:confirmDialog>
+					</p:fieldset>
 
-				</p:fieldset>
+				</h:form>
 
-			</h:form>
+			</h:panelGroup>
 
 		</p:tab>
 

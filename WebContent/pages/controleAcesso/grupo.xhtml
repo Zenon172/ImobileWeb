@@ -6,7 +6,7 @@
 
 	<ui:define name="cadastro">
 
-		<p:fieldset style="width: 98%">
+		<p:fieldset>
 
 			<h:panelGrid style="width: 60%">
 
@@ -14,10 +14,10 @@
 				<p:inputText id="itDescricao" value="#{mbeanModel.descricao}" required="true" maxlength="100" styleClass="coluna90" />
 
 				<p:outputLabel for="omMenuInicial" value="Menu Inicial" />
-				<h:selectOneMenu id="omMenuInicial" value="#{mbeanModel.menuInicialModel.id}" required="true">
+				<p:selectOneMenu id="omMenuInicial" value="#{mbeanModel.menuInicialModel.id}" required="true">
 					<f:selectItem itemLabel="Selecione" itemValue="" />
 					<f:selectItems value="#{mbean.comboMenu}" />
-				</h:selectOneMenu>
+				</p:selectOneMenu>
 
 			</h:panelGrid>
 
@@ -28,11 +28,11 @@
 					<h:outputText value="Menu" />
 					<h:outputText value="" />
 
-					<h:selectOneMenu value="#{mbean.menuSelecionadoModel.id}" styleClass="coluna98">
+					<p:selectOneMenu value="#{mbean.menuSelecionadoModel.id}" styleClass="coluna98">
 						<f:selectItem itemValue="" itemLabel="Não Selecionado" />
 						<f:selectItems value="#{mbean.comboMenu}" />
-					</h:selectOneMenu>
-					<p:commandButton icon="ui-icon-plus" value="Adicionar" action="#{mbean.addMenu}" process="@form" update="@form" />
+					</p:selectOneMenu>
+					<p:commandButton icon="fa icon-plus-squared white" value="Adicionar" action="#{mbean.addMenu}" process="@form" update="@form" />
 
 				</h:panelGrid>
 

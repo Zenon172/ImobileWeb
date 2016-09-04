@@ -7,7 +7,7 @@
 
 	<ui:define name="cadastro">
 
-		<p:fieldset style="width: 98%">
+		<p:fieldset>
 
 			<h:panelGrid style="width: 60%">
 
@@ -15,10 +15,10 @@
 				<p:inputText id="itDescricao" value="#{mbeanModel.descricao}" required="true" maxlength="100" styleClass="coluna90" />
 				
 				<p:outputLabel for="somCidade" value="Cidade" />
-				<h:selectOneMenu id="somCidade" value="#{mbeanModel.cidadeModel.id}" styleClass="coluna30">
+				<p:selectOneMenu id="somCidade" value="#{mbeanModel.cidadeModel.id}" styleClass="coluna30">
 					<f:selectItem itemValue="" itemLabel="Não Selecionado" />
 					<f:selectItems value="#{mbean.comboCidade}" />
-				</h:selectOneMenu>
+				</p:selectOneMenu>
 
 			</h:panelGrid>
 
@@ -32,10 +32,10 @@
 		<p:inputText value="#{mbeanPesquisaModel.descricao}" styleClass="coluna50" />
 		
 		<p:outputLabel for="somCidadePesquisa" value="Cidade" />
-		<h:selectOneMenu id="somCidadePesquisa" value="#{mbeanPesquisaModel.cidadeModel.id}" styleClass="coluna15">
+		<p:selectOneMenu id="somCidadePesquisa" value="#{mbeanPesquisaModel.cidadeModel.id}" styleClass="coluna15">
 			<f:selectItem itemValue="" itemLabel="Não Selecionado" />
 			<f:selectItems value="#{mbean.comboCidade}" />
-		</h:selectOneMenu>
+		</p:selectOneMenu>
 
 	</ui:define>
 

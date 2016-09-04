@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:pe="http://primefaces.org/ui/extensions">
+<f:view xmlns:f="http://java.sun.com/jsf/core" contentType="text/html" encoding='UTF-8'>
+
+	<h:head>
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta http-equiv="expires" content="-1" />
+		<title>Imobile - Sistema de Gestão Imobiliária</title>
+		<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/geral.css" />
+		<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/theme/jquery-ui.theme.css" />
+		<script src="#{request.contextPath}/resources/js/funcoes.js" type="text/javascript" />
+		<script src="#{request.contextPath}/resources/js/jquery.mask.min.js" type="text/javascript" />
+		<link rel="shortcut icon" href="#{request.contextPath}/resources/images/logo3x4.jpg" />
+	</h:head>
+
+	<h:body id="bodyDashBoard" style="font-size: 11px">
+
+		<div id="divDashBoard">
+
+			<h:panelGroup id="luMenu" layout="block" styleClass="fundo corner esquerda">
+
+				<h:form id="formMenu">
+
+					<div align="center">
+
+						<p:commandButton id="HFButton" icon="hosflow48" type="button" style="margin-top:5px; width: 64px; height:64px; margin-bottom: -5px;" />
+
+						<h:outputText value="____________" style="color:lightgray; margin-top: 5px;" />
+
+						<div id="divBotoes" style="height: 500px; overflow: auto">
+
+							<ui:include src="/pages/atalho_recursive.xhtml">
+								<ui:param name="menus" value="#{menuFaces.menus}" />
+							</ui:include>
+
+						</div>
+
+						<h:outputText value="____________" style="color:lightgray" />
+
+						<p:commandButton id="btnDesconectar" global="false" icon="logout48" action="#{menuFaces.logout}" style="margin-top:5px; width: 64px; height:64px" />
+						<pe:tooltip for="btnDesconectar" value="Desconectar o usuário #{sessionScope.usuarioLogado.nome} do sistema." />
+
+						<ui:include src="menu_novo.xhtml" />
+
+					</div>
+
+				</h:form>
+
+			</h:panelGroup>
+
+			<h:panelGroup id="areaTrabalho" layout="block" styleClass="fundo corner direita">
+
+				<div id="titlePage" class="titlePanel corner">
+
+					<h:outputText value="#{menuFaces.nomeTela}" />
+
+				</div>
+
+				<div id="scrAreaTrabalho" style="height: 600px; overflow-x: auto; overflow-y: auto">
+					<ui:include id="uiTela" src="#{menuFaces.tela}" />
+				</div>
+			</h:panelGroup>
+
+			<h:form id="formNotificacao" prependId="false">
+
+				<h:commandButton id="btnPesquisarProntuario" action="#{menuFaces.redirecionarBusca}" ajax="false" style="display:none" />
+				<p:remoteCommand name="buscarProntuario" action="#{menuFaces.redirecionarBusca}" process="@this textoBusca2" />
+
+				<p:outputPanel autoUpdate="true">
+
+					<h:panelGroup rendered="#{mensagemViewFaces.atualizado}">
+
+						<h:panelGroup style="position: absolute; right: 20px; top: 4px">
+							<h:inputText id="textoBusca2" value="#{menuFaces.buscaPesquisaGlobalModel.textoBusca}" style="width: 250px; margin-top: 0px; margin-right: 20px; border-radius: 4px; border: 1px solid #cbc7bd; padding-left: 5px;" onkeypress="if (event.keyCode == 13) { $('#btnPesquisarProntuario').click() }" rendered="#{sessionScope.usuarioLogado.usuarioFuncaoModel.funcaoModel.flagEspecialidade}" />
+							<p:watermark value="Buscar informações dos Prontuários" for="textoBusca2" />
+							<p:commandLink onclick="fecharDialogMsg();" title="visualizar caixa de entrada" action="#{mensagemViewFaces.lerMensagem}" process="@this" update="spCaixaEntrada" oncomplete="PF('dlgCaixaEntrada').show()">
+								<h:outputText value="(#{mensagemViewFaces.mensagemModel.qtdNaoLida}) " />
+								<h:graphicImage value="../resources/images/carta.png" style="vertical-align: middle; border-radius: 6px;" />
+							</p:commandLink>
+						</h:panelGroup>
+
+						<h:panelGroup id="notificationBar" rendered="#{!empty mensagemViewFaces.informacao}" styleClass="ui-widget ui-widget-content notificacaoMsg">
+							<p:commandLink onclick="fecharDialogMsg();" title="fechar" process="@this" global="false" styleClass="ui-icon cancelar16" style="position: absolute; top: 0px; right: 0px; margin: 5px;">
+								<f:setPropertyActionListener target="#{mensagemViewFaces.informacao}" value="" />
+							</p:commandLink>
+							<p:commandLink action="#{mensagemViewFaces.lerMensagem}" process="@this" update="caixaEntrada spMensagens" onclick="fecharDialogMsg();" oncomplete="if(args.abrirDialogMensagem){PF('dlgMensagens').show();}else{dlgCaixaEntrada.show();}">
+								<h:outputText value="#{mensagemViewFaces.informacao}" title="clique para ler a mensagem" style="margin-top: 50px" />
+							</p:commandLink>
+						</h:panelGroup>
+
+					</h:panelGroup>
+
+				</p:outputPanel>
+
+				<p:remoteCommand name="deslogar" action="#{menuFaces.logout}" oncomplete="document.formNotificacao.submit();" />
+
+			</h:form>
+
+		</div>
+
+		<h:panelGroup id="pgInformativo" layout="block" styleClass="fundo inferior corner">
+
+			<h:panelGrid columns="6" width="100%" style="height: 100%;" columnClasses="colunaInformativo1, colunaInformativo4, colunaInformativo4, colunaInformativo2, colunaInformativoAjax, colunaInformativo5">
+				<h:column>
+					<p:outputPanel>
+						<ui:include src="/pages/sobre.xhtml" />
+					</p:outputPanel>
+				</h:column>
+				<h:column>
+					<h:outputLabel value="#{sessionScope.usuarioLogado.nome}" />
+				</h:column>
+				<h:column>
+					<h:outputLabel value="#{sessionScope.usuarioLogado.grupoModel.descricao}" />
+				</h:column>
+				<h:column>
+					<h:outputLabel value="" />
+				</h:column>
+				<h:column>
+				</h:column>
+			</h:panelGrid>
+
+		</h:panelGroup>
+
+		<p:growl id="msgCadastro" globalOnly="false" showDetail="true" showSummary="false" autoUpdate="true" escape="false" />
+
+		<p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" rendered="#{!menuFaces.telaPossuiSchedule}" />
+
+		<p:dialog modal="true" widgetVar="statusDialog" header="Processando solicitação..." draggable="false" closable="false" resizable="false" width="225">
+			<p:graphicImage value="../resources/images/ajax-loader.gif" style="border: 0px;width:200px;height:25px" />
+		</p:dialog>
+
+		<script type="text/javascript">
+			function redimensionarDashBoard() {
+				$("#divDashBoard").height($(window).height() - $("#pgInformativo").height() - 8);
+				$("#scrAreaTrabalho").height($("#divDashBoard").height() - 28);
+				$("#divBotoes").height($(window).height() - 193);
+			}
+
+			$(document).ready(function() {
+				redimensionarDashBoard();
+				$("#nbAviso").height(300);
+			});
+
+			$(window).resize(function() {
+				redimensionarDashBoard();
+			});
+			
+			$(".telefone").mask("(00) 0000-00009");
+			$('.telefone').focusout(function(){
+			    var phone, element;
+			    element = $(this);
+			    element.unmask();
+			    phone = element.val().replace(/\D/g, '');
+			    if(phone.length > 10) {
+			        element.mask("(99) 99999-9999");
+			    } else {
+			        element.mask("(99) 9999-99999");
+			    }
+			}).trigger('focusout');
+		</script>
+
+	</h:body>
+</f:view>
+</html>

@@ -53,7 +53,7 @@
 
 				</p:dataTable>
 
-				<p:commandButton type="button" icon="salvar" value="Alterar Configurações" onclick="PF('cdAlterarCRUD').show()" />
+				<p:commandButton type="button" icon="fa icon-floppy white" value="Alterar Configurações" onclick="PF('cdAlterarCRUD').show()" />
 
 				<p:confirmDialog message="Confirmar a ALTERAÇÃO do registro?" header="Aviso" severity="alert" widgetVar="cdAlterarCRUD">
 					<p:commandButton value="Sim" onclick="PF('cdAlterarCRUD').hide()" action="#{mbean.updateEvent}" update="@form" />

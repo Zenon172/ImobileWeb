@@ -4,7 +4,7 @@
 
 		<c:if test="${not empty linha.subMenus}">
 
-			<p:submenu label="#{linha.descricao}" styleClass="subMenu">
+			<p:submenu label="#{linha.descricao}" styleClass="subMenu" icon="#{linha.icone}">
 
 				<ui:include src="/pages/menu_recursive.xhtml">
 					<ui:param name="menus" value="${linha.subMenus}" />

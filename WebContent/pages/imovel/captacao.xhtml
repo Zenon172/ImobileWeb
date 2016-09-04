@@ -8,7 +8,7 @@
 
 	<ui:define name="cadastro">
 
-		<p:fieldset id="fsContatos" legend="Contatos" style="width: 98%">
+		<p:fieldset id="fsContatos" legend="Contatos">
 
 			<h:panelGrid style="width: 100%; margin-bottom: 10px">
 
@@ -30,10 +30,10 @@
 						<p:inputText id="itTelefone" value="#{contato.telefone}" maxlength="15" styleClass="coluna90 telefone">
 							<p:ajax global="false" event="change" listener="#{mbean.validarTelefoneDuplicidade(contato.telefone)}" process="@this" />
 						</p:inputText>
-						<h:selectOneMenu value="#{contato.operadoraModel.id}" styleClass="coluna95">
+						<p:selectOneMenu value="#{contato.operadoraModel.id}" styleClass="coluna95">
 							<f:selectItem itemLabel="selecione" itemValue="" />
 							<f:selectItems value="#{mbean.comboOperadoras}" />
-						</h:selectOneMenu>
+						</p:selectOneMenu>
 						<p:inputText id="itEmail" value="#{contato.email}" maxlength="100" styleClass="coluna90">
 							<p:ajax global="false" event="change" listener="#{mbean.validarEmailDuplicidade(contato.email)}" process="@this" />
 						</p:inputText>
@@ -43,7 +43,7 @@
 			</p:dataGrid>
 			
 			<div align="right">
-				<p:commandButton value="Adicionar Corretor" icon="ui-icon-plus" process="@this, fsContatos" oncomplete="if(!args.validationFailed){PF('cdCorretor').show()}" style="margin-top: 5px"/>
+				<p:commandButton value="Adicionar Corretor" icon="fa icon-plus-squared white" process="@this, fsContatos" oncomplete="if(!args.validationFailed){PF('cdCorretor').show()}" style="margin-top: 5px"/>
 			</div>
 			
 			<p:confirmDialog message="Confirma o cadastro do CORRETOR?" header="Aviso" severity="alert" widgetVar="cdCorretor" modal="true">
@@ -70,7 +70,7 @@
 
 		</p:fieldset>
 
-		<p:fieldset id="fsDadosImovel" legend="Dados do Imóvel" style="width: 98%">
+		<p:fieldset id="fsDadosImovel" legend="Dados do Imóvel">
 
 			<h:panelGrid columns="7" columnClasses="coluna25, coluna11, coluna15, coluna15, coluna15, coluna10, coluna15" style="width: 100%">
 
@@ -82,28 +82,28 @@
 				<p:outputLabel for="omStatusCaptacao" value="Status" />
 				<p:outputLabel for="itValor" value="Valor" />
 
-				<h:selectOneMenu id="omResponsavel" value="#{mbeanModel.responsavelModel.id}" required="true" style="width: 95%">
+				<p:selectOneMenu id="omResponsavel" value="#{mbeanModel.responsavelModel.id}" required="true" style="width: 95%">
 					<f:selectItem itemLabel="Selecione" itemValue="" />
 					<f:selectItems value="#{mbean.comboResponsavel}" />
-				</h:selectOneMenu>
+				</p:selectOneMenu>
 				<ts:calendar id="calDataAnuncio" value="#{mbeanModel.dataAnuncio}" styleClass="coluna90" />
-				<h:selectOneMenu id="omTipoImovel" value="#{mbeanModel.tipoImovelModel.id}" required="true" style="width: 90%">
+				<p:selectOneMenu id="omTipoImovel" value="#{mbeanModel.tipoImovelModel.id}" required="true" style="width: 90%">
 					<f:selectItem itemLabel="Selecione" itemValue="" />
 					<f:selectItems value="#{mbean.comboTipoImovel}" />
-				</h:selectOneMenu>
+				</p:selectOneMenu>
 
-				<h:selectOneMenu id="omOrigem" value="#{mbeanModel.origemModel.id}" required="true" style="width: 90%">
+				<p:selectOneMenu id="omOrigem" value="#{mbeanModel.origemModel.id}" required="true" style="width: 90%">
 					<f:selectItem itemLabel="Selecione" itemValue="" />
 					<f:selectItems value="#{mbean.comboOrigem}" />
-				</h:selectOneMenu>
-				<h:selectOneMenu id="omBairro" value="#{mbeanModel.bairroModel.id}" required="true" style="width: 90%">
+				</p:selectOneMenu>
+				<p:selectOneMenu id="omBairro" value="#{mbeanModel.bairroModel.id}" required="true" style="width: 90%">
 					<f:selectItem itemLabel="Selecione" itemValue="" />
 					<f:selectItems value="#{mbean.comboBairro}" />
-				</h:selectOneMenu>
-				<h:selectOneMenu id="omStatusCaptacao" value="#{mbeanModel.statusCaptacaoModel.id}" required="true" style="width: 90%">
+				</p:selectOneMenu>
+				<p:selectOneMenu id="omStatusCaptacao" value="#{mbeanModel.statusCaptacaoModel.id}" required="true" style="width: 90%">
 					<f:selectItem itemLabel="Selecione" itemValue="" />
 					<f:selectItems value="#{mbean.comboStatusCaptacao}" />
-				</h:selectOneMenu>
+				</p:selectOneMenu>
 				<p:inputNumber id="itValor" value="#{mbeanModel.valor}" symbol="R$ " decimalSeparator="," thousandSeparator="." maxValue="99999999" style="width: 90%; text-align:right" />
 
 			</h:panelGrid>
@@ -127,7 +127,7 @@
 
 		</p:fieldset>
 		
-		<p:fieldset id="fsDadosAnuncio" legend="Dados do Anúncio" style="width: 98%">
+		<p:fieldset id="fsDadosAnuncio" legend="Dados do Anúncio">
 		
 			<h:panelGrid style="width: 100%">
 
@@ -144,11 +144,11 @@
 
 		</p:fieldset>
 
-		<p:fieldset legend="Atividades" style="width: 98%" rendered="#{!empty mbeanModel.id}">
+		<p:fieldset legend="Atividades" rendered="#{!empty mbeanModel.id}">
 
 			<h:panelGrid id="pgListaAtividade" style="width: 100%">
 
-				<p:commandButton type="button" value="Adicionar" icon="ui-icon-plus" onclick="PF('dlgAtividade').show()" />
+				<p:commandButton type="button" value="Adicionar" icon="fa icon-plus-squared white" onclick="PF('dlgAtividade').show()" />
 
 				<p:dataTable value="#{mbeanModel.atividades}" var="linha" emptyMessage="Nenhuma atividade registrada">
 
@@ -195,14 +195,14 @@
 						<h:outputText value="Data Inicial" />
 						<h:outputText value="Data Final" />
 
-						<h:selectOneMenu value="#{mbean.atividadeModel.responsavelModel.id}" styleClass="coluna95">
+						<p:selectOneMenu value="#{mbean.atividadeModel.responsavelModel.id}" styleClass="coluna95">
 							<f:selectItem itemLabel="Não selecionado" itemValue="" />
 							<f:selectItems value="#{mbean.comboResponsavel}" />
-						</h:selectOneMenu>
-						<h:selectOneMenu value="#{mbean.atividadeModel.statusAtividadeModel.id}" styleClass="coluna95">
+						</p:selectOneMenu>
+						<p:selectOneMenu value="#{mbean.atividadeModel.statusAtividadeModel.id}" styleClass="coluna95">
 							<f:selectItem itemLabel="Não selecionado" itemValue="" />
 							<f:selectItems value="#{mbean.comboStatusAtividade}" />
-						</h:selectOneMenu>
+						</p:selectOneMenu>
 						<ts:calendar value="#{mbean.atividadeModel.dataInicial}" pattern="dd/MM/yyyy HH:mm" />
 						<ts:calendar value="#{mbean.atividadeModel.dataFinal}" pattern="dd/MM/yyyy HH:mm" />
 
@@ -231,8 +231,8 @@
 				</p:scrollPanel>
 
 				<p:panel style="margin: 5px;">
-					<p:commandButton value="Gravar" icon="salvar" action="#{mbean.addAtividade}" process="@this, pgAtividades" update="pgAtividades, pgListaAtividade" oncomplete="handleRequest('dlgAtividade', args)" />
-					<p:commandButton type="button" value="Fechar" icon="ui-icon-close" onclick="dlgAtividade.hide();" />
+					<p:commandButton value="Gravar" icon="fa icon-floppy white" action="#{mbean.addAtividade}" process="@this, pgAtividades" update="pgAtividades, pgListaAtividade" oncomplete="handleRequest('dlgAtividade', args)" />
+					<p:commandButton type="button" value="Fechar" icon="fa icon-cancel white" onclick="dlgAtividade.hide();" />
 				</p:panel>
 
 			</h:panelGroup>
@@ -243,7 +243,7 @@
 
 	<ui:define name="comandosCrudFim">
 
-		<p:commandButton id="btnInserir2" value="Gravar" icon="salvar" oncomplete="PF('cdCadastrarCRUD2').show()" rendered="#{!mbean.alterar and menuFaces.menuModel.flagInserir}" style="margin-left: 5px;">
+		<p:commandButton id="btnInserir2" value="Gravar" icon="fa icon-floppy white" oncomplete="PF('cdCadastrarCRUD2').show()" rendered="#{!mbean.alterar and menuFaces.menuModel.flagInserir}" style="margin-left: 5px;">
 			<f:setPropertyActionListener target="#{captacaoFaces.flagValidarCaptacaoDuplicada}" value="#{true}" />
 		</p:commandButton>
 
@@ -349,10 +349,10 @@
 				</p:scrollPanel>
 
 				<p:panel style="margin: 5px;">
-					<p:commandButton id="btnInserir3" value="Gravar captação" title="Salva a captação" icon="salvar" oncomplete="dlgCaptacoesExistentes.hide(); PF('cdCadastrarCRUD2').show()" rendered="#{!mbean.alterar and menuFaces.menuModel.flagInserir}" style="margin-left: 5px;">
+					<p:commandButton id="btnInserir3" value="Gravar captação" title="Salva a captação" icon="fa icon-floppy white" oncomplete="dlgCaptacoesExistentes.hide(); PF('cdCadastrarCRUD2').show()" rendered="#{!mbean.alterar and menuFaces.menuModel.flagInserir}" style="margin-left: 5px;">
 						<f:setPropertyActionListener target="#{captacaoFaces.flagValidarCaptacaoDuplicada}" value="#{false}" />
 					</p:commandButton>
-					<p:commandButton type="button" value="Fechar" icon="ui-icon-close" onclick="dlgCaptacoesExistentes.hide();" />
+					<p:commandButton type="button" value="Fechar" icon="fa icon-cancel white" onclick="dlgCaptacoesExistentes.hide();" />
 				</p:panel>
 
 			</h:panelGroup>
@@ -389,26 +389,26 @@
 			<p:outputLabel for="omBairroPesquisa" value="Bairro" />
 			<p:outputLabel for="omStatusCaptacaoPesquisa" value="Status" />
 
-			<h:selectOneMenu id="omResponsavelPesquisa" value="#{mbeanPesquisaModel.responsavelModel.id}" style="width: 90%">
+			<p:selectOneMenu id="omResponsavelPesquisa" value="#{mbeanPesquisaModel.responsavelModel.id}" style="width: 90%">
 				<f:selectItem itemLabel="Selecione" itemValue="" />
 				<f:selectItems value="#{mbean.comboResponsavel}" />
-			</h:selectOneMenu>
-			<h:selectOneMenu id="omTipoImovelPesquisa" value="#{mbeanPesquisaModel.tipoImovelModel.id}" style="width: 90%">
+			</p:selectOneMenu>
+			<p:selectOneMenu id="omTipoImovelPesquisa" value="#{mbeanPesquisaModel.tipoImovelModel.id}" style="width: 90%">
 				<f:selectItem itemLabel="Selecione" itemValue="" />
 				<f:selectItems value="#{mbean.comboTipoImovel}" />
-			</h:selectOneMenu>
-			<h:selectOneMenu id="omOrigemPesquisa" value="#{mbeanPesquisaModel.origemModel.id}" style="width: 90%">
+			</p:selectOneMenu>
+			<p:selectOneMenu id="omOrigemPesquisa" value="#{mbeanPesquisaModel.origemModel.id}" style="width: 90%">
 				<f:selectItem itemLabel="Selecione" itemValue="" />
 				<f:selectItems value="#{mbean.comboOrigem}" />
-			</h:selectOneMenu>
-			<h:selectOneMenu id="omBairroPesquisa" value="#{mbeanPesquisaModel.bairroModel.id}" style="width: 90%">
+			</p:selectOneMenu>
+			<p:selectOneMenu id="omBairroPesquisa" value="#{mbeanPesquisaModel.bairroModel.id}" style="width: 90%">
 				<f:selectItem itemLabel="Selecione" itemValue="" />
 				<f:selectItems value="#{mbean.comboBairro}" />
-			</h:selectOneMenu>
-			<h:selectOneMenu id="omStatusCaptacaoPesquisa" value="#{mbeanPesquisaModel.statusCaptacaoModel.id}" style="width: 90%">
+			</p:selectOneMenu>
+			<p:selectOneMenu id="omStatusCaptacaoPesquisa" value="#{mbeanPesquisaModel.statusCaptacaoModel.id}" style="width: 90%">
 				<f:selectItem itemLabel="Selecione" itemValue="" />
 				<f:selectItems value="#{mbean.comboStatusCaptacao}" />
-			</h:selectOneMenu>
+			</p:selectOneMenu>
 
 		</h:panelGrid>
 

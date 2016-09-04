@@ -1664,3 +1664,7 @@ select {
 .ui-datatable table,.ui-treetable table {
 	table-layout: auto !important;
 }
+
+.ui-tabs .ui-tabs-panel {
+    padding: 5px;
+}
