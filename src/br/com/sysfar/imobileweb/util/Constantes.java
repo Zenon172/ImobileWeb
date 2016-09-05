@@ -42,5 +42,8 @@ public class Constantes {
 	
 	public static final Long CONFIGURACAO_MARGEM_VALOR_IMOVEL_PESQUISA = 1L;
 	public static final Long CONFIGURACAO_QUANTIDADE_DIAS_SEM_CONTATO_CLIENTE = 2L;
+	public static final Long CONFIGURACAO_PASTA_UPLOAD_ARQUIVO = 3L;
+	public static final Long CONFIGURACAO_PASTA_UPLOAD_RELATORIO = 4L;
 	
+	public static final String PASTA_DOWNLOAD_ARQUIVO = "../../arquivos/arquivos_imobile/";
 }

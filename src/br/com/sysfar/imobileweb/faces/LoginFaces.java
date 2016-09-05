@@ -5,9 +5,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import br.com.relatec.util.ConstantesRelatec;
+import br.com.sysfar.imobileweb.dao.ConfiguracaoDAO;
 import br.com.sysfar.imobileweb.dao.UsuarioDAO;
+import br.com.sysfar.imobileweb.model.ConfiguracaoModel;
 import br.com.sysfar.imobileweb.model.UsuarioModel;
 import br.com.sysfar.imobileweb.util.Constantes;
+import br.com.sysfar.imobileweb.util.GerenciadorCaminhoArquivoUtil;
 import br.com.topsys.constant.TSConstant;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSCryptoUtil;
@@ -21,6 +24,7 @@ import br.com.topsys.web.util.TSFacesUtil;
 public final class LoginFaces extends TSMainFaces {
 
 	private UsuarioDAO usuarioDAO;
+	private ConfiguracaoDAO configuracaoDAO;
 	private UsuarioModel usuarioModel;
 	private UsuarioModel usuarioAuxiliarModel;
 	private String novaSenha;
@@ -30,6 +34,7 @@ public final class LoginFaces extends TSMainFaces {
 	protected void clearFields() {
 		this.usuarioModel = new UsuarioModel();
 		this.usuarioDAO = new UsuarioDAO();
+		this.configuracaoDAO = new ConfiguracaoDAO();
 		this.limparNovaSenha();
 	}
 
@@ -47,6 +52,14 @@ public final class LoginFaces extends TSMainFaces {
 		TSFacesUtil.addObjectInSession(Constantes.SESSION_USUARIO_LOGADO, usuario);
 		TSFacesUtil.addObjectInSession(ConstantesRelatec.GRUPO_LOGADO_ID, usuario.getGrupoModel().getId());
 		TSFacesUtil.addObjectInSession(Constantes.SESSION_FLAG_ACESSO_JAR, true);
+		
+		ConfiguracaoModel configSistema = this.configuracaoDAO.obter(new ConfiguracaoModel(Constantes.CONFIGURACAO_PASTA_UPLOAD_RELATORIO));
+		
+		GerenciadorCaminhoArquivoUtil.setPastaCaminhoRelatorio(configSistema.getValor());
+		
+		configSistema = this.configuracaoDAO.obter(new ConfiguracaoModel(Constantes.CONFIGURACAO_PASTA_UPLOAD_ARQUIVO));
+		
+		GerenciadorCaminhoArquivoUtil.setPastaCaminhoArquivo(configSistema.getValor());
 
 		return "logar";
 

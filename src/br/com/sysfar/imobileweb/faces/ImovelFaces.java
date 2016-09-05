@@ -1,5 +1,6 @@
 package br.com.sysfar.imobileweb.faces;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,7 +10,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
+import org.apache.commons.io.FileUtils;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.FileUploadEvent;
 
 import br.com.sysfar.imobileweb.dao.ClienteDAO;
 import br.com.sysfar.imobileweb.dao.ComboDAO;
@@ -26,6 +29,7 @@ import br.com.sysfar.imobileweb.model.CondominioModel;
 import br.com.sysfar.imobileweb.model.ConstrutoraModel;
 import br.com.sysfar.imobileweb.model.EdificioModel;
 import br.com.sysfar.imobileweb.model.ImovelAtualizacaoModel;
+import br.com.sysfar.imobileweb.model.ImovelFotoModel;
 import br.com.sysfar.imobileweb.model.ImovelModel;
 import br.com.sysfar.imobileweb.model.MenuModel;
 import br.com.sysfar.imobileweb.model.OperadoraModel;
@@ -38,8 +42,10 @@ import br.com.sysfar.imobileweb.model.TipoImovelModel;
 import br.com.sysfar.imobileweb.model.TipoPisoModel;
 import br.com.sysfar.imobileweb.model.UsuarioModel;
 import br.com.sysfar.imobileweb.util.Constantes;
+import br.com.sysfar.imobileweb.util.GerenciadorCaminhoArquivoUtil;
 import br.com.sysfar.imobileweb.util.Utilitario;
 import br.com.topsys.exception.TSApplicationException;
+import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.util.TSFacesUtil;
 
@@ -73,6 +79,7 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 
 	private ImovelAtualizacaoModel imovelAtualizacaoModel;
 	private ImovelAtualizacaoModel imovelAtualizacaoSelecionadoModel;
+	private ImovelFotoModel imovelFotoSelecionadaModel;
 
 	@Override
 	@PostConstruct
@@ -96,6 +103,7 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 		this.crudModel.getProprietarioModel().setFlagAtivo(Boolean.TRUE);
 		this.crudModel.getProprietarioModel().setContatos(new ArrayList<ProprietarioContatoModel>());
 		this.crudModel.getProprietarioModel().setContatosResponsavelVenda(new ArrayList<ProprietarioContatoModel>());
+		this.crudModel.setFotos(new ArrayList<ImovelFotoModel>());
 
 		this.crudPesquisaModel = new ImovelModel();
 		this.crudPesquisaModel.setFlagAtivo(Boolean.TRUE);
@@ -368,6 +376,7 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 	protected void posDetail() {
 		this.crudModel.setClientesPerfil(this.clienteDAO.pesquisarPerfil(this.crudModel));
 		this.crudModel.setAtualizacoes(this.imovelDAO.pesquisarAtualizacoes(this.crudModel));
+		this.crudModel.setFotos(this.imovelDAO.pesquisarFotos(this.crudModel));
 		this.carregarComboCondominio();
 	}
 
@@ -473,6 +482,56 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 
 		}
 
+		return null;
+	}
+	
+	public String removeFoto() {
+		
+		try {
+			
+			this.imovelDAO.excluir(this.imovelFotoSelecionadaModel);
+			
+			this.crudModel.getFotos().remove(this.imovelFotoSelecionadaModel);
+			
+			super.addInfoMessageKey(Constantes.OPERACAO_SUCESSO);
+			
+		} catch (TSApplicationException e) {
+			
+			super.throwException(e);
+			
+		}
+		
+		return null;
+	}
+	
+	public void enviarFoto(FileUploadEvent event) {
+
+		ImovelFotoModel imovelFotoModel = new ImovelFotoModel();
+		
+		imovelFotoModel.setImovelModel(this.crudModel);
+		imovelFotoModel.setArquivo(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(event.getFile().getFileName()));
+
+		try {
+
+			FileUtils.copyInputStreamToFile(event.getFile().getInputstream(), new File(GerenciadorCaminhoArquivoUtil.getPastaUploadArquivo() + imovelFotoModel.getArquivo()));
+			
+			this.crudModel.getFotos().add(imovelFotoModel);
+
+		} catch (Exception ex) {
+
+			super.addErrorMessage("Ocorreu um erro ao enviar a imagem");
+
+		}
+
+	}
+	
+	public String subirFoto(ImovelFotoModel foto) {
+		Utilitario.ordenarListaPraCima(this.crudModel.getFotos(), foto);
+		return null;
+	}
+	
+	public String descerFoto(ImovelFotoModel foto) {
+		Utilitario.ordenarListaPraBaixo(this.crudModel.getFotos(), foto);
 		return null;
 	}
 
@@ -618,6 +677,14 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 
 	public void setComboTipoAtualizacaoImovel(List<SelectItem> comboTipoAtualizacaoImovel) {
 		this.comboTipoAtualizacaoImovel = comboTipoAtualizacaoImovel;
+	}
+
+	public ImovelFotoModel getImovelFotoSelecionadaModel() {
+		return imovelFotoSelecionadaModel;
+	}
+
+	public void setImovelFotoSelecionadaModel(ImovelFotoModel imovelFotoSelecionadaModel) {
+		this.imovelFotoSelecionadaModel = imovelFotoSelecionadaModel;
 	}
 
 }

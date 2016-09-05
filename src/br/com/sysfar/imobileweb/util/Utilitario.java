@@ -3,9 +3,11 @@ package br.com.sysfar.imobileweb.util;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.text.MaskFormatter;
 
+import br.com.sysfar.imobileweb.model.ImovelFotoModel;
 import br.com.sysfar.imobileweb.model.UsuarioModel;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.util.TSFacesUtil;
@@ -128,6 +130,32 @@ public class Utilitario {
 		
 		}
 			
+	}
+	
+	public static void ordenarListaPraCima(List<ImovelFotoModel> lista, ImovelFotoModel item) {
+
+		int posicao = lista.indexOf(item);
+
+		if (posicao > 0) {
+
+			lista.remove(posicao);
+			lista.add(posicao - 1, item);
+
+		}
+
+	}
+
+	public static void ordenarListaPraBaixo(List<ImovelFotoModel> lista, ImovelFotoModel item) {
+
+		int posicao = lista.indexOf(item);
+
+		if (posicao < lista.size() - 1) {
+
+			lista.remove(posicao);
+			lista.add(posicao + 1, item);
+
+		}
+
 	}
 
 }

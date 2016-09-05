@@ -632,3 +632,85 @@
 *:not(.ui-selectonemenu-trigger):not(.ui-selectonemenu-label):not(.ui-chkbox-box):not(#layout-menubar) {
 	box-sizing: border-box;
 }
+
+.pgNoBorder tbody tr td {
+	border: 0px !important;
+}
+
+.ui-commandlink {
+	text-decoration: inherit;
+}
+
+.scrollPanelDialog {
+	background: none;
+	padding: 5px;
+	overflow: auto !important;
+}
+
+/* TAMANHOS DIALOGS, COLUNAS*/
+.dialog20 {
+	width: 20% !important;
+	height: 20% !important;
+	left: 40% !important;
+	top: 40% !important;
+}
+
+.dialog30 {
+	width: 30% !important;
+	height: 30% !important;
+	left: 35% !important;
+	top: 35% !important;
+}
+
+.dialog40 {
+	width: 40% !important;
+	height: 40% !important;
+	left: 30% !important;
+	top: 30% !important;
+}
+
+.dialog50 {
+	width: 50% !important;
+	height: 50% !important;
+	left: 25% !important;
+	top: 25% !important;
+}
+
+.dialog60 {
+	width: 60% !important;
+	height: 60% !important;
+	left: 20% !important;
+	top: 20% !important;
+}
+
+.dialog70 {
+	width: 70% !important;
+	height: 70% !important;
+	left: 15% !important;
+	top: 15% !important;
+}
+
+.dialog80 {
+	width: 80% !important;
+	height: 80% !important;
+	left: 10% !important;
+	top: 10% !important;
+}
+
+.dialog90 {
+	width: 90% !important;
+	height: 90% !important;
+	left: 5% !important;
+	top: 5% !important;
+}
+
+.dialog95 {
+	width: 95% !important;
+	height: 95% !important;
+	left: 2.5% !important;
+	top: 2.5% !important;
+}
+
+.ui-dialog .ui-dialog-content {
+    padding: 10px !important;
+}

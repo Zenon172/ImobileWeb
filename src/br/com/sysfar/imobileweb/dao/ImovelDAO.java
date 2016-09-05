@@ -6,6 +6,7 @@ import java.util.List;
 
 import br.com.sysfar.imobileweb.model.ClienteModel;
 import br.com.sysfar.imobileweb.model.ImovelAtualizacaoModel;
+import br.com.sysfar.imobileweb.model.ImovelFotoModel;
 import br.com.sysfar.imobileweb.model.ImovelModel;
 import br.com.sysfar.imobileweb.model.ProprietarioModel;
 import br.com.sysfar.imobileweb.model.UsuarioModel;
@@ -86,23 +87,58 @@ public final class ImovelDAO implements CrudDAO<ImovelModel> {
 	public ImovelModel inserir(final ImovelModel model) throws TSApplicationException {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+		
+		broker.beginTransaction();
 
 		model.setId(broker.getSequenceNextValue("imovel_id_seq"));
 
 		broker.setSQL("INSERT INTO IMOVEL (ID, FLAG_ATIVO, CODIGO, TIPO_IMOVEL_ID, DATA_CADASTRO, USUARIO_CADASTRO_ID, FLAG_PISCINA_PRIVATIVA, VALOR, ENDERECO, COMPLEMENTO, EDIFICIO_ID, ANDAR, UNIDADE, PONTO_REFERENCIA, BAIRRO_ID, CEP, CONSTRUTORA_ID, TIPO_PISO_SALA_ID, TIPO_PISO_QUARTO_ID, ANO_CONSTRUCAO, AREA_PRIVATIVA, TIPO_FACHADA_ID, NOME_ADMINISTRADOR, TELEFONE_ADMINISTRADOR, VALOR_CONDOMINIO, QUARTOS, SUITES, BANHEIROS, VARANDAS, DEPENDENCIAS, WC_EMPREGADAS, ARMARIOS_BANHEIROS, ARMARIOS_COZINHAS, ARMARIOS_QUARTOS, CLOSETS, PAVIMENTOS, HOME_OFFICES, DESPENSAS, DEPOSITOS, FLAG_COZINHA_AMERICANA, FLAG_SALAO_FESTAS, FLAG_PLAYGROUND, FLAG_PISCINA, FLAG_ACADEMIA, FLAG_QUADRA_POLIESPORTIVA, FLAG_PARQUE_INFANTIL, FLAG_CAMPO, FLAG_SALAO_JOGOS, FLAG_SAUNA, FLAG_BRINQUEDOTECA, FLAG_CINEMA, FLAG_QUADRA_SQUASH, FLAG_QUADRA_TENIS, FLAG_CHURRASQUEIRA, FLAG_ESTACIONAMENTO_VISITANTE, FLAG_AGUA_INDIVIDUAL, FLAG_GAS_INDIVIDUAL, FLAG_GERADOR_PROPRIO, POSICAO_SOL_ID, FLAG_ELEVADOR, QTD_ELEVADORES, FLAG_MOBILIADO, DESCRICAO_MOBILIA, QTD_VAGAS_ESTACIONAMENTO, FLAG_UTILIZOU_FGTS, FLAG_IMOVEL_QUITADO, FLAG_TERRENO_FOREIRO, FLAG_EXCLUSIVIDADE, FLAG_HABITADO, COMISSAO, MOTIVO_VENDA, OUTROS_IMOVEIS_VENDA, OBSERVACOES, PROPRIETARIO_ID, CAPTADOR_ID, DATA_CAPTACAO, CAPTACAO_ID, FLAG_ARMARIOS_BANHEIRO, FLAG_ARMARIOS_COZINHA, FLAG_ARMARIOS_QUARTOS, QTD_VAGAS_COBERTAS, QTD_VAGAS_DESCOBERTAS, QTD_VAGAS_SOLTAS, FLAG_INFRAESTRUTURA, CONDOMINIO_ID, FLAG_VARIAS_VAGAS, FLAG_NAO_ANUNCIAR) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", model.getId(), model.getFlagAtivo(), model.getCodigo(), model.getTipoImovelModel().getId(), new Timestamp(model.getDataCadastro().getTime()), model.getUsuarioCadastroModel().getId(), model.getFlagPiscinaPrivativa(), model.getValor(), model.getEndereco(), model.getComplemento(), model.getEdificioModel().getId(), model.getAndar(), model.getUnidade(), model.getPontoReferencia(), model.getBairroModel().getId(), model.getCep(), model.getConstrutoraModel().getId(), model.getTipoPisoSalaModel().getId(), model.getTipoPisoQuartoModel().getId(), model.getAnoConstrucao(), model.getAreaPrivativa(), model.getTipoFachadaModel().getId(), model.getNomeAdministrador(), model.getTelefoneAdministrador(), model.getValorCondominio(), model.getQuartos(), model.getSuites(), model.getBanheiros(), model.getVarandas(), model.getDependencias(), model.getWcEmpregadas(), model.getArmariosBanheiros(), model.getArmariosCozinhas(), model.getArmariosQuartos(), model.getClosets(), model.getPavimentos(), model.getHomeOffices(), model.getDespensas(), model.getDepositos(), model.getFlagCozinhaAmericana(), model.getFlagSalaoFestas(), model.getFlagPlayground(), model.getFlagPiscina(), model.getFlagAcademia(), model.getFlagQuadraPoliesportiva(), model.getFlagParqueInfantil(), model.getFlagCampo(), model.getFlagSalaoJogos(), model.getFlagSauna(), model.getFlagBrinquedoteca(), model.getFlagCinema(), model.getFlagQuadraSquash(), model.getFlagQuadraTenis(), model.getFlagChurrasqueira(), model.getFlagEstacionamentoVisitante(), model.getFlagAguaIndividual(), model.getFlagGasIndividual(), model.getFlagGeradorProprio(), model.getPosicaoSolModel().getId(), model.getFlagElevador(), model.getQtdElevadores(), model.getFlagMobiliado(), model.getDescricaoMobilia(), model.getQtdVagasEstacionamento(), model.getFlagUtilizouFgts(), model.getFlagImovelQuitado(), model.getFlagTerrenoForeiro(), model.getFlagExclusividade(), model.getFlagHabitado(), model.getComissao(), model.getMotivoVenda(), model.getOutrosImoveisVenda(), model.getObservacoes(), model.getProprietarioModel().getId(), model.getCaptadorModel().getId(), model.getDataCaptacao(), model.getCaptacaoModel().getId(), model.getFlagArmariosBanheiro(), model.getFlagArmariosCozinha(), model.getFlagArmariosQuartos(), model.getQtdVagasCobertas(), model.getQtdVagasDescobertas(), model.getQtdVagasSoltas(), model.getFlagInfraestrutura(), model.getCondominioModel().getId(), model.getFlagVariasVagas(), model.getFlagNaoAnunciar());
 
 		broker.execute();
+		
+		for(ImovelFotoModel foto : model.getFotos()){
+			
+			this.inserir(foto, broker);
+			
+		}
+		
+		broker.endTransaction();
 
+		return model;
+	}
+	
+	public ImovelFotoModel inserir(final ImovelFotoModel model, TSDataBaseBrokerIf broker) throws TSApplicationException {
+		
+		model.setId(broker.getSequenceNextValue("imovel_foto_id_seq"));
+		
+		broker.setSQL("INSERT INTO IMOVEL_FOTO (ID, IMOVEL_ID, ARQUIVO) VALUES (?, ?, ?)", model.getId(), model.getImovelModel().getId(), model.getArquivo());
+		
+		broker.execute();
+		
 		return model;
 	}
 
 	public ImovelModel alterar(final ImovelModel model) throws TSApplicationException {
 
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+		
+		broker.beginTransaction();
 
 		broker.setSQL("UPDATE IMOVEL SET CODIGO = ?, FLAG_ATIVO = ?, TIPO_IMOVEL_ID=?, DATA_CADASTRO=?, USUARIO_CADASTRO_ID=?, FLAG_PISCINA_PRIVATIVA=?, VALOR=?, ENDERECO=?, COMPLEMENTO=?, EDIFICIO_ID=?, ANDAR=?, UNIDADE=?, PONTO_REFERENCIA=?, BAIRRO_ID=?,  CEP=?, CONSTRUTORA_ID=?, TIPO_PISO_SALA_ID=?, TIPO_PISO_QUARTO_ID=?,  ANO_CONSTRUCAO=?, AREA_PRIVATIVA=?, TIPO_FACHADA_ID=?, NOME_ADMINISTRADOR=?, TELEFONE_ADMINISTRADOR=?, VALOR_CONDOMINIO=?, QUARTOS=?, SUITES=?, BANHEIROS=?, VARANDAS=?, DEPENDENCIAS=?, WC_EMPREGADAS=?, ARMARIOS_BANHEIROS=?, ARMARIOS_COZINHAS=?, ARMARIOS_QUARTOS=?, CLOSETS=?, PAVIMENTOS=?, HOME_OFFICES=?, DESPENSAS=?, DEPOSITOS=?, FLAG_COZINHA_AMERICANA=?, FLAG_SALAO_FESTAS=?, FLAG_PLAYGROUND=?, FLAG_PISCINA=?, FLAG_ACADEMIA=?, FLAG_QUADRA_POLIESPORTIVA=?, FLAG_PARQUE_INFANTIL=?, FLAG_CAMPO=?, FLAG_SALAO_JOGOS=?, FLAG_SAUNA=?, FLAG_BRINQUEDOTECA=?, FLAG_CINEMA=?, FLAG_QUADRA_SQUASH=?, FLAG_QUADRA_TENIS=?, FLAG_CHURRASQUEIRA=?, FLAG_ESTACIONAMENTO_VISITANTE=?, FLAG_AGUA_INDIVIDUAL=?, FLAG_GAS_INDIVIDUAL=?, FLAG_GERADOR_PROPRIO=?, POSICAO_SOL_ID=?, FLAG_ELEVADOR=?, QTD_ELEVADORES=?, FLAG_MOBILIADO=?, DESCRICAO_MOBILIA=?, QTD_VAGAS_ESTACIONAMENTO=?, FLAG_UTILIZOU_FGTS=?, FLAG_IMOVEL_QUITADO=?, FLAG_TERRENO_FOREIRO=?, FLAG_EXCLUSIVIDADE=?, FLAG_HABITADO=?, COMISSAO=?, MOTIVO_VENDA=?, OUTROS_IMOVEIS_VENDA=?, OBSERVACOES=?, PROPRIETARIO_ID=?, CAPTADOR_ID=?, DATA_CAPTACAO=?, FLAG_ARMARIOS_BANHEIRO=?, FLAG_ARMARIOS_COZINHA=?, FLAG_ARMARIOS_QUARTOS=?, QTD_VAGAS_COBERTAS=?, QTD_VAGAS_DESCOBERTAS=?, QTD_VAGAS_SOLTAS=?, FLAG_INFRAESTRUTURA=?, CONDOMINIO_ID=?, FLAG_VARIAS_VAGAS=?, FLAG_NAO_ANUNCIAR=? WHERE ID = ?", model.getCodigo(), model.getFlagAtivo(), model.getTipoImovelModel().getId(), new Timestamp(model.getDataCadastro().getTime()), model.getUsuarioCadastroModel().getId(), model.getFlagPiscinaPrivativa(), model.getValor(), model.getEndereco(), model.getComplemento(), model.getEdificioModel().getId(), model.getAndar(), model.getUnidade(), model.getPontoReferencia(), model.getBairroModel().getId(), model.getCep(), model.getConstrutoraModel().getId(), model.getTipoPisoSalaModel().getId(), model.getTipoPisoQuartoModel().getId(), model.getAnoConstrucao(), model.getAreaPrivativa(), model.getTipoFachadaModel().getId(), model.getNomeAdministrador(), model.getTelefoneAdministrador(), model.getValorCondominio(), model.getQuartos(), model.getSuites(), model.getBanheiros(), model.getVarandas(), model.getDependencias(), model.getWcEmpregadas(), model.getArmariosBanheiros(), model.getArmariosCozinhas(), model.getArmariosQuartos(), model.getClosets(), model.getPavimentos(), model.getHomeOffices(), model.getDespensas(), model.getDepositos(), model.getFlagCozinhaAmericana(), model.getFlagSalaoFestas(), model.getFlagPlayground(), model.getFlagPiscina(), model.getFlagAcademia(), model.getFlagQuadraPoliesportiva(), model.getFlagParqueInfantil(), model.getFlagCampo(), model.getFlagSalaoJogos(), model.getFlagSauna(), model.getFlagBrinquedoteca(), model.getFlagCinema(), model.getFlagQuadraSquash(), model.getFlagQuadraTenis(), model.getFlagChurrasqueira(), model.getFlagEstacionamentoVisitante(), model.getFlagAguaIndividual(), model.getFlagGasIndividual(), model.getFlagGeradorProprio(), model.getPosicaoSolModel().getId(), model.getFlagElevador(), model.getQtdElevadores(), model.getFlagMobiliado(), model.getDescricaoMobilia(), model.getQtdVagasEstacionamento(), model.getFlagUtilizouFgts(), model.getFlagImovelQuitado(), model.getFlagTerrenoForeiro(), model.getFlagExclusividade(), model.getFlagHabitado(), model.getComissao(), model.getMotivoVenda(), model.getOutrosImoveisVenda(), model.getObservacoes(), model.getProprietarioModel().getId(), model.getCaptadorModel().getId(), model.getDataCaptacao(), model.getFlagArmariosBanheiro(), model.getFlagArmariosCozinha(), model.getFlagArmariosQuartos(), model.getQtdVagasCobertas(), model.getQtdVagasDescobertas(), model.getQtdVagasSoltas(), model.getFlagInfraestrutura(), model.getCondominioModel().getId(), model.getFlagVariasVagas(), model.getFlagNaoAnunciar(), model.getId());
 
 		broker.execute();
+		
+		for(ImovelFotoModel foto : model.getFotos()){
+			
+			if(TSUtil.isEmpty(foto.getId())){
+				
+				this.inserir(foto, broker);
+				
+			}
+			
+		}
+		
+		broker.endTransaction();
 
 		return model;
 	}
@@ -166,6 +202,17 @@ public final class ImovelDAO implements CrudDAO<ImovelModel> {
 		return model;
 	}
 	
+	public ImovelFotoModel excluir(final ImovelFotoModel model) throws TSApplicationException {
+		
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+		
+		broker.setSQL("UPDATE IMOVEL_FOTO SET FLAG_ATIVO = FALSE WHERE ID = ?", model.getId());
+		
+		broker.execute();
+		
+		return model;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<ImovelAtualizacaoModel> pesquisarAtualizacoes(final ImovelModel model) {
 
@@ -174,6 +221,16 @@ public final class ImovelDAO implements CrudDAO<ImovelModel> {
 		broker.setSQL("SELECT IA.ID, IA.IMOVEL_ID, IA.TIPO_ATUALIZACAO_IMOVEL_ID, (SELECT TAI.DESCRICAO FROM TIPO_ATUALIZACAO_IMOVEL TAI WHERE TAI.ID = IA.TIPO_ATUALIZACAO_IMOVEL_ID), IA.DATA, IA.OBSERVACAO, IA.DATA_CADASTRO, IA.USUARIO_CADASTRO_ID, (SELECT U.NOME FROM USUARIO U WHERE U.ID = IA.USUARIO_CADASTRO_ID) FROM IMOVEL_ATUALIZACAO IA WHERE IA.IMOVEL_ID = ? AND IA.FLAG_ATIVO ORDER BY IA.ID", model.getId());
 
 		return broker.getCollectionBean(ImovelAtualizacaoModel.class, "id", "imovelModel.id", "tipoAtualizacaoImovelModel.id", "tipoAtualizacaoImovelModel.descricao", "data", "observacao", "dataCadastro", "usuarioCadastroModel.id", "usuarioCadastroModel.nome");
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<ImovelFotoModel> pesquisarFotos(final ImovelModel model) {
+		
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+		
+		broker.setSQL("SELECT IF.ID, IF.IMOVEL_ID, IF.ARQUIVO FROM IMOVEL_FOTO IF WHERE IF.IMOVEL_ID = ? AND IF.FLAG_ATIVO ORDER BY IF.ID", model.getId());
+		
+		return broker.getCollectionBean(ImovelFotoModel.class, "id", "imovelModel.id", "arquivo");
 	}
 	
 	public ImovelAtualizacaoModel inserir(final ImovelAtualizacaoModel model) throws TSApplicationException {

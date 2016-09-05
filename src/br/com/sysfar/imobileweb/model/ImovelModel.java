@@ -173,6 +173,7 @@ public class ImovelModel extends BaseModel {
 	private ProprietarioModel proprietarioModel;
 	
 	private List<ImovelAtualizacaoModel> atualizacoes;
+	private List<ImovelFotoModel> fotos;
 	
 	private List<String> bairrosPesquisa;
 	private Double valorMin;
@@ -918,6 +919,14 @@ public class ImovelModel extends BaseModel {
 
 	public void setQtdVagasDescobertas(Integer qtdVagasDescobertas) {
 		this.qtdVagasDescobertas = qtdVagasDescobertas;
+	}
+
+	public List<ImovelFotoModel> getFotos() {
+		return fotos;
+	}
+
+	public void setFotos(List<ImovelFotoModel> fotos) {
+		this.fotos = fotos;
 	}
 
 }

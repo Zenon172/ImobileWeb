@@ -5,6 +5,84 @@
 	<ui:param name="mbeanPesquisaModel" value="${imovelFaces.crudPesquisaModel}" />
 	<ui:param name="possuiDadosAtualizacao" value="true" />
 
+	<ui:define name="tabs">
+
+		<p:tab title="Fotos" rendered="#{!empty mbeanModel.id}">
+
+			<h:form id="formFotos" prependId="false">
+
+				<h:panelGroup layout="block" style="height: calc(100vh - 174px); overflow-y:auto; overflow-x: hidden; width: 100%;">
+
+
+					<p:fileUpload label="Enviar Fotos" fileUploadListener="#{mbean.enviarFoto}" mode="advanced" multiple="true" process="@this" update="@form" auto="true" sizeLimit="2048000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="width: 98%" />
+
+					<p:dataTable value="#{mbeanModel.fotos}" var="linha" emptyMessage="Nenhuma foto adicionada">
+
+						<p:column headerText="Imagem" styleClass="coluna90">
+							<div align="center">
+								<p:commandLink process="@this" update=":tabview:formFotos:spFotos" oncomplete="PF('dlgFoto').show()">
+									<p:graphicImage value="#{linha.arquivoView}" height="100px" stream="false" />
+									<f:setPropertyActionListener target="#{mbean.imovelFotoSelecionadaModel}" value="#{linha}" />
+								</p:commandLink>
+							</div>
+						</p:column>
+
+						<p:column headerText="" styleClass="coluna05">
+							<div align="center">
+								<p:commandLink title="Clique aqui para excluir a imagem" styleClass="fa icon-cancel red Fs22" action="#{mbean.removeFoto}" process="@this" update="@form">
+									<f:setPropertyActionListener target="#{mbean.imovelFotoSelecionadaModel}" value="#{linha}" />
+								</p:commandLink>
+							</div>
+						</p:column>
+
+						<p:column headerText="" styleClass="coluna05" style="padding:0px">
+							<h:panelGrid styleClass="pgNoBorder">
+								<p:commandLink title="Clique para subir a imagem" styleClass="icon-up-big Fs22 black" action="#{mbean.subirFoto(linha)}" process="@this" update="@form" />
+								<p:commandLink title="Clique para descer a imagem" styleClass="icon-down-big Fs22 black" action="#{mbean.descerFoto(linha)}" process="@this" update="@form" />
+							</h:panelGrid>
+						</p:column>
+
+					</p:dataTable>
+
+					<p:dialog dynamic="true" modal="true" resizable="false" closeOnEscape="true" widgetVar="dlgFoto" header="Visualização de Foto" styleClass="dialog90">
+
+						<h:panelGroup id="pgFotos">
+
+							<p:scrollPanel id="spFotos" mode="native" styleClass="scrollPanelDialog" style="height: calc(90vh - 110px)">
+
+								<div align="center">
+									<p:graphicImage value="#{mbean.imovelFotoSelecionadaModel.arquivoView}" stream="false" style="max-width: 100%" />
+								</div>
+
+							</p:scrollPanel>
+
+							<p:panel style="margin-top: 5px;">
+								<p:commandButton type="button" value="Fechar" icon="fa icon-cancel white" onclick="PF('dlgFoto').hide();" />
+							</p:panel>
+
+						</h:panelGroup>
+
+					</p:dialog>
+
+				</h:panelGroup>
+
+				<p:fieldset rendered="#{empty permissao ? true : permissao}" style="margin-top: 5px">
+
+					<p:commandButton type="button" id="btnAlterar2" value="Gravar" icon="fa icon-floppy white" onclick="PF('cdAlterarCRUD2').show()" style="margin-left: 5px;" rendered="#{mbean.alterar and menuFaces.menuModel.flagAlterar and (empty permissaoAlterar ? true : permissaoAlterar)}" />
+
+				</p:fieldset>
+
+				<p:confirmDialog message="Confirmar a ALTERAÇÃO do registro?" header="Aviso" severity="alert" widgetVar="cdAlterarCRUD2" rendered="#{menuFaces.menuModel.flagAlterar and (empty permissao ? true : permissao) and (empty permissaoAlterar ? true : permissaoAlterar)}">
+					<p:commandButton process="@form" value="Sim" onclick="PF('cdAlterarCRUD2').hide()" action="#{mbean.updateEvent}" update="@form" />
+					<p:commandButton type="button" value="Não" onclick="PF('cdAlterarCRUD2').hide()" />
+				</p:confirmDialog>
+
+			</h:form>
+
+		</p:tab>
+
+	</ui:define>
+
 	<ui:define name="cadastro">
 
 		<p:fieldset legend="Dados do imóvel" style="margin-top: 5px;">

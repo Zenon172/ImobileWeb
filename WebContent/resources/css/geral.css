@@ -1668,3 +1668,9 @@ select {
 .ui-tabs .ui-tabs-panel {
     padding: 5px;
 }
+
+.scrollPanelDialog {
+	background: none;
+	padding: 5px;
+	overflow: auto !important;
+}
