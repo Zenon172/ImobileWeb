@@ -8,6 +8,8 @@ public class ImovelModel extends BaseModel {
 
 	private String codigo;
 	
+	private ImovelFotoModel imagemFotoPrincipalModel;
+	
 	private TipoImovelModel tipoImovelModel;
 
 	private Boolean flagPiscinaPrivativa;
@@ -927,6 +929,14 @@ public class ImovelModel extends BaseModel {
 
 	public void setFotos(List<ImovelFotoModel> fotos) {
 		this.fotos = fotos;
+	}
+
+	public ImovelFotoModel getImagemFotoPrincipalModel() {
+		return imagemFotoPrincipalModel;
+	}
+
+	public void setImagemFotoPrincipalModel(ImovelFotoModel imagemFotoPrincipalModel) {
+		this.imagemFotoPrincipalModel = imagemFotoPrincipalModel;
 	}
 
 }

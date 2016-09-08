@@ -69,6 +69,6 @@
     <location>/pages/500.jsp</location>
   </error-page>
   <welcome-file-list>
-    <welcome-file>pages/login.xhtml</welcome-file>
+    <welcome-file>index.xhtml</welcome-file>
   </welcome-file-list>
 </web-app>

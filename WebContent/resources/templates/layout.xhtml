@@ -15,10 +15,17 @@
 	</p:selectOneMenu>
 
 	<ts:calendar id="" pattern="dd/MM/yyyy" value="" />
+	
+	<p:calendar id="" value="" pattern="dd/MM/yyyy" maxlength="10" navigator="true" onkeydown="maskDate(this,event,'dd/MM/yyyy')" onfocus="focusDate(this);" onblur="blurDate(this)" locale="pt_BR" styleClass="autoComplete90"/>
+	<p:calendar id="" value="" pattern="dd/MM/yyyy HH:mm" maxlength="16" size="18" onfocus="focusDate(this);" onkeydown="maskDate(this,event,'dd/MM/yyyy HH:mm')" onblur="blurDate(this)" navigator="true" showButtonPanel="true" locale="pt_BR" />
 
 	<p:selectBooleanCheckbox id="" value="" />
 
 	<p:autoComplete id="" value="" var="" itemLabel="" itemValue="" completeMethod="" scrollHeight="200" queryDelay="300" converter="" autocomplete="true" minQueryLength="2" styleClass="autoComplete90">
+		<p:ajax event="query" global="false" />
+	</p:autoComplete>
+	
+	<p:autoComplete id="acExame" value="#{funcaoFaces.procedimentoPermitido}" var="procedimento" queryDelay="300" forceSelection="true" completeMethod="#{procedimentoPesquisaFaces.buscaExameSimples}" itemLabel="#{procedimento.descricaoDetalhada}" autocomplete="true" itemValue="#{procedimento}" converter="#{procedimentoConverter}" minQueryLength="2" scrollHeight="200" styleClass="autoComplete95" onkeypress="return clickClassEnter(event, 'btnAddProcedimentoPermitido')">
 		<p:ajax event="query" global="false" />
 	</p:autoComplete>
 
@@ -27,32 +34,33 @@
 		<h:outputText value="a" />
 		<ts:calendar id="dataFinal" value="" />
 	</h:panelGrid>
+	
+	<ts:autoCompletePaciente value="" styleClass="autoComplete95"/>
 
-	<p:dialog dynamic="true" modal="true" resizable="false" closeOnEscape="true" widgetVar="dlgVisitante" header="Pesquisa de Visitantes" styleClass="dialog70">
+	<p:dialog dynamic="true" modal="true" resizable="false" closeOnEscape="true" widgetVar="dlgAddPendencia" header="Adicionar Pendências" styleClass="dialog80">
 
-		<h:panelGroup id="pgVisitantes">
+			<h:panelGroup id="pgPendencias">
 
-			<p:scrollPanel id="spVisitantes" mode="native" styleClass="scrollPanelDialog">
+				<p:scrollPanel id="spPendencias" mode="native" styleClass="scrollPanelDialog" style="height: calc(80vh - 95px)">
 
-				<h:panelGrid style="width: 100%">
+					<h:panelGroup layout="block" styleClass="Responsive Container100">
 
+						<h:outputText value="Label" />
+						<div class="EmptyBox5"></div>
+						<p:selectOneMenu value="" styleClass="coluna99">
+							<f:selectItem itemValue="" itemLabel="Não selecionado" />
+						</p:selectOneMenu>
+		
+					</h:panelGroup>
 
-				</h:panelGrid>
+				</p:scrollPanel>
 
-				<script type="text/javascript">
-					$(document).ready(function() {
-						$("div[id*=spVisitantes]").height($(window).height() * 0.7 - 120);
-					});
-				</script>
+				<p:panel style="margin-top: 5px;">
+					<p:commandButton id="btnFecharDialogPendencias" type="button" value="Fechar" icon="fa fa-close Fs16" onclick="PF('dlgAddPendencia').hide();" styleClass="btnDialog" />
+				</p:panel>
 
-			</p:scrollPanel>
+			</h:panelGroup>
 
-			<p:panel style="margin: 5px;">
-				<p:commandButton type="button" value="Fechar" icon="fa icon-cancel white" onclick="PF('dlgVisitante').hide();" />
-			</p:panel>
-
-		</h:panelGroup>
-
-	</p:dialog>
+		</p:dialog>
 
 </ui:composition>

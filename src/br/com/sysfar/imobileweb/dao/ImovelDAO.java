@@ -40,6 +40,17 @@ public final class ImovelDAO implements CrudDAO<ImovelModel> {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<ImovelModel> pesquisarHome() {
+		
+		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+		
+		broker.setSQL("SELECT I.ID, I.FLAG_ATIVO, I.CODIGO, I.TIPO_IMOVEL_ID, (SELECT TI.DESCRICAO FROM TIPO_IMOVEL TI WHERE TI.ID = I.TIPO_IMOVEL_ID), I.CAPTADOR_ID, (SELECT C.NOME FROM USUARIO C WHERE C.ID = I.CAPTADOR_ID), I.BAIRRO_ID, (SELECT B.DESCRICAO FROM BAIRRO B WHERE B.ID = I.BAIRRO_ID), (SELECT C.NOME FROM CIDADE C, BAIRRO B WHERE C.ID = B.CIDADE_ID AND B.ID = I.BAIRRO_ID), I.EDIFICIO_ID, (SELECT E.DESCRICAO FROM EDIFICIO E WHERE E.ID = I.EDIFICIO_ID), I.VALOR, I.ENDERECO, I.COMPLEMENTO, I.ANDAR, I.UNIDADE, I.PONTO_REFERENCIA, I.CEP, I.OBSERVACOES, I.POSICAO_SOL_ID, (SELECT PS.DESCRICAO FROM POSICAO_SOL PS WHERE PS.ID = I.POSICAO_SOL_ID), (SELECT IF.ARQUIVO FROM IMOVEL_FOTO IF WHERE IF.IMOVEL_ID = I.ID AND IF.FLAG_PRINCIPAL ORDER BY ID DESC LIMIT 1), I.QUARTOS, I.SUITES, I.AREA_PRIVATIVA FROM IMOVEL I WHERE I.FLAG_ATIVO AND EXISTS(SELECT 1 FROM IMOVEL_FOTO IF WHERE IF.IMOVEL_ID = I.ID AND IF.FLAG_ATIVO AND IF.FLAG_PRINCIPAL) ORDER BY ID DESC");
+		
+		return broker.getCollectionBean(ImovelModel.class, "id", "flagAtivo", "codigo", "tipoImovelModel.id", "tipoImovelModel.descricao", "captadorModel.id", "captadorModel.nome", "bairroModel.id", "bairroModel.descricao", "bairroModel.cidadeModel.nome", "edificioModel.id", "edificioModel.descricao", "valor", "endereco", "complemento", "andar", "unidade", "pontoReferencia", "cep", "observacoes", "posicaoSolModel.id", "posicaoSolModel.descricao", "imagemFotoPrincipalModel.arquivo", "quartos", "suites", "areaPrivativa");
+		
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<ImovelModel> pesquisarPerfil(final ClienteModel model) {
 		
 		TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
