@@ -15,8 +15,8 @@
 <h:body>
 	<h:form>
 		<h:panelGroup layout="block" styleClass="topo1">
-			<p:inputText value="#{loginFaces.usuarioModel.login}" placeholder="Usuário" />
-			<p:password value="#{loginFaces.usuarioModel.senha}" placeholder="Senha" feedback="false" autocomplete="off" style="margin-left: 5px" />
+			<p:inputText value="#{loginFaces.usuarioModel.login}" placeholder="Usuário" onkeypress="if (event.keyCode === 13) {$('.icon-login').click();return false;}" />
+			<p:password value="#{loginFaces.usuarioModel.senha}" placeholder="Senha" feedback="false" autocomplete="off" onkeypress="if (event.keyCode === 13) {$('.icon-login').click();return false;}" style="margin-left: 5px" />
 			<p:commandLink ajax="false" action="#{loginFaces.acessar}" styleClass="fa icon-login white Fs20" style="margin-left: 5px; "/>
 		</h:panelGroup>
 		<h:panelGroup layout="block" styleClass="banner"></h:panelGroup>

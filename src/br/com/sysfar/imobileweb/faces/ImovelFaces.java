@@ -532,11 +532,11 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 
 			ImageIO.write(imagem, Constantes.EXTENSAO_FOTOS, new File(GerenciadorCaminhoArquivoUtil.getPastaUploadArquivo() + imovelFotoModel.getArquivo() + "." + Constantes.EXTENSAO_FOTOS));
 
-			if (imagem.getWidth() > imagem.getHeight()) {
-				imovelFotoModel.setFlagPortrait(false);
+			if (imagem.getWidth() < imagem.getHeight()) {
+				imovelFotoModel.setFlagPortrait(true);
 			}
 
-			if (imovelFotoModel.getFlagPortrait()) {
+			if (!TSUtil.isEmpty(imovelFotoModel.getFlagPortrait()) && imovelFotoModel.getFlagPortrait()) {
 
 				BufferedImage imagem60x80 = Utilitario.redimensionarImagem(imagem, 60, 80);
 				BufferedImage imagem150x200 = Utilitario.redimensionarImagem(imagem, 150, 200);
