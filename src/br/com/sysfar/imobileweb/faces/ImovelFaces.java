@@ -2,9 +2,13 @@ package br.com.sysfar.imobileweb.faces;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -12,7 +16,6 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 import javax.imageio.ImageIO;
 
-import org.apache.commons.io.FileUtils;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 
@@ -515,32 +518,40 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 
 		try {
 
-			File imagem = new File(GerenciadorCaminhoArquivoUtil.getPastaUploadArquivo() + imovelFotoModel.getArquivo() + "." + Constantes.EXTENSAO_FOTOS);
+			// File imagem = new
+			// File(GerenciadorCaminhoArquivoUtil.getPastaUploadArquivo() +
+			// imovelFotoModel.getArquivo() + "." + Constantes.EXTENSAO_FOTOS);
 
-			FileUtils.copyInputStreamToFile(event.getFile().getInputstream(), imagem);
-			
-			BufferedImage img = ImageIO.read(imagem);
+			// FileUtils.copyInputStreamToFile(event.getFile().getInputstream(),
+			// imagem);
 
-			if (img.getWidth() > img.getHeight()) {
+			BufferedImage marcaDagua = ImageIO.read(new File(GerenciadorCaminhoArquivoUtil.getPastaUploadArquivo() + "marca_dagua.png"));
+			BufferedImage imagem = ImageIO.read(event.getFile().getInputstream());
+
+			Utilitario.adicionarMarcaDagua(imagem, marcaDagua);
+
+			ImageIO.write(imagem, Constantes.EXTENSAO_FOTOS, new File(GerenciadorCaminhoArquivoUtil.getPastaUploadArquivo() + imovelFotoModel.getArquivo() + "." + Constantes.EXTENSAO_FOTOS));
+
+			if (imagem.getWidth() > imagem.getHeight()) {
 				imovelFotoModel.setFlagPortrait(false);
 			}
 
-			if(imovelFotoModel.getFlagPortrait()){
-				
+			if (imovelFotoModel.getFlagPortrait()) {
+
 				BufferedImage imagem60x80 = Utilitario.redimensionarImagem(imagem, 60, 80);
 				BufferedImage imagem150x200 = Utilitario.redimensionarImagem(imagem, 150, 200);
-				
+
 				ImageIO.write(imagem60x80, Constantes.EXTENSAO_FOTOS, new File(GerenciadorCaminhoArquivoUtil.getPastaUploadArquivo() + imovelFotoModel.getArquivo() + "_60x80." + Constantes.EXTENSAO_FOTOS));
 				ImageIO.write(imagem150x200, Constantes.EXTENSAO_FOTOS, new File(GerenciadorCaminhoArquivoUtil.getPastaUploadArquivo() + imovelFotoModel.getArquivo() + "_150x200." + Constantes.EXTENSAO_FOTOS));
-				
+
 			} else {
-				
+
 				BufferedImage imagem80x60 = Utilitario.redimensionarImagem(imagem, 80, 60);
 				BufferedImage imagem200x150 = Utilitario.redimensionarImagem(imagem, 200, 150);
-				
+
 				ImageIO.write(imagem80x60, Constantes.EXTENSAO_FOTOS, new File(GerenciadorCaminhoArquivoUtil.getPastaUploadArquivo() + imovelFotoModel.getArquivo() + "_80x60." + Constantes.EXTENSAO_FOTOS));
 				ImageIO.write(imagem200x150, Constantes.EXTENSAO_FOTOS, new File(GerenciadorCaminhoArquivoUtil.getPastaUploadArquivo() + imovelFotoModel.getArquivo() + "_200x150." + Constantes.EXTENSAO_FOTOS));
-				
+
 			}
 
 			this.crudModel.getFotos().add(imovelFotoModel);
@@ -577,6 +588,81 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 		MenuFaces menuFaces = (MenuFaces) TSFacesUtil.getManagedBean(Constantes.MENU_FACES);
 
 		return menuFaces.escolherMenu(new MenuModel(Constantes.MENU_CLIENTE));
+	}
+
+	public String baixarFotos() {
+
+		TSFacesUtil.getResponse().setContentType("application/zip");
+		TSFacesUtil.getResponse().setHeader("Content-Disposition", "attachment; filename=" + "fotos_" + this.crudModel.getCodigo() + ".zip");
+
+		ZipOutputStream saidaCompletaZip = null;
+		FileInputStream arquivoFoto = null;
+
+		try {
+
+			saidaCompletaZip = new ZipOutputStream(TSFacesUtil.getResponse().getOutputStream());
+
+			for (ImovelFotoModel foto : this.crudModel.getFotos()) {
+
+				try {
+					
+					arquivoFoto = new FileInputStream(GerenciadorCaminhoArquivoUtil.getPastaUploadArquivo() + foto.getArquivo() + "." + Constantes.EXTENSAO_FOTOS);
+
+					saidaCompletaZip.putNextEntry(new ZipEntry(foto.getArquivo() + "." + Constantes.EXTENSAO_FOTOS));
+
+					int content;
+					while ((content = arquivoFoto.read()) != -1) {
+						saidaCompletaZip.write(content);
+					}
+
+				} finally {
+
+					if (!TSUtil.isEmpty(arquivoFoto)) {
+						
+						try {
+
+							arquivoFoto.close();
+
+						} catch (IOException e) {
+
+							e.printStackTrace();
+
+						}
+						
+					}
+					
+				}
+
+				saidaCompletaZip.closeEntry();
+
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			super.addErrorMessage("Ocorreu um erro ao gerar o arquivo para download");
+
+		} finally {
+
+			TSFacesUtil.getFacesContext().responseComplete();
+
+			if (!TSUtil.isEmpty(saidaCompletaZip)) {
+
+				try {
+
+					saidaCompletaZip.flush();
+					saidaCompletaZip.close();
+
+				} catch (IOException e) {
+
+					e.printStackTrace();
+
+				}
+
+			}
+		}
+
+		return null;
 	}
 
 	public List<SelectItem> getComboTipoImovel() {

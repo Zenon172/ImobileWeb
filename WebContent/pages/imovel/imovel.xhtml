@@ -214,6 +214,8 @@
 				</p:column>
 
 			</p:dataGrid>
+			
+			<p:commandButton ajax="false" value="Baixar Fotos" icon="fa icon-download-cloud white" action="#{mbean.baixarFotos}" rendered="#{!empty mbeanModel.fotos}" style="margin-top: 5px"/>
 
 		</p:fieldset>
 
