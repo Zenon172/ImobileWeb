@@ -715,3 +715,109 @@
     padding: 10px !important;
 }
 
+.autoComplete10 input {
+	width: 10%
+}
+
+.autoComplete20 input {
+	width: 20%
+}
+
+.autoComplete30 input {
+	width: 30%
+}
+
+.autoComplete40 input {
+	width: 40%
+}
+
+.autoComplete50 input {
+	width: 50%
+}
+
+.autoComplete60 input {
+	width: 60%
+}
+
+.autoComplete70 input {
+	width: 70%
+}
+
+.autoComplete75 input {
+	width: 75%
+}
+
+.autoComplete80 input {
+	width: 80%
+}
+
+.autoComplete90 input {
+	width: 90%
+}
+
+.autoComplete95 input {
+	width: 95%
+}
+
+.autoComplete96 input {
+	width: 96%
+}
+
+.autoComplete98 input {
+	width: 98%
+}
+
+.autoComplete99 input {
+	width: 99%
+}
+
+.autoComplete995 input {
+	width: 99.5%
+}
+
+.autoComplete100 input {
+	width: 100%
+}
+
+.ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled {
+    opacity: .65;
+}
+
+.ui-selectonemenu{
+	min-width: 0px!important;
+}
+
+.scrollPanelDialog60 {
+	background: none;
+	padding: 5px 10px !important;
+	overflow: auto !important;
+	height: calc(60vh - 115px);
+}
+
+.scrollPanelDialog70 {
+	background: none;
+	padding: 5px 10px !important;
+	overflow: auto !important;
+	height: calc(70vh - 115px);
+}
+
+.scrollPanelDialog80 {
+	background: none;
+	padding: 5px 10px !important;
+	overflow: auto !important;
+	height: calc(80vh - 115px);
+}
+
+.scrollPanelDialog90 {
+	background: none;
+	padding: 5px 10px !important;
+	overflow: auto !important;
+	height: calc(90vh - 115px);
+}
+
+.scrollPanelDialog95 {
+	background: none;
+	padding: 5px 10px !important;
+	overflow: auto !important;
+	height: calc(95vh - 115px);
+}

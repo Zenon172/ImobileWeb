@@ -1,10 +1,15 @@
 package br.com.sysfar.imobileweb.util;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.text.MaskFormatter;
 
 import br.com.sysfar.imobileweb.model.ImovelFotoModel;
@@ -140,6 +145,7 @@ public class Utilitario {
 
 			lista.remove(posicao);
 			lista.add(posicao - 1, item);
+			item.setOrdem(posicao - 1);
 
 		}
 
@@ -153,9 +159,26 @@ public class Utilitario {
 
 			lista.remove(posicao);
 			lista.add(posicao + 1, item);
+			item.setOrdem(posicao + 1);
 
 		}
 
 	}
+	
+	public static BufferedImage redimensionarImagem(File imagemOriginal, int width, int height) throws IOException {
+        
+        BufferedImage imagem = null;
+        
+    	imagem = ImageIO.read(imagemOriginal);
+        	
+        BufferedImage imagemRedimencionada = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        
+        Graphics2D g = imagemRedimencionada.createGraphics();
+        
+        g.drawImage(imagem, 0, 0, width, height, null);
+        
+        return imagemRedimencionada;
+        
+    }
 
 }

@@ -1,5 +1,6 @@
 package br.com.sysfar.imobileweb.faces;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,6 +10,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
+import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
 import org.primefaces.context.RequestContext;
@@ -45,7 +47,6 @@ import br.com.sysfar.imobileweb.util.Constantes;
 import br.com.sysfar.imobileweb.util.GerenciadorCaminhoArquivoUtil;
 import br.com.sysfar.imobileweb.util.Utilitario;
 import br.com.topsys.exception.TSApplicationException;
-import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.util.TSFacesUtil;
 
@@ -121,7 +122,7 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 		this.clienteDAO = new ClienteDAO();
 		this.edificioDAO = new EdificioDAO();
 		this.usuarioDAO = new UsuarioDAO();
-		
+
 		this.iniciarCombos();
 		this.instanciarAtualizacao();
 
@@ -194,7 +195,7 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 	public void carregarComboEdificio() {
 		this.comboEdificio = super.initCombo(this.edificioDAO.pesquisar(this.crudModel.getCondominioModel()), "id", "descricao");
 	}
-	
+
 	public void carregarComboCondominio() {
 		this.comboCondominio = super.initCombo(this.comboDAO.pesquisarCondominio(this.crudModel.getBairroModel()), "id", "descricao");
 	}
@@ -345,20 +346,20 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 		}
 
 	}
-	
+
 	@Override
 	protected void posInsert() {
 
 		try {
-			
+
 			this.usuarioDAO.addQtdImoveis(this.crudModel.getCaptadorModel());
-			
+
 		} catch (TSApplicationException e) {
-			
+
 			super.throwException(e);
-			
+
 		}
-		
+
 	}
 
 	@Override
@@ -484,37 +485,64 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 
 		return null;
 	}
-	
+
 	public String removeFoto() {
-		
+
 		try {
-			
+
 			this.imovelDAO.excluir(this.imovelFotoSelecionadaModel);
-			
+
 			this.crudModel.getFotos().remove(this.imovelFotoSelecionadaModel);
-			
+
 			super.addInfoMessageKey(Constantes.OPERACAO_SUCESSO);
-			
+
 		} catch (TSApplicationException e) {
-			
+
 			super.throwException(e);
-			
+
 		}
-		
+
 		return null;
 	}
-	
+
 	public void enviarFoto(FileUploadEvent event) {
 
 		ImovelFotoModel imovelFotoModel = new ImovelFotoModel();
-		
+
 		imovelFotoModel.setImovelModel(this.crudModel);
-		imovelFotoModel.setArquivo(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(event.getFile().getFileName()));
+		imovelFotoModel.setArquivo(TSUtil.gerarId());
+		imovelFotoModel.setOrdem(this.crudModel.getFotos().size());
 
 		try {
 
-			FileUtils.copyInputStreamToFile(event.getFile().getInputstream(), new File(GerenciadorCaminhoArquivoUtil.getPastaUploadArquivo() + imovelFotoModel.getArquivo()));
+			File imagem = new File(GerenciadorCaminhoArquivoUtil.getPastaUploadArquivo() + imovelFotoModel.getArquivo() + "." + Constantes.EXTENSAO_FOTOS);
+
+			FileUtils.copyInputStreamToFile(event.getFile().getInputstream(), imagem);
 			
+			BufferedImage img = ImageIO.read(imagem);
+
+			if (img.getWidth() > img.getHeight()) {
+				imovelFotoModel.setFlagPortrait(false);
+			}
+
+			if(imovelFotoModel.getFlagPortrait()){
+				
+				BufferedImage imagem60x80 = Utilitario.redimensionarImagem(imagem, 60, 80);
+				BufferedImage imagem150x200 = Utilitario.redimensionarImagem(imagem, 150, 200);
+				
+				ImageIO.write(imagem60x80, Constantes.EXTENSAO_FOTOS, new File(GerenciadorCaminhoArquivoUtil.getPastaUploadArquivo() + imovelFotoModel.getArquivo() + "_60x80." + Constantes.EXTENSAO_FOTOS));
+				ImageIO.write(imagem150x200, Constantes.EXTENSAO_FOTOS, new File(GerenciadorCaminhoArquivoUtil.getPastaUploadArquivo() + imovelFotoModel.getArquivo() + "_150x200." + Constantes.EXTENSAO_FOTOS));
+				
+			} else {
+				
+				BufferedImage imagem80x60 = Utilitario.redimensionarImagem(imagem, 80, 60);
+				BufferedImage imagem200x150 = Utilitario.redimensionarImagem(imagem, 200, 150);
+				
+				ImageIO.write(imagem80x60, Constantes.EXTENSAO_FOTOS, new File(GerenciadorCaminhoArquivoUtil.getPastaUploadArquivo() + imovelFotoModel.getArquivo() + "_80x60." + Constantes.EXTENSAO_FOTOS));
+				ImageIO.write(imagem200x150, Constantes.EXTENSAO_FOTOS, new File(GerenciadorCaminhoArquivoUtil.getPastaUploadArquivo() + imovelFotoModel.getArquivo() + "_200x150." + Constantes.EXTENSAO_FOTOS));
+				
+			}
+
 			this.crudModel.getFotos().add(imovelFotoModel);
 
 		} catch (Exception ex) {
@@ -524,12 +552,12 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 		}
 
 	}
-	
+
 	public String subirFoto(ImovelFotoModel foto) {
 		Utilitario.ordenarListaPraCima(this.crudModel.getFotos(), foto);
 		return null;
 	}
-	
+
 	public String descerFoto(ImovelFotoModel foto) {
 		Utilitario.ordenarListaPraBaixo(this.crudModel.getFotos(), foto);
 		return null;

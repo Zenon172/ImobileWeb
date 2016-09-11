@@ -46,4 +46,7 @@ public class Constantes {
 	public static final Long CONFIGURACAO_PASTA_UPLOAD_RELATORIO = 4L;
 	
 	public static final String PASTA_DOWNLOAD_ARQUIVO = "../../arquivos/arquivos_imobile/";
+	public static final String PASTA_DOWNLOAD_ARQUIVO_SITE = "../arquivos/arquivos_imobile/";
+
+	public static final String EXTENSAO_FOTOS = "JPG";
 }

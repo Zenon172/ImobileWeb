@@ -196,11 +196,22 @@ input[type="text"], input[type="password"], textarea{ -webkit-appearance: none; 
 .Container50{ width:50%;  float:left;}
 .Container40{ width:40%;  float:left;}
 .Container33{ width:33.33%;  float:left;}
+.Container35{ width:35%;  float:left;}
 .Container30{ width:30%;  float:left;}
 .Container25{ width:25%;  float:left;}
 .Container20{ width:20%;  float:left;}
+.Container15{ width:15%;  float:left;}
 .Container10{ width:10%;  float:left;}
+.Container9{ width:9%;  float:left;}
+.Container8{ width:8%;  float:left;}
+.Container7{ width:7%;  float:left;}
+.Container6{ width:6%;  float:left;}
 .Container5{ width:5%;  float:left;}
+.Container5{ width:5%;  float:left;}
+.Container4{ width:4%;  float:left;}
+.Container3{ width:3%;  float:left;}
+.Container2{ width:2%;  float:left;}
+.Container1{ width:1%;  float:left;}
 
 .ContainerIndent{display:block;}
 

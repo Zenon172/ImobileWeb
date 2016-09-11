@@ -3,27 +3,41 @@ package br.com.sysfar.imobileweb.model;
 import java.util.Date;
 import java.util.List;
 
+import br.com.topsys.util.TSUtil;
+
 @SuppressWarnings("serial")
 public class ImovelModel extends BaseModel {
 
 	private String codigo;
 	
-	private ImovelFotoModel imagemFotoPrincipalModel;
+	private String tituloAnuncio;
 	
+	private String urlAmigavel;
+	
+	private String descricaoAnuncio;
+
+	private ImovelFotoModel imagemFotoPrincipalModel;
+
 	private TipoImovelModel tipoImovelModel;
 
 	private Boolean flagPiscinaPrivativa;
-	
+
 	private Boolean flagInfraestrutura;
 
 	private Double valor;
+	
+	private Double valorAluguel;
+	
+	private Boolean flagVenda;
+	
+	private Boolean flagAluguel;
 
 	private String endereco;
 
 	private String complemento;
-	
+
 	private CondominioModel condominioModel;
-	
+
 	private EdificioModel edificioModel;
 
 	private Integer andar;
@@ -39,7 +53,7 @@ public class ImovelModel extends BaseModel {
 	private ConstrutoraModel construtoraModel;
 
 	private TipoPisoModel tipoPisoSalaModel;
-	
+
 	private TipoPisoModel tipoPisoQuartoModel;
 
 	private Integer anoConstrucao;
@@ -53,6 +67,8 @@ public class ImovelModel extends BaseModel {
 	private String telefoneAdministrador;
 
 	private Double valorCondominio;
+	
+	private Double valorIPTU;
 
 	private Integer quartos;
 
@@ -67,15 +83,15 @@ public class ImovelModel extends BaseModel {
 	private Integer wcEmpregadas;
 
 	private Integer armariosBanheiros;
-	
+
 	private Boolean flagArmariosBanheiro;
 
 	private Integer armariosCozinhas;
-	
+
 	private Boolean flagArmariosCozinha;
 
 	private Integer armariosQuartos;
-	
+
 	private Boolean flagArmariosQuartos;
 
 	private Integer closets;
@@ -125,9 +141,9 @@ public class ImovelModel extends BaseModel {
 	private Boolean flagGasIndividual;
 
 	private Boolean flagGeradorProprio;
-	
+
 	private Boolean flagVariasVagas;
-	
+
 	private Boolean flagNaoAnunciar;
 
 	private PosicaoSolModel posicaoSolModel;
@@ -141,11 +157,11 @@ public class ImovelModel extends BaseModel {
 	private String descricaoMobilia;
 
 	private Integer qtdVagasEstacionamento;
-	
+
 	private Integer qtdVagasCobertas;
-	
+
 	private Integer qtdVagasDescobertas;
-	
+
 	private Integer qtdVagasSoltas;
 
 	private Boolean flagUtilizouFgts;
@@ -173,10 +189,10 @@ public class ImovelModel extends BaseModel {
 	private Date dataCaptacao;
 
 	private ProprietarioModel proprietarioModel;
-	
+
 	private List<ImovelAtualizacaoModel> atualizacoes;
 	private List<ImovelFotoModel> fotos;
-	
+
 	private List<String> bairrosPesquisa;
 	private Double valorMin;
 	private Double valorMax;
@@ -184,8 +200,17 @@ public class ImovelModel extends BaseModel {
 	private Double valorCondominioMax;
 	private Integer quartosMin;
 	private Integer quartosMax;
-	
+
 	private List<ClienteModel> clientesPerfil;
+
+	public ImovelModel() {
+		super();
+	}
+
+	public ImovelModel(Long id) {
+		super();
+		this.id = id;
+	}
 
 	public String getCodigo() {
 		return codigo;
@@ -937,6 +962,70 @@ public class ImovelModel extends BaseModel {
 
 	public void setImagemFotoPrincipalModel(ImovelFotoModel imagemFotoPrincipalModel) {
 		this.imagemFotoPrincipalModel = imagemFotoPrincipalModel;
+	}
+
+	public String getDescricaoAnuncio() {
+		return descricaoAnuncio;
+	}
+
+	public void setDescricaoAnuncio(String descricaoAnuncio) {
+		this.descricaoAnuncio = descricaoAnuncio;
+	}
+	
+	public Double getValorIPTU() {
+		return valorIPTU;
+	}
+
+	public void setValorIPTU(Double valorIPTU) {
+		this.valorIPTU = valorIPTU;
+	}
+
+	public String getTituloAnuncio() {
+		return tituloAnuncio;
+	}
+
+	public void setTituloAnuncio(String tituloAnuncio) {
+		this.tituloAnuncio = tituloAnuncio;
+	}
+
+	public String getUrlAmigavel() {
+		return urlAmigavel;
+	}
+
+	public void setUrlAmigavel(String urlAmigavel) {
+		this.urlAmigavel = urlAmigavel;
+	}
+
+	public Double getValorAluguel() {
+		return valorAluguel;
+	}
+
+	public void setValorAluguel(Double valorAluguel) {
+		this.valorAluguel = valorAluguel;
+	}
+
+	public Boolean getFlagVenda() {
+		return flagVenda;
+	}
+
+	public void setFlagVenda(Boolean flagVenda) {
+		this.flagVenda = flagVenda;
+	}
+
+	public Boolean getFlagAluguel() {
+		return flagAluguel;
+	}
+
+	public void setFlagAluguel(Boolean flagAluguel) {
+		this.flagAluguel = flagAluguel;
+	}
+
+	public Double getValorMetroQuadrado(){
+		return !TSUtil.isEmpty(this.valor) && !TSUtil.isEmpty(this.areaPrivativa) ? this.valor / this.areaPrivativa : null;
+	}
+	
+	public Double getValorMetroQuadradoLocacao(){
+		return !TSUtil.isEmpty(this.valorAluguel) && !TSUtil.isEmpty(this.areaPrivativa) ? this.valorAluguel / this.areaPrivativa : null;
 	}
 
 }
