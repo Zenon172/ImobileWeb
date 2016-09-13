@@ -107,9 +107,15 @@ public final class ImovelDAO implements CrudDAO<ImovelModel> {
 
 		broker.execute();
 		
+		int cont = 0;
+		
 		for(ImovelFotoModel foto : model.getFotos()){
 			
+			foto.setOrdem(cont);
+			
 			this.inserir(foto, broker);
+			
+			cont++;
 			
 		}
 		
@@ -139,7 +145,11 @@ public final class ImovelDAO implements CrudDAO<ImovelModel> {
 
 		broker.execute();
 		
+		int cont = 0;
+		
 		for(ImovelFotoModel foto : model.getFotos()){
+			
+			foto.setOrdem(cont);
 			
 			if(TSUtil.isEmpty(foto.getId())){
 				
@@ -151,6 +161,7 @@ public final class ImovelDAO implements CrudDAO<ImovelModel> {
 				
 			}
 			
+			cont++;
 		}
 		
 		broker.endTransaction();

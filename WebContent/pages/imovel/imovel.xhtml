@@ -183,7 +183,7 @@
 				<br />
 				<p:selectBooleanCheckbox id="flagAtivo" value="#{mbeanModel.flagAtivo}" />
 			</h:panelGroup>
-			
+
 			<h:panelGroup layout="block" styleClass="Container10">
 				<p:outputLabel for="flagNaoAnunciar" value="Não Anunciar" />
 				<br />
@@ -191,31 +191,58 @@
 			</h:panelGroup>
 
 		</p:fieldset>
-
+		
+		<p:remoteCommand name="ordenar" action="#{imovelFaces.ordenar}" process="@this" update="dgFotos" />
+		
 		<p:fieldset legend="Fotos" collapsed="true" toggleable="true">
 
-			<p:fileUpload label="Selecionar Fotos" fileUploadListener="#{mbean.enviarFoto}" mode="advanced" multiple="true" process="@this" update="dgFotos" auto="true" sizeLimit="2048000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="width: 98%" />
+			<h:panelGroup id="dgFotos">
 
-			<p:dataGrid id="dgFotos" value="#{mbeanModel.fotos}" var="linha" columns="7" emptyMessage="Nenhuma foto adicionada">
+				<p:fileUpload label="Selecionar Fotos" fileUploadListener="#{mbean.enviarFoto}" mode="advanced" multiple="true" process="@this" update="dgFotos" auto="true" dragDropSupport="true" sequential="true" sizeLimit="2048000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="width: 98%" />
+				
+				<style>
+			  		#sortable { list-style-type: none; margin: 0; padding: 0; width: 100%; }
+			  		#sortable li { margin: 3px 3px 3px 0; padding: 1px; float: left; width: 150px; height: 120px; text-align: center; }
+			    </style>
+  
+				<script>
+			  		$(function(){
+			    		$("#sortable").sortable({
+			    				start: function(event, ui) {
+			    			        var start_pos = ui.item.index();
+			    			        ui.item.data('start_pos', start_pos);
+			    			    },
+			    			    update: function (event, ui) {
+			    			        var start_pos = ui.item.data('start_pos');
+			    			        var end_pos = ui.item.index();
+			    			        ordenar([{name: 'indexStart', value: start_pos}, {name: 'indexEnd', value: end_pos}]);
+			    			    }
+			    			    });
+			    		$("#sortable").disableSelection();
+			  		});
+			    </script>
+			  
+			  <ul id="sortable">
+			  		<ui:repeat value="#{mbeanModel.fotos}" var="linha">
+				  		<li>
+				  			<p:commandLink process="@this" update=":tabview:frmTabCadastro:spFotos" oncomplete="PF('dlgFoto').show()">
+								<div style="height: 80px"><p:graphicImage value="#{linha.arquivoMini}" stream="false" style="with: 100%" /></div>
+								<f:setPropertyActionListener target="#{mbean.imovelFotoSelecionadaModel}" value="#{linha}" />
+							</p:commandLink>
+							<p:commandLink title="Clique aqui para excluir a imagem" styleClass="fa icon-trash Fs22" action="#{mbean.removeFoto}" process="@this" update=":tabview:frmTabCadastro:dgFotos">
+								<f:setPropertyActionListener target="#{mbean.imovelFotoSelecionadaModel}" value="#{linha}" />
+							</p:commandLink>
+				  		</li>
+					</ui:repeat>
+				</ul>
+  
+  				<div class="EmptyBox5" />
+  				
+  				<div align="right">
+					<p:commandButton ajax="false" value="Baixar Fotos" icon="fa icon-download-cloud white" action="#{mbean.baixarFotos}" rendered="#{!empty mbeanModel.fotos}" style="margin-top: 5px" />
+				</div>
 
-				<p:column headerText="Imagem">
-					<div align="center">
-						<p:commandLink title="Clique para subir a imagem" styleClass="icon-left-open Fs22 black" action="#{mbean.subirFoto(linha)}" process="@this" update=":tabview:frmTabCadastro:dgFotos" />
-						<p:commandLink process="@this" update=":tabview:frmTabCadastro:spFotos" oncomplete="PF('dlgFoto').show()">
-							<p:graphicImage value="#{linha.arquivoMini}" stream="false" style="with: 100%" />
-							<f:setPropertyActionListener target="#{mbean.imovelFotoSelecionadaModel}" value="#{linha}" />
-						</p:commandLink>
-						<p:commandLink title="Clique para descer a imagem" styleClass="icon-right-open Fs22 black" action="#{mbean.descerFoto(linha)}" process="@this" update=":tabview:frmTabCadastro:dgFotos" />
-						<br />
-						<p:commandLink title="Clique aqui para excluir a imagem" styleClass="fa icon-trash Fs22" action="#{mbean.removeFoto}" process="@this" update=":tabview:frmTabCadastro:dgFotos">
-							<f:setPropertyActionListener target="#{mbean.imovelFotoSelecionadaModel}" value="#{linha}" />
-						</p:commandLink>
-					</div>
-				</p:column>
-
-			</p:dataGrid>
-			
-			<p:commandButton ajax="false" value="Baixar Fotos" icon="fa icon-download-cloud white" action="#{mbean.baixarFotos}" rendered="#{!empty mbeanModel.fotos}" style="margin-top: 5px"/>
+			</h:panelGroup>
 
 		</p:fieldset>
 

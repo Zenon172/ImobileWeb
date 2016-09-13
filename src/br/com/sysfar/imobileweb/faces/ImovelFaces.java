@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -605,7 +606,7 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 			for (ImovelFotoModel foto : this.crudModel.getFotos()) {
 
 				try {
-					
+
 					arquivoFoto = new FileInputStream(GerenciadorCaminhoArquivoUtil.getPastaUploadArquivo() + foto.getArquivo() + "." + Constantes.EXTENSAO_FOTOS);
 
 					saidaCompletaZip.putNextEntry(new ZipEntry(foto.getArquivo() + "." + Constantes.EXTENSAO_FOTOS));
@@ -618,7 +619,7 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 				} finally {
 
 					if (!TSUtil.isEmpty(arquivoFoto)) {
-						
+
 						try {
 
 							arquivoFoto.close();
@@ -628,9 +629,9 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 							e.printStackTrace();
 
 						}
-						
+
 					}
-					
+
 				}
 
 				saidaCompletaZip.closeEntry();
@@ -660,6 +661,25 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 				}
 
 			}
+		}
+
+		return null;
+	}
+
+	public String ordenar() {
+
+		Map<String, String> paramMap = TSFacesUtil.getFacesContext().getExternalContext().getRequestParameterMap();
+
+		Integer indexOrigem = Integer.valueOf(paramMap.get("indexStart"));
+		Integer indexDestino = Integer.valueOf(paramMap.get("indexEnd"));
+
+		if (indexOrigem != null && indexOrigem >= 0 && indexDestino != null && indexDestino >= 0) {
+
+			ImovelFotoModel imovelFotoModel = this.crudModel.getFotos().get(indexOrigem);
+
+			this.crudModel.getFotos().remove(imovelFotoModel);
+			this.crudModel.getFotos().add(indexDestino, imovelFotoModel);
+
 		}
 
 		return null;

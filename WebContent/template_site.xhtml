@@ -13,6 +13,7 @@
 </h:head>
 
 <h:body>
+	<p:growl id="msgCadastro" globalOnly="false" showDetail="true" showSummary="false" autoUpdate="true" escape="false" />
 	<h:form>
 		<h:panelGroup layout="block" styleClass="topo1">
 			<p:inputText value="#{loginFaces.usuarioModel.login}" placeholder="Usuário" onkeypress="if (event.keyCode === 13) {$('.icon-login').click();return false;}" />

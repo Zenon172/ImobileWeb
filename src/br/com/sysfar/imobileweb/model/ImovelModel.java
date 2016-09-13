@@ -1027,5 +1027,9 @@ public class ImovelModel extends BaseModel {
 	public Double getValorMetroQuadradoLocacao(){
 		return !TSUtil.isEmpty(this.valorAluguel) && !TSUtil.isEmpty(this.areaPrivativa) ? this.valorAluguel / this.areaPrivativa : null;
 	}
+	
+	public String getDescricaoAnuncioPadraoHtml(){
+		return TSUtil.isEmpty(this.descricaoAnuncio) ? null : this.descricaoAnuncio.replaceAll("\n", "<br/>");
+	}
 
 }
