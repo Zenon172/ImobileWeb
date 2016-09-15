@@ -977,3 +977,7 @@
 .icon-hail:before { content: '\eb9c'; } /* '' */
 .icon-clouds:before { content: '\eb9d'; } /* '' */
 .icon-clouds-flash:before { content: '\eb9e'; } /* '' */
+.fa-hotel:before,
+.fa-bed:before {
+  content: "\f236";
+}

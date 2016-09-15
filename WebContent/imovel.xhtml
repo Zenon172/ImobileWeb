@@ -1,17 +1,80 @@
 <ui:composition template="template_site.xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xmlns:ts="http://java.sun.com/jsf/composite/components" xmlns:pe="http://primefaces.org/ui/extensions">
 
+	<ui:define name="tituloPagina">
+		<title>
+			<h:outputText value="#{imovelSiteFaces.imovelModel.tituloAnuncio}" />
+		</title>
+	</ui:define>
+	
 	<ui:define name="dadosPagina">
-		
-		<h:panelGroup layout="block" styleClass="Container50">
-			<p:galleria value="#{imovelSiteFaces.fotos}" var="image" style="width: 100%">
-				<p:graphicImage value="../arquivos/arquivos_imobile/#{image}.JPG" style="width: 100%" />
-			</p:galleria>
-		</h:panelGroup>
 
-		<h:panelGroup layout="block" styleClass="Container50" style="background-color: white">
-			
-			<h:outputText value="#{imovelSiteFaces.imovelModel.descricaoAnuncioPadraoHtml}" escape="false" styleClass="textoPadrao" />
-			
+		<h:panelGroup layout="block" styleClass="coluna100" style="text-align: left;">
+
+			<style>
+.ui-galleria-frame-content {
+	background-color: black;
+}
+
+.ui-galleria-frame-image {
+	width: auto !important;
+	height: 40px !important;
+}
+
+.destaqueImovel {
+	font-family: 'titillium_webregular' !important;
+	font-size: 28px;
+	color: #72828B;
+	margin-left: 10px;
+}
+</style>
+
+			<div class="EmptyBox10" />
+
+			<h:outputText value="#{imovelSiteFaces.imovelModel.tituloAnuncio}" styleClass="" style="font-size: 28px; color: #1578c9; font-family: 'titillium_webregular' !important; font-weight: bold; margin: 10px" />
+
+			<hr style="height: 1px; border: none; color: #72828B; background-color: #72828B; margin-top: 0px; margin-bottom: 0px;" />
+
+			<div class="EmptyBox10" />
+
+			<h:panelGroup layout="block" styleClass="Container50">
+				<p:galleria value="#{imovelSiteFaces.fotos}" var="image" style="width: 100%">
+					<p:graphicImage value="../arquivos/arquivos_imobile/#{image}.JPG" height="450px" />
+				</p:galleria>
+			</h:panelGroup>
+
+			<h:panelGroup layout="block" styleClass="Container50" style="background-color: white; text-align: left; height: 450px; padding: 10px">
+
+				<div style="float: left; text-align: center; padding-top: 8px; width: 50px; height: 50px; border: 2px solid #1578c9 !important; border-radius: 25px">
+					<h:outputText value="" styleClass="fa icon-dollar Fs28" style="color: #1578c9;" />
+				</div>
+
+				<h:outputText value="R$ " styleClass="destaqueImovel" />
+				<h:outputText value="#{imovelSiteFaces.imovelModel.valor}" styleClass="destaqueImovel" style="margin-left: 0px !important;">
+					<f:convertNumber type="number" pattern="#,###,##0.00" locale="pt_BR" />
+				</h:outputText>
+
+				<div class="EmptyBox10" />
+
+				<div style="float: left; text-align: center; padding-top: 8px; width: 50px; height: 50px; border: 2px solid #1578c9 !important; border-radius: 25px">
+					<h:outputText value="" styleClass="fa icon-home Fs28" style="color: #1578c9;" />
+				</div>
+
+				<h:outputText value="#{imovelSiteFaces.imovelModel.tipoImovelModel.descricao} " styleClass="destaqueImovel" />
+
+				<div class="EmptyBox10" />
+
+				<div style="float: left; text-align: center; padding-top: 8px; width: 50px; height: 50px; border: 2px solid #1578c9 !important; border-radius: 25px">
+					<h:outputText value="" styleClass="fa fa-hotel Fs28" style="color: #1578c9;" />
+				</div>
+
+				<h:outputText value="#{imovelSiteFaces.imovelModel.tipoImovelModel.descricao} " styleClass="destaqueImovel" />
+
+			</h:panelGroup>
+
+			<h:panelGroup layout="block" styleClass="Container100" style="background-color: white; text-align: left">
+				<h:outputText value="#{imovelSiteFaces.imovelModel.descricaoAnuncioPadraoHtml}" escape="false" styleClass="textoPadrao" />
+			</h:panelGroup>
+
 		</h:panelGroup>
 
 	</ui:define>
