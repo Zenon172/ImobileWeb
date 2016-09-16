@@ -11,33 +11,45 @@
 		<h:panelGroup layout="block" styleClass="coluna100" style="text-align: left;">
 
 			<style>
-.ui-galleria-frame-content {
-	background-color: black;
-}
-
-.ui-galleria-frame-image {
-	width: auto !important;
-	height: 40px !important;
-}
-
-.destaqueImovel {
-	font-family: 'titillium_webregular' !important;
-	font-size: 28px;
-	color: #72828B;
-	margin-left: 10px;
-}
-</style>
+				.ui-galleria-frame-content {
+					background-color: black;
+				}
+				
+				.ui-galleria-frame-image {
+					width: auto !important;
+					height: 40px !important;
+				}
+				
+				.destaqueImovel {
+					font-family: 'titillium_webregular' !important;
+					font-size: 28px;
+					color: #72828B;
+					margin-left: 10px;
+				}
+				
+				.labelImovel {
+					font-family: 'titillium_webregular' !important;
+					font-size: 12px;
+					color: #72828B;
+					margin-left: 10px;
+				}
+			</style>
 
 			<div class="EmptyBox10" />
 
 			<h:outputText value="#{imovelSiteFaces.imovelModel.tituloAnuncio}" styleClass="" style="font-size: 28px; color: #1578c9; font-family: 'titillium_webregular' !important; font-weight: bold; margin: 10px" />
 
 			<hr style="height: 1px; border: none; color: #72828B; background-color: #72828B; margin-top: 0px; margin-bottom: 0px;" />
+			
+			<div class="EmptyBox5" />
+			
+			<h:outputText value="" styleClass="icon-location Fs24" style="color: #1578c9;" />
+			<h:outputText value="#{imovelSiteFaces.imovelModel.bairroModel.descricao}" styleClass="textoPadrao"/>
 
 			<div class="EmptyBox10" />
 
-			<h:panelGroup layout="block" styleClass="Container50">
-				<p:galleria value="#{imovelSiteFaces.fotos}" var="image" style="width: 100%">
+			<h:panelGroup layout="block" styleClass="Container50" style="text-align: center">
+				<p:galleria value="#{imovelSiteFaces.fotos}" var="image">
 					<p:graphicImage value="../arquivos/arquivos_imobile/#{image}.JPG" height="450px" />
 				</p:galleria>
 			</h:panelGroup>
@@ -45,29 +57,75 @@
 			<h:panelGroup layout="block" styleClass="Container50" style="background-color: white; text-align: left; height: 450px; padding: 10px">
 
 				<div style="float: left; text-align: center; padding-top: 8px; width: 50px; height: 50px; border: 2px solid #1578c9 !important; border-radius: 25px">
-					<h:outputText value="" styleClass="fa icon-dollar Fs28" style="color: #1578c9;" />
+					<h:outputText value="" styleClass="icon-dollar Fs28" style="color: #1578c9;" />
 				</div>
 
-				<h:outputText value="R$ " styleClass="destaqueImovel" />
-				<h:outputText value="#{imovelSiteFaces.imovelModel.valor}" styleClass="destaqueImovel" style="margin-left: 0px !important;">
-					<f:convertNumber type="number" pattern="#,###,##0.00" locale="pt_BR" />
+				<div style="float: left; margin-top: -3px">
+					<h:outputText value="Valor" styleClass="labelImovel" /><br/>
+					<h:outputText value="R$ " styleClass="destaqueImovel" />
+					<h:outputText value="#{imovelSiteFaces.imovelModel.valor}" styleClass="destaqueImovel" style="margin-left: 0px !important;">
+						<f:convertNumber type="number" pattern="#,###,##0.00" locale="pt_BR" />
+					</h:outputText>
+				</div>
+
+				<div class="EmptyBox10" />
+
+				<div style="float: left; text-align: center; padding-top: 8px; width: 50px; height: 50px; border: 2px solid #1578c9 !important; border-radius: 25px">
+					<h:outputText value="" styleClass="#{imovelSiteFaces.imovelModel.tipoImovelModel.descricao == 'Apartamento' ? 'fa fa-building-o' : 'icon-home'} Fs28" style="color: #1578c9;" />
+				</div>
+				
+				<div style="float: left; margin-top: -3px">
+					<h:outputText value="Tipo" styleClass="labelImovel" /><br/>
+					<h:outputText value="#{imovelSiteFaces.imovelModel.tipoImovelModel.descricao} " styleClass="destaqueImovel" />
+				</div>
+
+				<div class="EmptyBox10" />
+
+				<div style="float: left; text-align: center; padding-top: 8px; width: 50px; height: 50px; border: 2px solid #1578c9 !important; border-radius: 25px">
+					<h:outputText value="" styleClass="fa icon-sun Fs28" style="color: #1578c9;" />
+				</div>
+
+				<div style="float: left; margin-top: -3px">
+					<h:outputText value="Posição do sol" styleClass="labelImovel" /><br/>
+					<h:outputText value="#{imovelSiteFaces.imovelModel.posicaoSolModel.descricao}" styleClass="destaqueImovel" />
+				</div>
+				
+				<div class="EmptyBox10" />
+
+				<div style="float: left; text-align: center; padding-top: 8px; width: 50px; height: 50px; border: 2px solid #1578c9 !important; border-radius: 25px">
+					<h:outputText value="" styleClass="fa fa-bed Fs28" style="color: #1578c9;" />
+				</div>
+				
+				<div style="float: left;">
+					<h:outputText value="#{imovelSiteFaces.imovelModel.quartos} dormitório(s)" styleClass="destaqueImovel" />
+				</div>
+				
+				<div class="EmptyBox10" />
+
+				<div style="float: left; text-align: center; padding-top: 8px; width: 50px; height: 50px; border: 2px solid #1578c9 !important; border-radius: 25px">
+					<h:outputText value="" styleClass="fa fa-venus-mars Fs28" style="color: #1578c9;" />
+				</div>
+
+				<h:outputText value="#{imovelSiteFaces.imovelModel.suites} suíte(s)" styleClass="destaqueImovel" />
+				
+				<div class="EmptyBox10" />
+
+				<div style="float: left; text-align: center; padding-top: 8px; width: 50px; height: 50px; border: 2px solid #1578c9 !important; border-radius: 25px">
+					<h:outputText value="" styleClass="fa fa-car Fs28" style="color: #1578c9;" />
+				</div>
+
+				<h:outputText value="#{imovelSiteFaces.imovelModel.qtdVagasEstacionamento} Vaga(s)" styleClass="destaqueImovel" />
+
+				<div class="EmptyBox10" />
+
+				<div style="float: left; text-align: center; padding-top: 8px; width: 50px; height: 50px; border: 2px solid #1578c9 !important; border-radius: 25px">
+					<h:outputText value="" styleClass="fa fa-expand Fs28" style="color: #1578c9;" />
+				</div>
+
+				<h:outputText value="#{imovelSiteFaces.imovelModel.areaPrivativa}" styleClass="destaqueImovel">
+					<f:convertNumber pattern="#,###,##0.##" />
 				</h:outputText>
-
-				<div class="EmptyBox10" />
-
-				<div style="float: left; text-align: center; padding-top: 8px; width: 50px; height: 50px; border: 2px solid #1578c9 !important; border-radius: 25px">
-					<h:outputText value="" styleClass="fa icon-home Fs28" style="color: #1578c9;" />
-				</div>
-
-				<h:outputText value="#{imovelSiteFaces.imovelModel.tipoImovelModel.descricao} " styleClass="destaqueImovel" />
-
-				<div class="EmptyBox10" />
-
-				<div style="float: left; text-align: center; padding-top: 8px; width: 50px; height: 50px; border: 2px solid #1578c9 !important; border-radius: 25px">
-					<h:outputText value="" styleClass="fa fa-hotel Fs28" style="color: #1578c9;" />
-				</div>
-
-				<h:outputText value="#{imovelSiteFaces.imovelModel.tipoImovelModel.descricao} " styleClass="destaqueImovel" />
+				<h:outputText value=" m²" styleClass="destaqueImovel" style="margin-left: 0px !important;" />
 
 			</h:panelGroup>
 
