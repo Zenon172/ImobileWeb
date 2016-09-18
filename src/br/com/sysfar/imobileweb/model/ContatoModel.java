@@ -1,28 +1,43 @@
 package br.com.sysfar.imobileweb.model;
 
 import java.io.Serializable;
-
-import br.com.topsys.util.TSUtil;
+import java.util.Date;
 
 @SuppressWarnings("serial")
 public class ContatoModel implements Serializable {
 
 	private Long id;
 	
+	private ImovelModel imovelModel;
+	
 	private String nome;
 	
 	private String telefone;
-
+	
 	private String email;
 	
-	private OperadoraModel operadoraModel;
+	private String mensagem;
+	
+	private Boolean flagRetornoWhatsapp;
+	
+	private Boolean flagRetornoTelefone;
+	
+	private Date dataCadastro;
 
 	public Long getId() {
-		return TSUtil.tratarLong(id);
+		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public ImovelModel getImovelModel() {
+		return imovelModel;
+	}
+
+	public void setImovelModel(ImovelModel imovelModel) {
+		this.imovelModel = imovelModel;
 	}
 
 	public String getNome() {
@@ -49,12 +64,36 @@ public class ContatoModel implements Serializable {
 		this.email = email;
 	}
 
-	public OperadoraModel getOperadoraModel() {
-		return operadoraModel;
+	public String getMensagem() {
+		return mensagem;
 	}
 
-	public void setOperadoraModel(OperadoraModel operadoraModel) {
-		this.operadoraModel = operadoraModel;
+	public void setMensagem(String mensagem) {
+		this.mensagem = mensagem;
+	}
+
+	public Boolean getFlagRetornoWhatsapp() {
+		return flagRetornoWhatsapp;
+	}
+
+	public void setFlagRetornoWhatsapp(Boolean flagRetornoWhatsapp) {
+		this.flagRetornoWhatsapp = flagRetornoWhatsapp;
+	}
+
+	public Boolean getFlagRetornoTelefone() {
+		return flagRetornoTelefone;
+	}
+
+	public void setFlagRetornoTelefone(Boolean flagRetornoTelefone) {
+		this.flagRetornoTelefone = flagRetornoTelefone;
+	}
+
+	public Date getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
 	}
 
 	@Override

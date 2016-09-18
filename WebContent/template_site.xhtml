@@ -7,12 +7,15 @@
 	</ui:insert>
 	<link rel="shortcut icon" href="#{request.contextPath}/resources/images/favicon.png" /> 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+	<h:outputScript name="js/bootstrap.min.js" />
 	<h:outputStylesheet name="css/font-icon-layout.css" library="sentinel-layout" />
 	<h:outputStylesheet name="css/sentinel-layout.css" library="sentinel-layout" />
 	<h:outputStylesheet name="css/core-layout.css" library="sentinel-layout" />
 	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/geral_site.css" />
 	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/geral_sentinel.css" />
 	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/font-awesome.css" />
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/Fontsaddict.css" />
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/bootstrap.min.css" />
 </h:head>
 
 <h:body>
@@ -25,7 +28,7 @@
 		</h:panelGroup>
 		<h:panelGroup layout="block" styleClass="banner"></h:panelGroup>
 		<h:panelGroup layout="block" styleClass="topo2"></h:panelGroup>
-		<h:panelGroup layout="block" styleClass="Container100" style="text-align: center; padding: 5px 60px;">
+		<h:panelGroup layout="block" styleClass="Container100" style="text-align: center; padding: 5px 30px;">
 			<ui:insert name="dadosPagina" />
 		</h:panelGroup>
 	</h:form>

@@ -1,7 +1,7 @@
 package br.com.sysfar.imobileweb.model;
 
 @SuppressWarnings("serial")
-public class ClienteContatoModel extends ContatoModel {
+public class ClienteContatoModel extends ContatoGenericoModel {
 
 	private ClienteModel clienteModel;
 

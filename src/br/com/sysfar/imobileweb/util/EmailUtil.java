@@ -25,9 +25,9 @@ public class EmailUtil {
 	public EmailUtil() {
 
 		this.porta = "587";
-		this.email = "contato@sistemaimobileweb.com.br";
-		this.senha = "na5@MAyaT3ra";
-		//this.smtp = "mail.sistemaimobileweb.com";
+		this.email = "contato@nayaramaciel.com.br";
+		this.senha = "$!nays2guinho!$";
+		//this.smtp = "mail.nayaramaciel.com.br";
 		this.smtp = "localhost";
 
 	}

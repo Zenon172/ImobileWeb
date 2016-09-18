@@ -2,7 +2,7 @@ package br.com.sysfar.imobileweb.model;
 
 
 @SuppressWarnings("serial")
-public class CaptacaoContatoModel extends ContatoModel {
+public class CaptacaoContatoModel extends ContatoGenericoModel {
 
 	private CaptacaoModel captacaoModel;
 

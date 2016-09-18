@@ -755,3 +755,15 @@
 	color: #72828B;
 	font-family: 'titillium_webregular' !important;
 }
+
+.bold{
+	font-weight: bold;
+}
+
+.fontSite{
+	font-family: 'titillium_webregular' !important;
+}
+
+.fontAzul{
+	color: #1578c9 !important;
+}
