@@ -1,0 +1,50 @@
+<ui:composition template="template_site.xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xmlns:ts="http://java.sun.com/jsf/composite/components" xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<ui:define name="tituloPagina">
+		<title>
+			<h:outputText value="Busca Imóvel a venda em Salvador" />
+		</title>
+	</ui:define>
+	
+	<ui:define name="dadosPagina">
+	
+		<style>
+			.boxImovel{
+				height: 150px;
+				margin: 5px;
+				background-color: white;
+				text-align: left;
+			}
+		</style>
+		
+		<div style="width: 100%; height: 50px; background-color: white; text-align: left; font-weight: bold;" class="fontSite ">
+			<h:outputText value="200" styleClass="Fs40" />
+			<h:outputText value=" Apartamentos a venda em salvador" styleClass="Fs28" />
+		</div>
+		
+		<h:panelGroup layout="block" styleClass="Container40">
+			
+		</h:panelGroup>
+		
+		<h:panelGroup layout="block" styleClass="Container60">
+			
+			<ui:repeat var="linha" value="#{buscaImovelFaces.imoveis}">
+			
+				<a href="imovel.xhtml?codigo=#{linha.id}">
+				<h:panelGroup layout="block" styleClass="boxImovel">
+					
+					<p:graphicImage value="#{linha.imagemFotoPrincipalModel.arquivoMedio}" height="150px" width="200px" stream="false" rendered="#{!empty linha.imagemFotoPrincipalModel.arquivo}" />
+					
+					<h:outputText value="#{linha.endereco}" styleClass="fontCinza" />
+					<h:outputText value="#{linha.tituloAnuncio}" styleClass="fontAzul" />
+					
+				</h:panelGroup>
+				</a>
+				
+			</ui:repeat>
+			
+		</h:panelGroup>
+		
+	</ui:define>
+
+</ui:composition>
