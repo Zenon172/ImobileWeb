@@ -1,0 +1,191 @@
+jQuery(document).change(function(){
+	jQuery('.wpl_prp_cont.row_box').each(function(){
+		jQuery(this).find('.price_box').appendTo(jQuery(this).find('.wpl_prp_bot'));
+	});
+})
+window.onload = function(){
+	jQuery('.select-menu option').each(function(){
+		if (jQuery(this).attr('value') == '') {
+			jQuery(this).attr('disabled', true);
+		}
+	});
+};
+jQuery(document).ready(function() {
+
+	jQuery('div[id^="owlcarousel-"]').each(function(){
+		var carousel = jQuery(this),
+			auto_play = parseInt(carousel.attr('data-auto-play'))<1 ? false : parseInt(carousel.attr('data-auto-play')),
+			items_count = parseInt(carousel.attr('data-items')),
+			display_navs = carousel.attr('data-nav')=='true' ? true : false,
+			display_pagination = carousel.attr('data-pagination')=='true' ? true : false,
+			auto_height = items_count<=1 ? true : false;
+
+		jQuery(carousel).owlCarousel({
+			autoPlay: auto_play,
+			items: items_count,
+			navigation: display_navs,
+			pagination: display_pagination,
+			navigationText: false,
+			autoHeight: auto_height,
+			itemsDesktop: [1170, 5],
+			itemsDesktopSmall: [980, 4],
+			itemsTablet: [768, 3],
+			itemsMobile: [480, 1]
+		});
+	})
+	jQuery('.owl-prev').addClass('icon-chevron-left');
+	jQuery('.owl-next').addClass('icon-chevron-right');
+
+	setTimeout(function(){
+		jQuery('body').addClass('loaded');
+	}, 3000);
+	
+	jQuery('#dsidx-map').wrap('<div class="map-cont"></div>');
+
+	jQuery(window).resize(
+		function(){
+			if(!jQuery('body').hasClass('cherry-fixed-layout')) {
+				var fullWidthBlock = jQuery('.full-width-block, .wpl_googlemap_container');
+				fullWidthBlock.width(jQuery(window).width());
+				fullWidthBlock.css({width: jQuery(window).width(), "margin-left": (jQuery(window).width()/2)*-1, left: "50%", 'position': 'relative'});
+			};
+		}		
+	).trigger('resize');
+
+	jQuery('.wpl_prp_cont').wrapAll('<div class="wpl_prp_cont_wrap clearfix"></div>');
+	var i = 1;
+	jQuery('.wpl_prp_cont.grid_box, .wpl_prp_cont.row_box').each(function(){
+		jQuery(this).addClass('item-'+i);
+		var specialElem = jQuery(this).find('.wpl_gallery_container > div').not('.no_image_box');
+		specialElem.wrapInner('<span></span>').wrapAll('<div class="special-wrap"></div>');
+		i++;
+	});
+
+	jQuery('.wpl_prp_cont.row_box').each(function(){
+		jQuery(this).find('.price_box').appendTo(jQuery(this).find('.wpl_prp_bot'));
+	});
+	jQuery('.wpl_pagination_container').addClass('clearfix');
+
+	// Js form styles
+	jQuery('select.wpl_page_size_options').styler();  
+
+	// Add classes for search fields 
+	var searchBox = jQuery('.wpl_search_from_box');
+	searchBox.find('input[type="text"]').parent().addClass('text-field');
+	searchBox.find('input[type="checkbox"]').parent().addClass('checkbox-field');
+	searchBox.find('input[type="checkbox"].yesno').parent().addClass('mini');
+
+	searchBox.find('.checkbox-field').each(function(){
+		jQuery(this).prepend(jQuery(this).find('label').clone().addClass('show'));
+	})
+
+	searchBox.find('.wpl_search_from_box_bot').prepend('<div class="text-field-wrap"></div>');
+	searchBox.find('.wpl_search_from_box_bot .text-field').appendTo('.text-field-wrap');
+	searchBox.find('#sf2_min_price').attr('value', '').attr('placeholder', 'Min Price');
+	searchBox.find('#sf2_max_price').attr('value', '').attr('placeholder', 'Max Price');
+
+	//DOM changes in properties
+	jQuery('.wpl_prp_container_content .wpl_prp_container_content_title').find('h1, h2').wrapAll('<div class="first-col"><div class="title-header clearfix"></div></div>');
+	jQuery('.wpl_prp_container_content_left .wpl_prp_show_detail_boxes').first().addClass('hide').clone().appendTo('.wpl_prp_container_content_title .first-col');
+	jQuery('.wpl_prp_container_content_left .wpl_prp_show_detail_boxes').last().addClass('last');
+	
+	jQuery('.wpl_prp_show_detail_boxes .wpl_prp_show_detail_boxes_cont').each(function(){
+		var j = 1;
+		jQuery(this).find('.rows').each(function(){
+			jQuery(this).addClass('item-'+j);
+			j++;
+		});
+	});
+
+	jQuery(function(jQuery) {
+	    var num_cols = 3,
+	    container = jQuery('.wpl_prp_show_detail_boxes_cont'),
+	    listItem = '.rows',
+	    listClass = 'sub-list';
+	    container.each(function() {
+	        var items_per_col = new Array(),
+	        items = jQuery(this).find(listItem),
+	        min_items_per_col = Math.floor(items.length / num_cols),
+	        difference = items.length - (min_items_per_col * num_cols);
+	        for (var i = 0; i < num_cols; i++) {
+	            if (i < difference) {
+	                items_per_col[i] = min_items_per_col + 1;
+	            } else {
+	                items_per_col[i] = min_items_per_col;
+	            }
+	        }
+	        for (var i = 0; i < num_cols; i++) {
+	            jQuery(this).append(jQuery('<div ></div>').addClass(listClass));
+	            for (var j = 0; j < items_per_col[i]; j++) {
+	                var pointer = 0;
+	                for (var k = 0; k < i; k++) {
+	                    pointer += items_per_col[k];
+	                }
+	                jQuery(this).find('.' + listClass).last().append(items[j + pointer]);
+	            }
+	        }
+	    });
+	});
+
+	//DOM changes in agent
+	jQuery('.wpl_agent_info_r, .wpl_profile_show_container').addClass('clearfix');
+	jQuery('.wpl_profile_show_container_box .wpl_agent_info_l img').wrap('<div class="photo-logo-wrap"></div>');
+	jQuery('.wpl_profile_show_container_box .wpl_agent_info_r .company, .wpl_profile_show_container_box .wpl_agent_info_r .location').wrapAll('<div class="company_details"></div>');
+	jQuery('.wpl_profile_show_container_box .wpl_agent_info_r .company_details').appendTo('.wpl_profile_show_container_box .wpl_agent_info .wpl_agent_info_c .wpl_profile_container_title');
+	jQuery('.wpl_profile_show_container_box .wpl_agent_info_r').appendTo('.wpl_agent_info_l');
+	jQuery('.wpl_profile_show_container_box .wpl_agent_info_r img').wrap('<div class="logo"></div>');
+	jQuery('.wpl_profile_show_container_box .wpl_agent_info_r .logo').appendTo('.wpl_agent_info_l .photo-logo-wrap');
+
+
+	//DOM changes in IDX
+	jQuery('.dsidx-sorting-control, #dsidx-map-control').wrapAll('<div class="controls clearfix"></div>');
+
+	jQuery('.dsidx-widget-single-listing-slideshow').wrap('<div class="dsidx-widget-single-listing-slideshow-wrap"></div>');
+	jQuery('#dsidx-listings').addClass('clearfix');
+
+	jQuery('.dsidx-shortcode-item').each(function(){
+		jQuery(this).prepend('<div class="empty-box"></div>');
+
+		var text = jQuery('.dsidx-address')[0].nextSibling;
+		jQuery(text).wrap('<div class="text"></div>');
+	});	
+
+	jQuery('.dsidx-shortcode-item .empty-box').each(function(){
+		jQuery(this).nextUntil('p').wrapAll('<div class="header-wrap"></div>')
+	})
+
+	jQuery('.dsidx-shortcode-item > table:last-of-type').addClass('last');
+
+	jQuery('.header-wrap').find('.dsidx-address, div.text').wrapAll('<div class="title-wrap"></div>'); 
+	jQuery('.header-wrap .title-wrap').insertAfter('.dsidx-shortcode-item .dsidx-primary-photo');
+	jQuery('.header-wrap').find('.title-wrap, .dsidx-primary-data').wrapAll('<div class="header-desc-wrap"></div>'); 
+
+	var k = 1;
+	jQuery('#dsidx-listings li.dsidx-listing').each(function(){
+		jQuery(this).addClass('item-'+k);
+		k++;
+	});
+
+	var z = 1;
+	jQuery('.dsidx-results .dsidx-prop-summary').each(function(){
+		jQuery(this).find('.dsidx-prop-title').prependTo(jQuery(this).find('.dsidx-prop-features'));
+		jQuery(this).addClass('item-'+z);
+		z++;
+	});
+	
+	if( jQuery("html").hasClass("ie8") || jQuery("html").hasClass("ie9") ) {
+		jQuery(function(){
+			jQuery('input, textarea').placeholder();
+		});
+	}
+
+	jQuery('.dsidx-details #dsidx-media-td ~ div').addClass('dsidx-details-info');
+	jQuery('.dsidx-details #dsidx-description').appendTo('.dsidx-details .dsidx-details-info');
+
+	/* IDX Contact Form */
+	var contactForm = jQuery('#dsidx-contact-form');
+	contactForm.find('table tr').each(function(){
+		var contactFormLabel = jQuery(this).find('label').text();
+		jQuery(this).find('input[type="text"]').attr('placeholder', contactFormLabel).parent().attr('colspan', '2');
+	})
+})

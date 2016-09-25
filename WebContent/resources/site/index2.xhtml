@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8;" />
+	<link rel="stylesheet" type="text/css" href="./normalize.css" />
+	<link rel="stylesheet" type="text/css" href="./bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="./styles.css" />
+	<link rel="stylesheet" type="text/css" href="./demo.css" />
+	<link rel="stylesheet" type="text/css" href="./jquery.fancybox.css" />
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/geral_novo_site.css" />
+	<script type="text/javascript" src="../js/funcoes_site.js"></script>
+	<script type="text/javascript" src="./jquery.min.js"></script>
+	<script type="text/javascript" src="./jquery.form.js"></script>
+	<script type="text/javascript" src="./jquery.validate.js.download"></script>
+	<script type="text/javascript" src="./jquery.fancybox.js.download"></script>
+	<script type="text/javascript" src="./demo-main.js.download"></script>
+	<script charset="utf-8">
+		//TODO: some strange value
+		var min_height = 600;
+		$(function() {
+			resizeFrame();
+		});
+		function resizeFrame() {
+			if (1 == 0)
+				return false;
+			var main_iframe = $('#preview');
+			var height = $(window).height()
+					- $('#preview-bar:visible').outerHeight();
+			/* if ($.browser.opera)
+			    height += 5; */
+
+			if (min_height >= height)
+				height = min_height;
+			$('#preview').height(height);
+			$('#iframelive').height(height);
+			if (1400 >= $(window).width())
+				$('#min-hide-this').hide();
+			else
+				$('#min-hide-this').show();
+
+		}
+		$(window).resize(function() {
+			resizeFrame();
+		}).load(function() {
+			resizeFrame();
+		});
+	</script>
+	<script type="text/javascript">
+		window.su = 'http://www.layoutexpresso.com/templates/';
+	</script>
+	<script type="text/javascript">
+		window.we = 'layoutexpresso@gmail.com';
+	</script>
+	<style type="text/css">
+.fancybox-margin {
+	margin-right: 0px;
+}
+</style>
+</h:head>
+
+<h:body id="fullscreen-preview">
+	<div id="preview-bar">
+		<ul id="bar-inner">
+			<li class="tm-logo block">
+				<a href="http://www.layoutexpresso.com/templates/"> 
+					<img src="./logo.png" alt="" />
+				</a>
+			</li>
+			<li class="block inner info">Nayara Maciel</li>
+			<li class="block inner">
+				<!-- Price: --> <strong class="price-cur">
+					<!-- $ -->
+			</strong>
+			</li>
+			<li class="block inner">
+				<a href="http://www.layoutexpresso.com/templates/demo/53995.html#request-form-wrapper" class="buy fancybox order" data-id="http://www.layoutexpresso.com/templates/search/page1.html?keyword=53995">
+					Encomendar Site
+				</a>
+			</li>
+		</ul>
+	</div>
+	<div id="iframelive" class="no-responsive" style="height: 600px;">
+		<div id="preview-wrapper">
+			<ui:include src="/resources/site/saved_resource.html" />
+		</div>
+	</div>
+	<div class="popup" id="request-form-wrapper" style="display: none">
+		<div class="popup_cnt">
+			<div class="headline">
+				Preencha o formulário<br /> para soliciar o orçamento do seu site 
+			</div>
+			<!--            <span class="btn-close"></span>-->
+			<form id="request-form" novalidate="novalidate">
+				<fieldset>
+					<label>Nome:</label> <input type="text" name="name" class="input-name" /><label>Email:</label> <input type="text" name="email" class="input-email" /><label>Telefone:</label> <input type="text" name="phone" class="input-phone" /><input type="submit" value="Enviar" class="btn2 send-button" />
+					<div id="loader-wrapper" class="loader-wrapper" style="display: none">
+						<div id="loader"></div>
+					</div>
+				</fieldset>
+				<p class="form-answer" style="display: none"></p>
+			</form>
+		</div>
+	</div>
+
+</h:body>
+
+</html>

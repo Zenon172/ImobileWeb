@@ -1,0 +1,57 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core">
+
+	<div class="content_box  ">
+		<div id="widgets_for_shortcodes" class="amr-widget-area">
+			FEATURED AGENTS
+			<script type="text/javascript">
+				wplj(document).ready(
+						function() {
+							wplj('.wpl_profile_container').hover(
+									function() {
+										wplj(this).children(
+												'.wpl_profile_picture')
+												.addClass('flip');
+									},
+									function() {
+										wplj(this).children(
+												'.wpl_profile_picture')
+												.removeClass('flip');
+									});
+
+							if (wplj.isFunction(wplj.fn.tooltip))
+								wplj('.wpl_profile_container li').tooltip();
+						});
+			</script>
+			<div class="wpl_agents_widget_container ">
+				<div class="wpl_profile_container" id="wpl_profile_container1" itemscope="">
+					<div class="wpl_profile_picture" style="width: 125px; height: 125px;">
+						<div class="front">
+							<img itemprop="image" src="./thprofile_125x125.jpg" alt="David Brown" />
+						</div>
+						<div class="back">
+							<a itemprop="url" href="http://livedemo00.template-help.com/wordpress_53995/apartments/admin/" class="view_properties" style="line-height: 125px;">View properties</a>
+						</div>
+					</div>
+					<div class="wpl_profile_container_desc">
+						<div class="wpl_profile_container_title">
+							<h2 class="title" itemprop="name">
+								David <strong>Brown</strong>
+							</h2>
+						</div>
+						<ul>
+							<li class="website" data-original-title="" title=""><a itemprop="url" href="http://demolink.org/" target="_blank">View website</a></li>
+							<li itemprop="telephone" class="phone" data-original-title="" title="">800-2345-6789</li>
+							<li itemprop="faxNumber" class="fax" data-original-title="" title="">800-2345-6790</li>
+							<li itemprop="email" class="email" data-original-title="" title=""><a href="mailto:info@demolink.org">info@demolink.org</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="wpl_profile_container empty"></div>
+				<div class="wpl_profile_container empty"></div>
+				<div class="wpl_profile_container empty"></div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+
+</ui:composition>

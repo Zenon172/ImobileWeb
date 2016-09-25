@@ -1,0 +1,20 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core">
+
+	<div class="wpl_sort_options_container">
+		<div class="wpl_sort_options_container_title">Sort Option:</div>
+		<ul>
+			<li><div class="wpl_plist_sort wpl_plist_sort_active sort_down" onclick="wpl_page_sortchange(&#39;wplorderby=p.mls_id&amp;wplorder=ASC&#39;);">Listing ID</div></li>
+			<li><div class="wpl_plist_sort" onclick="wpl_page_sortchange(&#39;wplorderby=p.living_area_si&amp;wplorder=ASC&#39;);">Built up Area</div></li>
+			<li><div class="wpl_plist_sort" onclick="wpl_page_sortchange(&#39;wplorderby=p.price_si&amp;wplorder=ASC&#39;);">Price</div></li>
+			<li><div class="wpl_plist_sort" onclick="wpl_page_sortchange(&#39;wplorderby=p.pic_numb&amp;wplorder=ASC&#39;);">Pictures</div></li>
+			<li><div class="wpl_plist_sort" onclick="wpl_page_sortchange(&#39;wplorderby=p.add_date&amp;wplorder=ASC&#39;);">Add date</div></li>
+			<li><div class="wpl_plist_sort" onclick="wpl_page_sortchange(&#39;wplorderby=p.view&amp;wplorder=ASC&#39;);">Serch</div></li>
+			<li><div class="wpl_plist_sort" onclick="wpl_page_sortchange(&#39;wplorderby=p.zip_name&amp;wplorder=ASC&#39;);">Postal code</div></li>
+		</ul>
+		<div class="wpl_list_grid_switcher">
+			<div id="grid_view" class="grid_view active"></div>
+			<div id="list_view" class="list_view "></div>
+		</div>
+	</div>
+
+</ui:composition>
