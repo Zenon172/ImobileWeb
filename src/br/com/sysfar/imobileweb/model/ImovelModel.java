@@ -1,5 +1,6 @@
 package br.com.sysfar.imobileweb.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -1050,6 +1051,20 @@ public class ImovelModel extends BaseModel {
 	
 	public String getDescricaoAnuncioPadraoHtml(){
 		return TSUtil.isEmpty(this.descricaoAnuncio) ? null : this.descricaoAnuncio.replaceAll("\n", "<br/>");
+	}
+	
+	public void instanciarCamposPesquisa(){
+		
+		this.setFlagAtivo(Boolean.TRUE);
+		this.setTipoImovelModel(new TipoImovelModel());
+		this.setCondominioModel(new CondominioModel());
+		this.setEdificioModel(new EdificioModel());
+		this.getEdificioModel().setCondominioModel(new CondominioModel());
+		this.setCaptadorModel(new UsuarioModel());
+		this.setProprietarioModel(new ProprietarioModel());
+		this.setBairrosPesquisa(new ArrayList<String>());
+		this.setBairroModel(new BairroModel());
+		
 	}
 
 }

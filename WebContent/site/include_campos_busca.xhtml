@@ -39,7 +39,9 @@
 					</div>
 					
 					<div class="search_submit_box">
-						<h:commandButton id="wpl_search_widget_submit2" value="Pesquisar" action="#{indexFaces.findEvent}" styleClass="fontNarrow wpl_search_widget_submit" />
+						<h:commandButton id="wpl_search_widget_submit2" value="Pesquisar" action="#{indexFaces.findEvent}" styleClass="fontNarrow wpl_search_widget_submit">
+							<f:param name="bairro" value="#{indexFaces.imovelPesquisaModel.bairroModel.id}"/>
+						</h:commandButton>
 					</div>
 				</div>
 				

@@ -8,8 +8,9 @@
 				<div class="wpl_prp_top" style="width: 285px; height: 200px;">
 					<div class="wpl_prp_top_boxes front">
 						<div class="wpl_gallery_container" id="wpl_gallery_container10">
-							<img itemprop="image" id="wpl_gallery_image10" src="#{empty linha.imagemFotoPrincipalModel.arquivo ? 'resources/images/sem_foto2.jpg' : linha.imagemFotoPrincipalModel.arquivoMedio}" class="wpl_gallery_image " alt="#{linha.tituloAnuncio}" width="285" height="200" style="width: 285px; height: 200px;" />
+							<img itemprop="image" id="wpl_gallery_image10" src="#{empty linha.imagemFotoPrincipalModel.arquivo ? 'resources/images/sem_foto2.jpg' : linha.imagemFotoPrincipalModel.arquivoView}" class="wpl_gallery_image " alt="#{linha.tituloAnuncio}" width="285" height="200" style="width: 285px; height: 200px;" />
 							<div class="special-wrap">
+								<div class="open_house"><span>#{linha.codigo}</span></div>
 								<div class="forclosure">
 									<span>#{empty linha.valor ? 'Aluguel' : 'Venda'}</span>
 								</div>

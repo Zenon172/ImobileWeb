@@ -7,24 +7,18 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
 import com.google.gson.Gson;
 
 import br.com.sysfar.imobileweb.dao.ComboDAO;
 import br.com.sysfar.imobileweb.dao.ImovelDAO;
-import br.com.sysfar.imobileweb.model.BairroModel;
-import br.com.sysfar.imobileweb.model.CondominioModel;
-import br.com.sysfar.imobileweb.model.EdificioModel;
 import br.com.sysfar.imobileweb.model.ImovelModel;
-import br.com.sysfar.imobileweb.model.ProprietarioModel;
-import br.com.sysfar.imobileweb.model.TipoImovelModel;
-import br.com.sysfar.imobileweb.model.UsuarioModel;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.faces.TSMainFaces;
 
-@ViewScoped
+@SessionScoped
 @ManagedBean(name = "indexFaces")
 @SuppressWarnings("serial")
 public class IndexFaces extends TSMainFaces {
@@ -49,17 +43,49 @@ public class IndexFaces extends TSMainFaces {
 		this.comboDAO = new ComboDAO();
 		
 		this.imovelPesquisaModel = new ImovelModel();
-		this.imovelPesquisaModel.setFlagAtivo(Boolean.TRUE);
-		this.imovelPesquisaModel.setTipoImovelModel(new TipoImovelModel());
-		this.imovelPesquisaModel.setCondominioModel(new CondominioModel());
-		this.imovelPesquisaModel.setEdificioModel(new EdificioModel());
-		this.imovelPesquisaModel.getEdificioModel().setCondominioModel(new CondominioModel());
-		this.imovelPesquisaModel.setCaptadorModel(new UsuarioModel());
-		this.imovelPesquisaModel.setProprietarioModel(new ProprietarioModel());
-		this.imovelPesquisaModel.setBairrosPesquisa(new ArrayList<String>());
-		this.imovelPesquisaModel.setBairroModel(new BairroModel());
+		this.imovelPesquisaModel.instanciarCamposPesquisa();
 
-		this.imoveis = this.imovelDAO.pesquisarHome();
+		this.find();
+		
+		this.comboBairros = super.initCombo(this.comboDAO.pesquisarBairro(), "id", "descricao");
+		this.comboTipoImovel = super.initCombo(this.comboDAO.pesquisarTipoImovel(), "id", "descricao");
+
+	}
+	
+	@Override
+	protected String find() {
+		
+		StringBuilder parametrosUrl = new StringBuilder();
+		
+		if(!TSUtil.isEmpty(this.imovelPesquisaModel.getBairroModel().getId())){
+			parametrosUrl.append(!TSUtil.isEmpty(parametrosUrl.toString()) ? "&" : "").append("bairroId=").append(this.imovelPesquisaModel.getBairroModel().getId());
+		}
+		
+		if(!TSUtil.isEmpty(this.imovelPesquisaModel.getValorMin())){
+			parametrosUrl.append(!TSUtil.isEmpty(parametrosUrl.toString()) ? "&" : "").append("minValor=").append(this.imovelPesquisaModel.getValorMin());
+		}
+		
+		if(!TSUtil.isEmpty(this.imovelPesquisaModel.getValorMax())){
+			parametrosUrl.append(!TSUtil.isEmpty(parametrosUrl.toString()) ? "&" : "").append("maxValor=").append(this.imovelPesquisaModel.getValorMax());
+		}
+		
+		if(!TSUtil.isEmpty(this.imovelPesquisaModel.getTipoImovelModel().getId())){
+			parametrosUrl.append(!TSUtil.isEmpty(parametrosUrl.toString()) ? "&" : "").append("tipo=").append(this.imovelPesquisaModel.getTipoImovelModel().getId());
+		}
+		
+		if(!TSUtil.isEmpty(this.imovelPesquisaModel.getCodigo())){
+			parametrosUrl.append(!TSUtil.isEmpty(parametrosUrl.toString()) ? "&" : "").append("codigo=").append(this.imovelPesquisaModel.getCodigo());
+		}
+		
+		if(!TSUtil.isEmpty(parametrosUrl.toString())){
+
+			this.imoveis = this.imovelDAO.pesquisar(this.imovelPesquisaModel, this.tipoOrdenacao);
+			
+		} else {
+			
+			this.imoveis = this.imovelDAO.pesquisarHome();
+			
+		}
 
 		listaCoordenadas = new ArrayList<Map<String, String>>();
 
@@ -84,17 +110,12 @@ public class IndexFaces extends TSMainFaces {
 
 		}
 		
-		this.comboBairros = super.initCombo(this.comboDAO.pesquisarBairro(), "id", "descricao");
-		this.comboTipoImovel = super.initCombo(this.comboDAO.pesquisarTipoImovel(), "id", "descricao");
-
-	}
-	
-	@Override
-	protected String find() {
+		if(!TSUtil.isEmpty(this.tipoOrdenacao)){
+			parametrosUrl.append(!TSUtil.isEmpty(parametrosUrl.toString()) ? "&" : "").append("ordem=").append(this.tipoOrdenacao);
+		}
 		
-		this.imoveis = this.imovelDAO.pesquisar(this.imovelPesquisaModel, this.tipoOrdenacao);
+		return "index.xhtml" + (!TSUtil.isEmpty(parametrosUrl.toString()) ? "?" + parametrosUrl.toString() + "&faces-redirect=true" : "");
 		
-		return null;
 	}
 
 	public String getCoordenadas() {

@@ -1,0 +1,48 @@
+<ui:composition template="template_site.xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xmlns:ts="http://java.sun.com/jsf/composite/components" xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<ui:define name="dadosPagina">
+
+		<ui:repeat var="linha" value="#{indexFaces.imoveis}">
+			<a href="imovel.xhtml?codigo=#{linha.id}"> <h:panelGroup layout="block" styleClass="boxImovelHome" style="padding: 5px;">
+					<p:graphicImage value="#{linha.imagemFotoPrincipalModel.arquivoMedio}" height="150px" width="200px" stream="false" rendered="#{!empty linha.imagemFotoPrincipalModel.arquivo}" />
+					<br />
+					<h:panelGroup rendered="#{!empty linha.edificioModel.descricao}">
+						<h:outputLabel value="#{linha.edificioModel.descricao}" style="color: #0e6bb8; font-weight: bold !important; font-size: 16px;" />
+						<br />
+					</h:panelGroup>
+					<h:panelGroup rendered="#{empty linha.edificioModel.descricao}">
+						<h:outputLabel value="#{linha.bairroModel.descricao}" style="color: #0e6bb8; font-weight: bold !important; font-size: 16px;" />
+						<br />
+					</h:panelGroup>
+					<h:panelGroup rendered="#{!empty linha.valor}">
+						<h:outputLabel value="R$ " />
+						<h:outputLabel value="#{linha.valor}" style="font-weigth: bold">
+							<f:convertNumber pattern="#,###,##0.00" />
+						</h:outputLabel>
+						<br />
+					</h:panelGroup>
+					<h:panelGroup rendered="#{!empty linha.edificioModel.descricao}">
+						<h:outputLabel value="#{linha.bairroModel.descricao} - #{linha.bairroModel.cidadeModel.nome}" />
+						<br />
+					</h:panelGroup>
+					<h:panelGroup rendered="#{!empty linha.quartos}">
+						<h:outputLabel value="#{linha.quartos} dormitório(s)" />
+						<br />
+					</h:panelGroup>
+					<h:panelGroup rendered="#{!empty linha.suites and linha.suites > 0}">
+						<h:outputLabel value="#{linha.suites} suíte(s)" />
+						<br />
+					</h:panelGroup>
+					<h:panelGroup rendered="#{!empty linha.areaPrivativa}">
+						<h:outputLabel value="#{linha.areaPrivativa}">
+							<f:convertNumber pattern="#,###,##0.0" />
+						</h:outputLabel>
+						<h:outputLabel value=" m² área" rendered="#{!empty linha.areaPrivativa}" />
+					</h:panelGroup>
+				</h:panelGroup>
+			</a>
+		</ui:repeat>
+
+	</ui:define>
+
+</ui:composition>
