@@ -1,103 +1,94 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core">
 
 	<div class="wpl_plisting_top_sidebar_container">
-		Search
-		<form action="http://livedemo00.template-help.com/wordpress_53995/apartments/" id="wpl_search_form_2" method="GET" onsubmit="return wpl_do_search_2();" class="wpl_search_from_box clearfix wpl_search_kind0">
+		Busca
+		<h:form id="wpl_search_form_2" prependId="false" styleClass="wpl_search_from_box clearfix wpl_search_kind0">
 
 			<div id="wpl_searchwidget_2" class="clearfix">
 				<div class="wpl_search_from_box_top">
 					<div class="wpl_search_field_container minmax_type  text-field" id="wpl2_search_field_container_6" style="">
-						<label>Price</label><select class="wpl_search_widget_field_unit" name="sf2_unit_price" id="sf2_unit_price" style="display: none;"><option value="260" selected="selected">$</option>
-							<option value="150">€</option>
-							<option value="220">£</option></select>
-						<div class="chosen-container chosen-container-single" style="width: 220px;" title="" id="sf2_unit_price_chosen">
-							<a class="chosen-single" tabindex="-1"> <span>$</span>
-								<div>
-									<b></b>
-								</div>
-							</a>
-							<div class="chosen-drop">
-								<div class="chosen-search">
-									<input type="text" autocomplete="off" />
-								</div>
-								<ul class="chosen-results"></ul>
-							</div>
-						</div>
-						<label id="wpl_search_widget_from_label2" class="wpl_search_widget_from_label" for="sf2_min_price">Min</label><input name="sf2_min_price" type="text" id="sf2_min_price" value="" placeholder="Min Price" /><label id="wpl_search_widget_to_label2" class="wpl_search_widget_to_label" for="sf2_max_price">Max</label><input name="sf2_max_price" type="text" id="sf2_max_price" value="" placeholder="Max Price" />
-
+						
+						<h:selectOneMenu value="#{indexFaces.imovelPesquisaModel.bairroModel.id}" styleClass="Azul fontNarrow" style="margin-top: 5px">
+							<f:selectItem itemValue="" itemLabel="Bairro" />
+							<f:selectItems value="#{indexFaces.comboBairros}" />
+						</h:selectOneMenu>
+						
+						<p:inputText id="sf2_min_price" value="#{indexFaces.imovelPesquisaModel.valorMin}" placeholder="Preço Mínimo"  styleClass="fontNarrow" style="margin-left: 20px" />
+						
+						<p:inputText id="sf2_max_price2" value="#{indexFaces.imovelPesquisaModel.valorMax}" placeholder="Preço Máximo" styleClass="fontNarrow" />
+						
 					</div>
+					
 					<div class="wpl_search_field_container select_type " id="wpl2_search_field_container_3" style="">
-						<label>Property Type</label><select name="sf2_select_property_type" class="wpl_search_widget_field_3" id="sf2_select_property_type" onchange="wpl_property_type_changed2(this.value);" style="display: none;"><option value="-1">Property Type</option>
-							<option value="13">Office</option>
-							<option value="6">Apartment</option>
-							<option value="7">Villa</option></select>
-						<div class="chosen-container chosen-container-single" style="width: 220px;" title="" id="sf2_select_property_type_chosen">
-							<a class="chosen-single" tabindex="-1"> <span>Property Type</span>
-								<div>
-									<b></b>
-								</div>
-							</a>
-							<div class="chosen-drop">
-								<div class="chosen-search">
-									<input type="text" autocomplete="off" />
-
-								</div>
-								<ul class="chosen-results"></ul>
+					
+						<h:selectOneMenu value="#{indexFaces.imovelPesquisaModel.tipoImovelModel.id}" styleClass="Azul fontNarrow" style="margin-top: 5px; width: 100px">
+							<f:selectItem itemValue="" itemLabel="Tipo" />
+							<f:selectItems value="#{indexFaces.comboTipoImovel}" />
+						</h:selectOneMenu>
+						
+					</div>
+					
+					<div class="wpl_search_field_container locationtextsearch_type " id="wpl2_search_field_container_41" style="">
+						
+						<div class="wpl_search_widget_location_level_container" id="wpl2_search_widget_location_level_container_location_text">
+							
+							<p:inputText id="sf2_locationtextsearch" value="#{indexFaces.imovelPesquisaModel.codigo}" placeholder="Código" styleClass="wpl_search_widget_location_textsearch ui-autocomplete-input fontNarrow" style="margin-left: 20px" />
+						
+						</div>
+					
+					</div>
+					
+					<div class="search_submit_box">
+						<h:commandButton id="wpl_search_widget_submit2" value="Pesquisar" action="#{indexFaces.findEvent}" styleClass="fontNarrow wpl_search_widget_submit" />
+					</div>
+				</div>
+				
+				<h:panelGroup rendered="false">
+					<div class="wpl_search_from_box_bot" id="wpl_search_from_box_bot2">
+						<div class="text-field-wrap">
+							<div class="wpl_search_field_container textbox_type  text-field" id="wpl2_search_field_container_18" style="">
+								<label for="sf2_textsearch_textsearch">Text Search</label><input value="" name="sf2_textsearch_textsearch" type="text" id="sf2_textsearch_textsearch" />
+	
+							</div>
+							<div class="wpl_search_field_container text_type  text-field" id="wpl2_search_field_container_42" style="">
+								<label for="sf2_text_field_42">Street</label> <input name="sf2_text_field_42" type="text" id="sf2_text_field_42" value="" placeholder="Street" />
+	
+							</div>
+							<div class="wpl_search_field_container text_type  text-field" id="wpl2_search_field_container_43">
+								<label for="sf2_text_post_code">Postal Code</label> <input name="sf2_text_post_code" type="text" id="sf2_text_post_code" value="" placeholder="Postal Code" />
+	
 							</div>
 						</div>
-					</div>
-					<div class="wpl_search_field_container locationtextsearch_type " id="wpl2_search_field_container_41" style="">
-						<div class="wpl_search_widget_location_level_container" id="wpl2_search_widget_location_level_container_location_text">
-							<input class="wpl_search_widget_location_textsearch ui-autocomplete-input" value="" name="sf2_locationtextsearch" id="sf2_locationtextsearch" placeholder="Zipcode, County, Country" autocomplete="off" />
+						<div class="wpl_search_field_container yesno_type  checkbox-field mini" id="wpl2_search_field_container_135" style="">
+							<label for="sf2_select_f_135" class="show">Garden</label><input value="1" name="sf2_select_f_135" type="checkbox" id="sf2_select_f_135" class="wpl_search_widget_field_135_check yesno" style="position: absolute; z-index: -1; visibility: hidden;" /><span class="jquery-safari-checkbox"><span class="mark"><img src="./empty.png" /></span></span> <label for="sf2_select_f_135">Garden</label>
+						</div>
+						<div class="wpl_search_field_container yesno_type  checkbox-field mini" id="wpl2_search_field_container_140">
+							<label for="sf2_select_f_140" class="show">Pet Policy</label><input value="1" name="sf2_select_f_140" type="checkbox" id="sf2_select_f_140" class="wpl_search_widget_field_140_check yesno" style="position: absolute; z-index: -1; visibility: hidden;" /><span class="jquery-safari-checkbox"><span class="mark"><img src="./empty.png" /></span></span> <label for="sf2_select_f_140">Pet Policy</label>
+						</div>
+						<div class="wpl_search_field_container yesno_type  checkbox-field mini" id="wpl2_search_field_container_136">
+							<label for="sf2_select_f_136" class="show">Balcony</label><input value="1" name="sf2_select_f_136" type="checkbox" id="sf2_select_f_136" class="wpl_search_widget_field_136_check yesno" style="position: absolute; z-index: -1; visibility: hidden;" /><span class="jquery-safari-checkbox"><span class="mark"><img src="./empty.png" /></span></span> <label for="sf2_select_f_136">Balcony</label>
+						</div>
+						<div class="wpl_search_field_container yesno_type  checkbox-field mini" id="wpl2_search_field_container_157">
+							<label for="sf2_select_f_157" class="show">TV</label><input value="1" name="sf2_select_f_157" type="checkbox" id="sf2_select_f_157" class="wpl_search_widget_field_157_check yesno" style="position: absolute; z-index: -1; visibility: hidden;" /><span class="jquery-safari-checkbox"><span class="mark"><img src="./empty.png" /></span></span> <label for="sf2_select_f_157">TV</label>
+						</div>
+						<div class="wpl_search_field_container yesno_type  checkbox-field mini" id="wpl2_search_field_container_132">
+							<label for="sf2_select_f_132" class="show">Jacuzzi</label><input value="1" name="sf2_select_f_132" type="checkbox" id="sf2_select_f_132" class="wpl_search_widget_field_132_check yesno" style="position: absolute; z-index: -1; visibility: hidden;" /><span class="jquery-safari-checkbox"><span class="mark"><img src="./empty.png" /></span></span> <label for="sf2_select_f_132">Jacuzzi</label>
+						</div>
+						<div class="wpl_search_field_container yesno_type  checkbox-field mini" id="wpl2_search_field_container_141">
+							<label for="sf2_select_f_141" class="show">Kitchen</label><input value="1" name="sf2_select_f_141" type="checkbox" id="sf2_select_f_141" class="wpl_search_widget_field_141_check yesno" style="position: absolute; z-index: -1; visibility: hidden;" /><span class="jquery-safari-checkbox"><span class="mark"><img src="./empty.png" /></span></span> <label for="sf2_select_f_141">Kitchen</label>
+						</div>
+						<div class="wpl_search_field_container yesno_type  checkbox-field mini" id="wpl2_search_field_container_100" style="">
+							<label for="sf2_select_n_100" class="show">Shopping Center</label><input value="1" name="sf2_select_n_100" type="checkbox" id="sf2_select_n_100" class="wpl_search_widget_field_100_check yesno" style="position: absolute; z-index: -1; visibility: hidden;" /><span class="jquery-safari-checkbox"><span class="mark"><img src="./empty.png" /></span></span> <label for="sf2_select_n_100">Shopping Center</label>
+						</div>
+						<div class="wpl_search_field_container yesno_type  checkbox-field mini" id="wpl2_search_field_container_159">
+							<label for="sf2_select_f_159" class="show">Internet</label><input value="1" name="sf2_select_f_159" type="checkbox" id="sf2_select_f_159" class="wpl_search_widget_field_159_check yesno" style="position: absolute; z-index: -1; visibility: hidden;" /><span class="jquery-safari-checkbox"><span class="mark"><img src="./empty.png" /></span></span> <label for="sf2_select_f_159">Internet</label>
 						</div>
 					</div>
-					<div class="search_submit_box">
-						<input id="wpl_search_widget_submit2" class="wpl_search_widget_submit" type="submit" value="Search" />
-
-					</div>
-				</div>
-				<div class="wpl_search_from_box_bot" id="wpl_search_from_box_bot2">
-					<div class="text-field-wrap">
-						<div class="wpl_search_field_container textbox_type  text-field" id="wpl2_search_field_container_18" style="">
-							<label for="sf2_textsearch_textsearch">Text Search</label><input value="" name="sf2_textsearch_textsearch" type="text" id="sf2_textsearch_textsearch" />
-
-						</div>
-						<div class="wpl_search_field_container text_type  text-field" id="wpl2_search_field_container_42" style="">
-							<label for="sf2_text_field_42">Street</label> <input name="sf2_text_field_42" type="text" id="sf2_text_field_42" value="" placeholder="Street" />
-
-						</div>
-						<div class="wpl_search_field_container text_type  text-field" id="wpl2_search_field_container_43">
-							<label for="sf2_text_post_code">Postal Code</label> <input name="sf2_text_post_code" type="text" id="sf2_text_post_code" value="" placeholder="Postal Code" />
-
-						</div>
-					</div>
-					<div class="wpl_search_field_container yesno_type  checkbox-field mini" id="wpl2_search_field_container_135" style="">
-						<label for="sf2_select_f_135" class="show">Garden</label><input value="1" name="sf2_select_f_135" type="checkbox" id="sf2_select_f_135" class="wpl_search_widget_field_135_check yesno" style="position: absolute; z-index: -1; visibility: hidden;" /><span class="jquery-safari-checkbox"><span class="mark"><img src="./empty.png" /></span></span> <label for="sf2_select_f_135">Garden</label>
-					</div>
-					<div class="wpl_search_field_container yesno_type  checkbox-field mini" id="wpl2_search_field_container_140">
-						<label for="sf2_select_f_140" class="show">Pet Policy</label><input value="1" name="sf2_select_f_140" type="checkbox" id="sf2_select_f_140" class="wpl_search_widget_field_140_check yesno" style="position: absolute; z-index: -1; visibility: hidden;" /><span class="jquery-safari-checkbox"><span class="mark"><img src="./empty.png" /></span></span> <label for="sf2_select_f_140">Pet Policy</label>
-					</div>
-					<div class="wpl_search_field_container yesno_type  checkbox-field mini" id="wpl2_search_field_container_136">
-						<label for="sf2_select_f_136" class="show">Balcony</label><input value="1" name="sf2_select_f_136" type="checkbox" id="sf2_select_f_136" class="wpl_search_widget_field_136_check yesno" style="position: absolute; z-index: -1; visibility: hidden;" /><span class="jquery-safari-checkbox"><span class="mark"><img src="./empty.png" /></span></span> <label for="sf2_select_f_136">Balcony</label>
-					</div>
-					<div class="wpl_search_field_container yesno_type  checkbox-field mini" id="wpl2_search_field_container_157">
-						<label for="sf2_select_f_157" class="show">TV</label><input value="1" name="sf2_select_f_157" type="checkbox" id="sf2_select_f_157" class="wpl_search_widget_field_157_check yesno" style="position: absolute; z-index: -1; visibility: hidden;" /><span class="jquery-safari-checkbox"><span class="mark"><img src="./empty.png" /></span></span> <label for="sf2_select_f_157">TV</label>
-					</div>
-					<div class="wpl_search_field_container yesno_type  checkbox-field mini" id="wpl2_search_field_container_132">
-						<label for="sf2_select_f_132" class="show">Jacuzzi</label><input value="1" name="sf2_select_f_132" type="checkbox" id="sf2_select_f_132" class="wpl_search_widget_field_132_check yesno" style="position: absolute; z-index: -1; visibility: hidden;" /><span class="jquery-safari-checkbox"><span class="mark"><img src="./empty.png" /></span></span> <label for="sf2_select_f_132">Jacuzzi</label>
-					</div>
-					<div class="wpl_search_field_container yesno_type  checkbox-field mini" id="wpl2_search_field_container_141">
-						<label for="sf2_select_f_141" class="show">Kitchen</label><input value="1" name="sf2_select_f_141" type="checkbox" id="sf2_select_f_141" class="wpl_search_widget_field_141_check yesno" style="position: absolute; z-index: -1; visibility: hidden;" /><span class="jquery-safari-checkbox"><span class="mark"><img src="./empty.png" /></span></span> <label for="sf2_select_f_141">Kitchen</label>
-					</div>
-					<div class="wpl_search_field_container yesno_type  checkbox-field mini" id="wpl2_search_field_container_100" style="">
-						<label for="sf2_select_n_100" class="show">Shopping Center</label><input value="1" name="sf2_select_n_100" type="checkbox" id="sf2_select_n_100" class="wpl_search_widget_field_100_check yesno" style="position: absolute; z-index: -1; visibility: hidden;" /><span class="jquery-safari-checkbox"><span class="mark"><img src="./empty.png" /></span></span> <label for="sf2_select_n_100">Shopping Center</label>
-					</div>
-					<div class="wpl_search_field_container yesno_type  checkbox-field mini" id="wpl2_search_field_container_159">
-						<label for="sf2_select_f_159" class="show">Internet</label><input value="1" name="sf2_select_f_159" type="checkbox" id="sf2_select_f_159" class="wpl_search_widget_field_159_check yesno" style="position: absolute; z-index: -1; visibility: hidden;" /><span class="jquery-safari-checkbox"><span class="mark"><img src="./empty.png" /></span></span> <label for="sf2_select_f_159">Internet</label>
-					</div>
-				</div>
+				</h:panelGroup>
 			</div>
-			<div class="more_search_option" data-widget-id="2" id="more_search_option2">More options</div>
-		</form>
+			<h:panelGroup rendered="false">
+				<div class="more_search_option" data-widget-id="2" id="more_search_option2">Mais Opções</div>
+			</h:panelGroup>
+		</h:form>
 	</div>
 </ui:composition>

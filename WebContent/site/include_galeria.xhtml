@@ -1,318 +1,90 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core">
 
 	<div class="wpl_prp_cont_wrap clearfix">
-		<div class="wpl_prp_cont grid_box item-1" id="wpl_prp_cont10">
-			<div class="wpl_prp_top" style="width: 285px; height: 200px;">
-				<div class="wpl_prp_top_boxes front">
-					<div class="wpl_gallery_container" id="wpl_gallery_container10">
-						<img itemprop="image" id="wpl_gallery_image10" src="./thimg_Depositphotos_23357482_original_285x200.jpg" class="wpl_gallery_image " alt="5 Rooms, Office, For Rent, 5 Bathrooms, Listing ID 1009, United States," width="285" height="200" style="width: 285px; height: 200px;" />
-						<div class="special-wrap">
-							<div class="feature">
-								<span>Featured</span>
-							</div>
-							<div class="forclosure">
-								<span>Foreclosure</span>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="wpl_prp_top_boxes back">
-					<a id="prp_link_id_10" href="http://livedemo00.template-help.com/wordpress_53995/apartments/10-Office-For-Rent-United-States-5Rooms-5Bathrooms-USD3000" class="view_detail">More Details</a>
-				</div>
-			</div>
-			<div class="wpl_prp_bot">
-				<a id="prp_link_id_10" href="http://livedemo00.template-help.com/wordpress_53995/apartments/10-Office-For-Rent-United-States-5Rooms-5Bathrooms-USD3000" class="view_detail" title="House 1">
-					<h3 class="wpl_prp_title">House 1</h3>
-				</a>
-				<h4 class="wpl_prp_listing_location">United States</h4>
-				<div class="wpl_prp_listing_icon_box">
-					<div class="room">5</div>
-					<div class="bathroom">5</div>
-					<div class="pic_count">3</div>
-				</div>
-				<div class="wpl_prp_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</div>
-			</div>
-			<div class="price_box">
-				<span itemprop="price" content="$3,000 Per Year">$3,000 Per Year</span>
-			</div>
-		</div>
-		<div class="wpl_prp_cont grid_box item-2" id="wpl_prp_cont9">
-			<div class="wpl_prp_top" style="width: 285px; height: 200px;">
-				<div class="wpl_prp_top_boxes front">
-					<div class="wpl_gallery_container" id="wpl_gallery_container9">
-						<img itemprop="image" id="wpl_gallery_image9" src="./thimg_Depositphotos_20356337_original_285x200.jpg" class="wpl_gallery_image " alt="8 Bedrooms, Villa, For sale, 4 Bathrooms, Listing ID 1008, United States," width="285" height="200" style="width: 285px; height: 200px;" />
-						<div class="special-wrap">
-							<div class="open_house">
-								<span>Open House</span>
-							</div>
-							<div class="forclosure">
-								<span>Foreclosure</span>
+	
+		<ui:repeat var="linha" value="#{indexFaces.imoveis}">
+		
+			<div class="wpl_prp_cont grid_box item-1" id="wpl_prp_cont10">
+				<div class="wpl_prp_top" style="width: 285px; height: 200px;">
+					<div class="wpl_prp_top_boxes front">
+						<div class="wpl_gallery_container" id="wpl_gallery_container10">
+							<img itemprop="image" id="wpl_gallery_image10" src="#{empty linha.imagemFotoPrincipalModel.arquivo ? 'resources/images/sem_foto2.jpg' : linha.imagemFotoPrincipalModel.arquivoMedio}" class="wpl_gallery_image " alt="#{linha.tituloAnuncio}" width="285" height="200" style="width: 285px; height: 200px;" />
+							<div class="special-wrap">
+								<div class="forclosure">
+									<span>#{empty linha.valor ? 'Aluguel' : 'Venda'}</span>
+								</div>
+								<h:panelGroup layout="block" styleClass="feature" rendered="#{!empty linha.valor and !empty linha.valorAluguel}">
+									<span>Aluguel</span>
+								</h:panelGroup>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="wpl_prp_top_boxes back">
-					<a id="prp_link_id_9" href="http://livedemo00.template-help.com/wordpress_53995/apartments/9-Villa-For-sale-United-States-8Bedrooms-4Bathrooms-USD30" class="view_detail">More Details</a>
-				</div>
-			</div>
-			<div class="wpl_prp_bot">
-				<a id="prp_link_id_9" href="http://livedemo00.template-help.com/wordpress_53995/apartments/9-Villa-For-sale-United-States-8Bedrooms-4Bathrooms-USD30" class="view_detail" title="House 1">
-					<h3 class="wpl_prp_title">House 1</h3>
-				</a>
-				<h4 class="wpl_prp_listing_location">United States</h4>
-				<div class="wpl_prp_listing_icon_box">
-					<div class="bedroom">8</div>
-					<div class="bathroom">4</div>
-					<div class="pic_count">3</div>
-				</div>
-				<div class="wpl_prp_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</div>
-			</div>
-			<div class="price_box">
-				<span itemprop="price" content="$30">$30</span>
-			</div>
-		</div>
-		<div class="wpl_prp_cont grid_box item-3" id="wpl_prp_cont8">
-			<div class="wpl_prp_top" style="width: 285px; height: 200px;">
-				<div class="wpl_prp_top_boxes front">
-					<div class="wpl_gallery_container" id="wpl_gallery_container8">
-						<img itemprop="image" id="wpl_gallery_image8" src="./thimg_Depositphotos_6594772_original_285x200.jpg" class="wpl_gallery_image " alt="4 Bedrooms, Villa, For sale, 4 Bathrooms, Listing ID 1007, United States," width="285" height="200" style="width: 285px; height: 200px;" />
-						<div class="special-wrap">
-							<div class="feature">
-								<span>Featured</span>
-							</div>
-							<div class="hot_offer">
-								<span>Hot Offer</span>
-							</div>
-							<div class="forclosure">
-								<span>Foreclosure</span>
-							</div>
-						</div>
+					<div class="wpl_prp_top_boxes back">
+						<a id="prp_link_id_10" href="imovel.xhtml?codigo=#{linha.id}" class="view_detail">Mais Detalhes</a>
 					</div>
 				</div>
-				<div class="wpl_prp_top_boxes back">
-					<a id="prp_link_id_8" href="http://livedemo00.template-help.com/wordpress_53995/apartments/8-Villa-For-sale-United-States-4Bedrooms-4Bathrooms-USD2000" class="view_detail">More Details</a>
-				</div>
-			</div>
-			<div class="wpl_prp_bot">
-				<a id="prp_link_id_8" href="http://livedemo00.template-help.com/wordpress_53995/apartments/8-Villa-For-sale-United-States-4Bedrooms-4Bathrooms-USD2000" class="view_detail" title="House 1">
-					<h3 class="wpl_prp_title">House 1</h3>
-				</a>
-				<h4 class="wpl_prp_listing_location">United States</h4>
-				<div class="wpl_prp_listing_icon_box">
-					<div class="bedroom">4</div>
-					<div class="bathroom">4</div>
-					<div class="pic_count">3</div>
-				</div>
-				<div class="wpl_prp_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</div>
-			</div>
-			<div class="price_box">
-				<span itemprop="price" content="$2,000">$2,000</span>
-			</div>
-		</div>
-		<div class="wpl_prp_cont grid_box item-4" id="wpl_prp_cont7">
-			<div class="wpl_prp_top" style="width: 285px; height: 200px;">
-				<div class="wpl_prp_top_boxes front">
-					<div class="wpl_gallery_container" id="wpl_gallery_container7">
-						<img itemprop="image" id="wpl_gallery_image7" src="./thimg_Depositphotos_11458354_EL4_285x200.jpg" class="wpl_gallery_image " alt="3 Bedrooms, Apartment, Vacation Rental, 3 Bathrooms, Listing ID 1006, United States," width="285" height="200" style="width: 285px; height: 200px;" />
-						<div class="special-wrap">
-							<div class="hot_offer">
-								<span>Hot Offer</span>
-							</div>
-							<div class="open_house">
-								<span>Open House</span>
-							</div>
-						</div>
+				
+				<div class="wpl_prp_bot">
+					<a id="prp_link_id_10" href="http://livedemo00.template-help.com/wordpress_53995/apartments/10-Office-For-Rent-United-States-5Rooms-5Bathrooms-USD3000" class="view_detail" title="House 1">
+						<h3 class="wpl_prp_title">#{linha.bairroModel.descricao}</h3>
+					</a>
+					<h4 class="wpl_prp_listing_location">#{empty linha.bairroModel.cidadeModel.nome ? 'Cidade não informada' : linha.bairroModel.cidadeModel.nome}</h4>
+					<div class="wpl_prp_listing_icon_box">
+						<h:panelGroup rendered="#{linha.quartos > 0}"><span>#{linha.quartos}</span><div class="fa fa-bed Azul vBaseline ML0"></div></h:panelGroup>
+						<h:panelGroup rendered="#{linha.suites > 0}"><span>#{linha.suites}</span><div class="addict-tub Azul vBaseline ML-20 Fs18"></div></h:panelGroup>
+						<h:panelGroup rendered="#{linha.qtdVagasEstacionamento > 0}"><span>#{linha.qtdVagasEstacionamento}</span><div class="fa fa-car Azul vBaseline ML0"></div></h:panelGroup>
 					</div>
+					<div class="wpl_prp_desc">#{linha.tituloAnuncio}</div>
 				</div>
-				<div class="wpl_prp_top_boxes back">
-					<a id="prp_link_id_7" href="http://livedemo00.template-help.com/wordpress_53995/apartments/7-Apartment-Vacation-Rental-United-States-3Bedrooms-3Bathrooms-USD1000" class="view_detail">More Details</a>
-				</div>
-			</div>
-			<div class="wpl_prp_bot">
-				<a id="prp_link_id_7" href="http://livedemo00.template-help.com/wordpress_53995/apartments/7-Apartment-Vacation-Rental-United-States-3Bedrooms-3Bathrooms-USD1000" class="view_detail" title="House 1">
-					<h3 class="wpl_prp_title">House 1</h3>
-				</a>
-				<h4 class="wpl_prp_listing_location">United States</h4>
-				<div class="wpl_prp_listing_icon_box">
-					<div class="bedroom">3</div>
-					<div class="bathroom">3</div>
-					<div class="pic_count">4</div>
-				</div>
-				<div class="wpl_prp_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</div>
-			</div>
-			<div class="price_box">
-				<span itemprop="price" content="$1,000 Per Week">$1,000 Per Week</span>
-			</div>
-		</div>
-		<div class="wpl_prp_cont grid_box item-5" id="wpl_prp_cont6">
-			<div class="wpl_prp_top" style="width: 285px; height: 200px;">
-				<div class="wpl_prp_top_boxes front">
-					<div class="wpl_gallery_container" id="wpl_gallery_container6">
-						<img itemprop="image" id="wpl_gallery_image6" src="./thimg_Depositphotos_5874135_original_285x200.jpg" class="wpl_gallery_image " alt="5 Bedrooms, Apartment, For Rent, 4 Bathrooms, Listing ID 1005, United States," width="285" height="200" style="width: 285px; height: 200px;" />
-						<div class="special-wrap">
-							<div class="feature">
-								<span>Featured</span>
-							</div>
-							<div class="open_house">
-								<span>Open House</span>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="wpl_prp_top_boxes back">
-					<a id="prp_link_id_6" href="http://livedemo00.template-help.com/wordpress_53995/apartments/6-Apartment-For-Rent-United-States-5Bedrooms-4Bathrooms-USD300" class="view_detail">More Details</a>
+				<div class="price_box">
+					<span itemprop="price">R$ <h:outputText value="#{empty linha.valor ? linha.valorAluguel : linha.valor}"><f:convertNumber type="number" pattern="#,###,##0.00" locale="pt_BR" /></h:outputText> </span>
 				</div>
 			</div>
-			<div class="wpl_prp_bot">
-				<a id="prp_link_id_6" href="http://livedemo00.template-help.com/wordpress_53995/apartments/6-Apartment-For-Rent-United-States-5Bedrooms-4Bathrooms-USD300" class="view_detail" title="House 1">
-					<h3 class="wpl_prp_title">House 1</h3>
-				</a>
-				<h4 class="wpl_prp_listing_location">United States</h4>
-				<div class="wpl_prp_listing_icon_box">
-					<div class="bedroom">5</div>
-					<div class="bathroom">4</div>
-					<div class="pic_count">4</div>
-				</div>
-				<div class="wpl_prp_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</div>
-			</div>
-			<div class="price_box">
-				<span itemprop="price" content="$300 Per Week">$300 Per Week</span>
-			</div>
-		</div>
-		<div class="wpl_prp_cont grid_box item-6" id="wpl_prp_cont5">
-			<div class="wpl_prp_top" style="width: 285px; height: 200px;">
-				<div class="wpl_prp_top_boxes front">
-					<div class="wpl_gallery_container" id="wpl_gallery_container5">
-						<img itemprop="image" id="wpl_gallery_image5" src="./thimg_Depositphotos_5166732_original_285x200.jpg" class="wpl_gallery_image " alt="1 Bedrooms, Apartment, For Rent, 1 Bathrooms, Listing ID 1004, United States," width="285" height="200" style="width: 285px; height: 200px;" />
-						<div class="special-wrap">
-							<div class="feature">
-								<span>Featured</span>
-							</div>
-							<div class="hot_offer">
-								<span>Hot Offer</span>
-							</div>
-							<div class="open_house">
-								<span>Open House</span>
-							</div>
-							<div class="forclosure">
-								<span>Foreclosure</span>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="wpl_prp_top_boxes back">
-					<a id="prp_link_id_5" href="http://livedemo00.template-help.com/wordpress_53995/apartments/5-Apartment-For-Rent-United-States-1Bedroom-1Bathroom-USD2000" class="view_detail">More Details</a>
-				</div>
-			</div>
-			<div class="wpl_prp_bot">
-				<a id="prp_link_id_5" href="http://livedemo00.template-help.com/wordpress_53995/apartments/5-Apartment-For-Rent-United-States-1Bedroom-1Bathroom-USD2000" class="view_detail" title="House 1">
-					<h3 class="wpl_prp_title">House 1</h3>
-				</a>
-				<h4 class="wpl_prp_listing_location">United States</h4>
-				<div class="wpl_prp_listing_icon_box">
-					<div class="bedroom">1</div>
-					<div class="bathroom">1</div>
-					<div class="parking">2</div>
-					<div class="pic_count">4</div>
-				</div>
-				<div class="wpl_prp_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</div>
-			</div>
-			<div class="price_box">
-				<span itemprop="price" content="$2,000 Per Week">$2,000 Per Week</span>
-			</div>
-		</div>
-		<div class="wpl_prp_cont grid_box item-7" id="wpl_prp_cont4">
-			<div class="wpl_prp_top" style="width: 285px; height: 200px;">
-				<div class="wpl_prp_top_boxes front">
-					<div class="wpl_gallery_container" id="wpl_gallery_container4">
-						<img itemprop="image" id="wpl_gallery_image4" src="./thimg_Depositphotos_4501185_original_285x200.jpg" class="wpl_gallery_image " alt="1 Rooms, Office, For sale, 1 Bathrooms, Listing ID 1003, United States," width="285" height="200" style="width: 285px; height: 200px;" />
-					</div>
-				</div>
-				<div class="wpl_prp_top_boxes back">
-					<a id="prp_link_id_4" href="http://livedemo00.template-help.com/wordpress_53995/apartments/4-Office-For-sale-United-States-1Room-1Bathroom-USD3000" class="view_detail">More Details</a>
-				</div>
-			</div>
-			<div class="wpl_prp_bot">
-				<a id="prp_link_id_4" href="http://livedemo00.template-help.com/wordpress_53995/apartments/4-Office-For-sale-United-States-1Room-1Bathroom-USD3000" class="view_detail" title="House 1">
-					<h3 class="wpl_prp_title">House 1</h3>
-				</a>
-				<h4 class="wpl_prp_listing_location">United States</h4>
-				<div class="wpl_prp_listing_icon_box">
-					<div class="room">1</div>
-					<div class="bathroom">1</div>
-					<div class="pic_count">3</div>
-				</div>
-				<div class="wpl_prp_desc">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</div>
-			</div>
-			<div class="price_box">
-				<span itemprop="price" content="$3,000">$3,000</span>
-			</div>
-		</div>
-		<div class="wpl_prp_cont grid_box item-8" id="wpl_prp_cont3">
-			<div class="wpl_prp_top" style="width: 285px; height: 200px;">
-				<div class="wpl_prp_top_boxes front">
-					<div class="wpl_gallery_container" id="wpl_gallery_container3">
-						<img itemprop="image" id="wpl_gallery_image3" src="./thimg_Depositphotos_2192402_original_285x200.jpg" class="wpl_gallery_image " alt="5 Rooms, Office, For sale, 1 Bathrooms, Listing ID 1002, United States," width="285" height="200" style="width: 285px; height: 200px;" />
-					</div>
-				</div>
-				<div class="wpl_prp_top_boxes back">
-					<a id="prp_link_id_3" href="http://livedemo00.template-help.com/wordpress_53995/apartments/3-Office-For-sale-United-States-5Rooms-1Bathroom-USD3000" class="view_detail">More Details</a>
-				</div>
-			</div>
-			<div class="wpl_prp_bot">
-				<a id="prp_link_id_3" href="http://livedemo00.template-help.com/wordpress_53995/apartments/3-Office-For-sale-United-States-5Rooms-1Bathroom-USD3000" class="view_detail" title="House 1">
-					<h3 class="wpl_prp_title">House 1</h3>
-				</a>
-				<h4 class="wpl_prp_listing_location">United States</h4>
-				<div class="wpl_prp_listing_icon_box">
-					<div class="room">5</div>
-					<div class="bathroom">1</div>
-					<div class="pic_count">5</div>
-				</div>
-				<div class="wpl_prp_desc">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</div>
-			</div>
-			<div class="price_box">
-				<span itemprop="price" content="$3,000">$3,000</span>
-			</div>
-		</div>
+		
+		</ui:repeat>
+		
 	</div>
 
 	<div class="wpl_pagination_container clearfix">
-		<ul class="pagination">
-			<li class="prev disabled"><a href="http://livedemo00.template-help.com/wordpress_53995/#">Previous</a></li>
-			<li class="active"><a href="http://livedemo00.template-help.com/wordpress_53995/#">1</a></li>
-			<li><a href="http://livedemo00.template-help.com/wordpress_53995/?wplpage=2">2</a></li>
-			<li class="next"><a href="http://livedemo00.template-help.com/wordpress_53995/?wplpage=2">Next</a></li>
-		</ul>
-		<span class="wpl_total_result">9 Results returned.</span>
-		<span class="wpl_page_size">
-			<span class="wpl_page_size_title">Per Page </span>
-			<div class="jq-selectbox jqselect wpl_page_size_options" style="display: inline-block; position: relative; z-index: 100">
-				<select class="wpl_page_size_options" onchange="wpl_pagesize_changed(this.value);" style="margin: 0px; padding: 0px; position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; opacity: 0;"><option value="8" selected="selected">8</option>
-					<option value="16">16</option>
-					<option value="24">24</option>
-					<option value="32">32</option>
-					<option value="48">48</option>
-					<option value="80">80</option>
-				</select>
-				<div class="jq-selectbox__select" style="position: relative">
-					<div class="jq-selectbox__select-text" style="width: 16px;">8</div>
-					<div class="jq-selectbox__trigger">
-						<div class="jq-selectbox__trigger-arrow"></div>
+		<h:panelGroup rendered="false">
+			<ul class="pagination">
+				<li class="prev disabled"><a href="http://livedemo00.template-help.com/wordpress_53995/#">Previous</a></li>
+				<li class="active"><a href="http://livedemo00.template-help.com/wordpress_53995/#">1</a></li>
+				<li><a href="http://livedemo00.template-help.com/wordpress_53995/?wplpage=2">2</a></li>
+				<li class="next"><a href="http://livedemo00.template-help.com/wordpress_53995/?wplpage=2">Next</a></li>
+			</ul>
+		</h:panelGroup>
+		<span class="wpl_total_result">#{indexFaces.imoveis.size()} resultados encontrados.</span>
+		<h:panelGroup rendered="false">
+			<span class="wpl_page_size">
+				<span class="wpl_page_size_title">Per Page </span>
+				<div class="jq-selectbox jqselect wpl_page_size_options" style="display: inline-block; position: relative; z-index: 100">
+					<select class="wpl_page_size_options" onchange="wpl_pagesize_changed(this.value);" style="margin: 0px; padding: 0px; position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; opacity: 0;"><option value="8" selected="selected">8</option>
+						<option value="16">16</option>
+						<option value="24">24</option>
+						<option value="32">32</option>
+						<option value="48">48</option>
+						<option value="80">80</option>
+					</select>
+					<div class="jq-selectbox__select" style="position: relative">
+						<div class="jq-selectbox__select-text" style="width: 16px;">8</div>
+						<div class="jq-selectbox__trigger">
+							<div class="jq-selectbox__trigger-arrow"></div>
+						</div>
+					</div>
+					<div class="jq-selectbox__dropdown" style="position: absolute; display: none;">
+						<ul style="position: relative; list-style: none; overflow: auto; overflow-x: hidden">
+							<li class="selected sel">8</li>
+							<li>16</li>
+							<li>24</li>
+							<li>32</li>
+							<li>48</li>
+							<li>80</li>
+						</ul>
 					</div>
 				</div>
-				<div class="jq-selectbox__dropdown" style="position: absolute; display: none;">
-					<ul style="position: relative; list-style: none; overflow: auto; overflow-x: hidden">
-						<li class="selected sel">8</li>
-						<li>16</li>
-						<li>24</li>
-						<li>32</li>
-						<li>48</li>
-						<li>80</li>
-					</ul>
-				</div>
-			</div>
-		</span>
+			</span>
+		</h:panelGroup>
 	</div>
 
 </ui:composition>

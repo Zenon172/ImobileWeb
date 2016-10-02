@@ -1,5 +1,6 @@
 package br.com.sysfar.imobileweb.dao;
 
+import java.io.Serializable;
 import java.util.List;
 
 import br.com.sysfar.imobileweb.model.BairroModel;
@@ -23,7 +24,8 @@ import br.com.sysfar.imobileweb.model.UsuarioModel;
 import br.com.topsys.database.TSDataBaseBrokerIf;
 import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
 
-public final class ComboDAO {
+@SuppressWarnings("serial")
+public final class ComboDAO implements Serializable {
 
 	@SuppressWarnings("unchecked")
 	public List<GrupoModel> pesquisarGrupo() {

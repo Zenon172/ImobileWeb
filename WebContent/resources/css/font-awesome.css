@@ -18,7 +18,7 @@
 
 .fa {
   /* display: inline-block; */
-  font: normal normal normal 14px/1 FontAwesome;
+  font: normal normal normal 14px/1 FontAwesome !important;
   font-size: inherit;
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
@@ -1833,4 +1833,8 @@
 .fontAwesome20Red{
     font: normal normal normal 18px/1 FontAwesome!important;
     color: #cc0000 !important;
+}
+
+.Azul{
+	color:#14b1f3 !important;
 }

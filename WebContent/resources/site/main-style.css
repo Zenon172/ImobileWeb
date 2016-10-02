@@ -1370,7 +1370,7 @@ article.testimonial .testimonial_content small { color:#333; }
 .amr-widget-area > div { text-align:left; }
 .amr-widget-area > div:first-of-type { margin-top:15px; }
 .span12 .amr-widget-area .wpl_agents_widget_container .wpl_profile_container {
-	width:23.076923076923077%;
+	width:30%;
 	margin:10px 0 10px 2.564102564102564%;
 	min-height:inherit;
 	float:left;
@@ -1398,7 +1398,7 @@ article.testimonial .testimonial_content small { color:#333; }
 	border:1px solid #dddddd;
 	min-height:125px;
 	border-radius:4px;
-	background:url(images/empty.png) no-repeat;
+	background:url(empty.png) no-repeat;
 	background-size:100% 100%;
 	-webkit-box-sizing:border-box;
 	-moz-box-sizing:border-box;
@@ -2611,7 +2611,7 @@ blockquote p { line-height:22px; }
 .wpl_plisting_top_sidebar_container .wpl_search_from_box .more_search_option.active:after { content:''; }
 .wpl_plisting_top_sidebar_container .wpl_search_from_box .wpl_search_from_box_top { margin:0 0 20px; }
 .wpl_plisting_top_sidebar_container .wpl_search_from_box .wpl_search_from_box_top input, .wpl_plisting_top_sidebar_container .wpl_search_from_box .wpl_search_from_box_top .wpl_search_widget_location_textsearch, .wpl_plisting_top_sidebar_container .wpl_search_from_box .wpl_search_from_box_top .search_submit_box {
-	width:170px;
+	width:140px;
 	height:30px;
 	padding:5px;
 	font:13px/30px 'PT Sans Narrow', sans-serif;
@@ -2693,7 +2693,7 @@ blockquote p { line-height:22px; }
 @media only screen and (max-width: 768px) {
 	.wpl_plisting_top_sidebar_container .wpl_search_from_box .wpl_search_from_box_top .wpl_search_field_container.locationtextsearch_type { width:50%; }
 }
-.wpl_plisting_top_sidebar_container .wpl_search_from_box .wpl_search_from_box_top .wpl_search_field_container > input { margin:5px 30px 5px 0; }
+.wpl_plisting_top_sidebar_container .wpl_search_from_box .wpl_search_from_box_top .wpl_search_field_container > input { margin:5px 20px 5px 0; }
 @media only screen and (max-width: 1200px) {
 	.wpl_plisting_top_sidebar_container .wpl_search_from_box .wpl_search_from_box_top .wpl_search_field_container > input { margin:5px 10px 5px 0; }
 }
@@ -3351,7 +3351,7 @@ blockquote p { line-height:22px; }
 	color:#777;
 	margin:0 0 10px;
 }
-.wpl_prp_cont .wpl_prp_bot .wpl_prp_listing_icon_box div {
+.wpl_prp_cont .wpl_prp_bot .wpl_prp_listing_icon_box span {
 	margin:0 5px;
 	color:#14b1f3;
 	font:13px/1.2em 'PT Sans Narrow', sans-serif;

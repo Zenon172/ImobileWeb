@@ -32,16 +32,22 @@ a, strong {
     float: left;
     padding-left: 20px;
 }
+.block.inner2 {
+    /*padding: 35px 0 0 0;*/
+    padding: 10px 0 10px 0;
+    min-width: 380px;
+    text-align: center;
+}
 .block.inner {
     /*padding: 35px 0 0 0;*/
-    padding: 27px 0 0 0;
-    min-width: 295px;
+    padding: 10px 0 10px 0;
+    min-width: 280px;
     text-align: center;
 }
 .block.tm-logo {
     border: none;
     /*padding: 22px 20px 0;*/
-    padding: 16px 20px 0;
+    padding: 26px 20px 0;
 }
 .block.info {
     font-family: 'PT Sans', sans-serif;

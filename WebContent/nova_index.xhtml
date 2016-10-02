@@ -57,23 +57,25 @@
 
 	<div id="preview-bar">
 		<ul id="bar-inner">
-			<li class="tm-logo block"><a href="http://www.nayaramaciel.com.br/"> <img src="./resources/site/logo.png" alt="" />
+			<li class="tm-logo block"><a href="http://www.nayaramaciel.com.br/"> <img src="./resources/site/logo_completa.png" alt="" />
 			</a></li>
-			<li class="block inner info">Nayara Maciel</li>
+			<li class="block inner info" style="font-size: 36px; margin-top: 30px;">Imóveis SSA</li>
+			<li class="block inner"></li>
 			<li class="block inner">
-				<!-- Price: --> <strong class="price-cur"> <!-- $ -->
-			</strong>
+				<div align="left">
+					<h:outputText value="(71) 98823-2582 (oi)" /><br/>
+					<h:outputText value="(71) 99273-9749 (tim)" /><br/>
+					<h:outputText value="(71) 98194-5757 (claro)" /><br/>
+					<h:outputText value="(71) 99949-2582 (vivo) (whatsapp)" />
+				</div>
 			</li>
-			<li class="block inner"><a href="http://www.layoutexpresso.com/templates/demo/53995.html#request-form-wrapper" class="buy fancybox order" data-id="http://www.layoutexpresso.com/templates/search/page1.html?keyword=53995"> Encomendar Site </a></li>
+			
 		</ul>
 	</div>
 	<div id="iframelive" class="no-responsive">
 		<div id="preview-wrapper">
-
 			<div id="motopress-main" class="main-holder">
-
 				<ui:include src="/site/include_top_menu.xhtml" />
-
 				<div class="motopress-wrapper content-holder clearfix">
 					<div class="container">
 						<div class="row">
@@ -89,31 +91,18 @@
 											<div class="row ">
 												<div class="span12 ">
 													<div class="wpl_property_listing_container" id="wpl_property_listing_container">
-
 														<ui:include src="/site/include_google_mapa.xhtml" />
-
 														<ui:include src="/site/include_campos_busca.xhtml" />
-
 														<ui:include src="/site/include_campos_sort.xhtml" />
-
 														<ui:include src="/site/include_galeria.xhtml" />
-
-
 													</div>
 													<div class="spacer"></div>
-
 													<ui:include src="/site/include_featured_agents.xhtml" />
-
 													<div class="spacer"></div>
-
 													<ui:include src="/site/include_rodape1.xhtml" />
-
 												</div>
-												
 											</div>
-											
 											<div class="clear"></div>
-
 										</div>
 									</div>
 								</div>
@@ -121,9 +110,7 @@
 						</div>
 					</div>
 				</div>
-
 			</div>
-
 		</div>
 	</div>
 	<div class="popup" id="request-form-wrapper" style="display: none">

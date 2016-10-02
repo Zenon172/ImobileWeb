@@ -35,6 +35,10 @@ public class ImovelModel extends BaseModel {
 	private String endereco;
 
 	private String complemento;
+	
+	private Double latitude;
+	
+	private Double longitude;
 
 	private CondominioModel condominioModel;
 
@@ -1018,6 +1022,22 @@ public class ImovelModel extends BaseModel {
 
 	public void setFlagAluguel(Boolean flagAluguel) {
 		this.flagAluguel = flagAluguel;
+	}
+
+	public Double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
 	}
 
 	public Double getValorMetroQuadrado(){

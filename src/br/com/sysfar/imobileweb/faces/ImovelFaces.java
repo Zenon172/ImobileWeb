@@ -119,6 +119,7 @@ public class ImovelFaces extends CrudFaces<ImovelModel> {
 		this.crudPesquisaModel.setCaptadorModel(new UsuarioModel());
 		this.crudPesquisaModel.setProprietarioModel(new ProprietarioModel());
 		this.crudPesquisaModel.setBairrosPesquisa(new ArrayList<String>());
+		this.crudPesquisaModel.setBairroModel(new BairroModel());
 
 		this.imovelDAO = new ImovelDAO();
 		this.comboDAO = new ComboDAO();

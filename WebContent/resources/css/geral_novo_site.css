@@ -727,3 +727,31 @@ body {
 		display: none !important
 	}
 }
+
+.vBaseline{
+	vertical-align: baseline !important;
+}
+
+.ML-20 {
+	margin-left: -20px !important;
+}
+
+.ML20, .ML20 input {
+	margin-left: 20px !important;
+}
+
+.ML0 {
+	margin-left: 0px !important;
+}
+
+.ML5 {
+	margin-left: 5px !important;
+}
+
+.fontNarrow, .fontNarrow input{
+	font: 13px/1.2em 'PT Sans Narrow', sans-serif !important;
+}
+
+.MT5px, .MT5px input{
+	margin-top: 5px !important;
+}
