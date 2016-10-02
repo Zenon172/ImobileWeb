@@ -1,0 +1,372 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core">
+
+	<h:form id="formGaleria" prependId="false">
+		<div class="span12" data-motopress-wrapper-file="page-fullwidth.php" data-motopress-wrapper-type="content">
+			<div class="row">
+				<div class="span12" data-motopress-type="static" data-motopress-static-file="static/static-title.php">
+					<section class="title-section">
+						<h1 class="title-header">TITULO ANUNCIO #{imovelSiteFaces.imovelModel.tituloAnuncio}</h1>
+					</section>
+				</div>
+			</div>
+			<div id="content" class="row">
+				<div class="span12" data-motopress-type="loop" data-motopress-loop-file="loop/loop-page.php">
+					<div id="post-1929" class="page post-1929 type-page status-publish hentry">
+						<div class="wpl_prp_show_container" id="wpl_prp_show_container">
+							<div class="wpl_prp_container" id="wpl_prp_container9" itemscope="">
+								<div class="wpl_prp_show_tabs">
+									<div class="tabs_container">
+										<h:panelGroup rendered="#{!imovelSiteFaces.flagVerLocalizacao}">
+											<div id="tabs-1" class="tabs_contents" style="display: block;">
+												<div class="wpl_gallery_container" id="wpl_gallery_container9" style="width: 1600px">
+													<div class="bx-wrapper" style="max-width: 100%;">
+														<div class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 548px;">
+															<ul class="bxslider" id="bxslider_9_3" style="width: auto; position: relative;">
+																<ui:repeat var="linha" value="#{imovelSiteFaces.imovelModel.fotos}">
+																	<li style="float: none; list-style: none; position: absolute; width: 1170px; z-index: 0; display: #{linha.id == imovelSiteFaces.fotoSelecionada.id ? 'list-item;' : 'none;'}">
+																		<img src="#{linha.arquivoView}" itemprop="image" class="wpl_gallery_image " id="wpl_gallery_image29" width="1600" height="750" alt="teste" />
+																	</li>
+																</ui:repeat>
+															</ul>
+														</div>
+														<div class="bx-controls bx-has-controls-direction">
+															<div class="bx-controls-direction">
+																<p:commandLink styleClass="fa fa-chevron-left bx-prev" action="#{imovelSiteFaces.carregarFotoAnterior}" process="@this" update="@form" />
+																<p:commandLink styleClass="fa fa-chevron-right bx-next" action="#{imovelSiteFaces.carregarProximaFoto}" process="@this" update="@form" />
+															</div>
+														</div>
+													</div>
+													<div id="bx-pager">
+														<div id="img_count">#{imovelSiteFaces.imovelModel.fotos.size()}</div>
+														<ui:repeat var="linha" value="#{imovelSiteFaces.imovelModel.fotos}">
+															<p:commandLink process="@this" update="@all" styleClass="#{linha.id == imovelSiteFaces.fotoSelecionada.id ? 'active' : ''}">
+																<img src="#{linha.arquivoMini}" width="100" height="80" style="width: 100px; height: 80px;" itemprop="image" alt="" />
+																<f:setPropertyActionListener value="#{linha}" target="#{imovelSiteFaces.fotoSelecionada}" />
+															</p:commandLink>
+														</ui:repeat>
+													</div>
+												</div>
+											</div>
+										</h:panelGroup>
+										<h:panelGroup rendered="#{imovelSiteFaces.flagVerLocalizacao}">
+											<div id="tabs-2" class="tabs_contents">
+												<div class="wpl_googlemap_container wpl_googlemap_pshow" id="wpl_googlemap_container15" style="width: 1349px; margin-left: -674.5px; left: 50%; position: relative;">
+													<div class="wpl_map_canvas" id="wpl_map_canvas15" style="height: 480px;"></div>
+												</div>
+											</div>
+										</h:panelGroup>
+									</div>
+									<div class="tabs_box">
+										<ul class="tabs">
+											<li class="active">
+												<p:commandLink value="Fotos" process="@this" update="@all">
+													<f:setPropertyActionListener value="false" target="#{imovelSiteFaces.flagVerLocalizacao}" />
+												</p:commandLink>
+											</li>
+											<li>
+												<p:commandLink value="Localização" process="@this" update="@all">
+													<f:setPropertyActionListener value="true" target="#{imovelSiteFaces.flagVerLocalizacao}" />
+												</p:commandLink>
+											</li>
+										</ul>
+									</div>
+								</div>
+								<h:panelGroup rendered="true">
+								<div class="wpl_prp_container_content">
+									<div class="wpl_prp_container_content_left">
+										<div class="wpl_prp_container_content_title">
+											<div class="first-col">
+												<div class="title-header clearfix">
+													<h1 class="title_text">#{imovelSiteFaces.imovelModel.bairroModel.descricao}</h1>
+													<h2 class="location_build_up">
+														<span itemprop="address">#{imovelSiteFaces.imovelModel.bairroModel.cidadeModel.nome}</span>
+													</h2>
+												</div>
+												<div class="wpl_prp_show_detail_boxes">
+													<div class="wpl_prp_show_detail_boxes_title">Descrição</div>
+													<div class="wpl_prp_show_detail_boxes_cont" itemprop="description">
+														<p><h:outputText value="#{imovelSiteFaces.imovelModel.descricaoAnuncioPadraoHtml}" escape="false" /> </p>
+														<div class="sub-list"></div>
+														<div class="sub-list"></div>
+														<div class="sub-list"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="wpl_prp_show_detail_boxes hide">
+											<div class="wpl_prp_show_detail_boxes_title">Descrição</div>
+											<div class="wpl_prp_show_detail_boxes_cont" itemprop="description">
+												<p><h:outputText value="#{imovelSiteFaces.imovelModel.descricaoAnuncioPadraoHtml}" escape="false" /></p>
+												<div class="sub-list"></div>
+												<div class="sub-list"></div>
+												<div class="sub-list"></div>
+											</div>
+										</div>
+										<div class="wpl_prp_show_detail_boxes">
+											<div class="wpl_prp_show_detail_boxes_title">Detalhes Básicos</div>
+											<div class="wpl_prp_show_detail_boxes_cont">
+												<div class="sub-list">
+													<div id="wpl-dbst-show3" class="rows other item-1">
+														Tipo : <span>#{imovelSiteFaces.imovelModel.tipoImovelModel.descricao}</span>
+													</div>
+													<div id="wpl-dbst-show2" class="rows other item-2">
+														Posição do sol : <span>#{imovelSiteFaces.imovelModel.posicaoSolModel.descricao}</span>
+													</div>
+													<div id="wpl-dbst-show5" class="rows other item-3">
+														Código : <span>#{imovelSiteFaces.imovelModel.codigo}</span>
+													</div>
+													<div id="wpl-dbst-show6" class="rows other item-4">
+														Preço : <span>R$ <h:outputText value="#{imovelSiteFaces.imovelModel.valor}">
+																			<f:convertNumber type="number" pattern="#,###,##0.00" locale="pt_BR" />
+																		</h:outputText></span>
+													</div>
+												</div>
+												<div class="sub-list">
+													<div id="wpl-dbst-show7" class="rows other item-5">
+														Área privativa : <span>#{imovelSiteFaces.imovelModel.areaPrivativa}</span>
+													</div>
+													<div id="wpl-dbst-show8" class="rows other item-6">
+														Quartos : <span>#{imovelSiteFaces.imovelModel.quartos}</span>
+													</div>
+													<div id="wpl-dbst-show9" class="rows other item-7">
+														Suítes : <span>#{imovelSiteFaces.imovelModel.suites}</span>
+													</div>
+													<div id="wpl-dbst-show17" class="rows other item-8">
+														Banheiros : <span>#{imovelSiteFaces.imovelModel.banheiros}</span>
+													</div>
+												</div>
+												<div class="sub-list">
+													<div id="wpl-dbst-show10" class="rows other item-9">
+														Vagas : <span>#{imovelSiteFaces.imovelModel.qtdVagasEstacionamento}</span>
+													</div>
+													<div id="wpl-dbst-show12" class="rows other item-10">
+														Condomínio : <span><h:panelGroup rendered="#{!empty imovelSiteFaces.imovelModel.valorCondominio}"> R$ <h:outputText value="#{imovelSiteFaces.imovelModel.valorCondominio}">
+																			<f:convertNumber type="number" pattern="#,###,##0.00" locale="pt_BR" />
+																		</h:outputText></h:panelGroup></span>
+													</div>
+													<div id="wpl-dbst-show11" class="rows other item-11">
+														IPTU : <span><h:panelGroup rendered="#{!empty imovelSiteFaces.imovelModel.valorIPTU}"> R$ <h:outputText value="#{imovelSiteFaces.imovelModel.valorIPTU}">
+																			<f:convertNumber type="number" pattern="#,###,##0.00" locale="pt_BR" />
+																		</h:outputText></h:panelGroup></span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="wpl_prp_show_detail_boxes">
+											<div class="wpl_prp_show_detail_boxes_title">Características</div>
+											<div class="wpl_prp_show_detail_boxes_cont">
+												<h:panelGroup rendered="#{imovelSiteFaces.imovelModel.flagPiscinaPrivativa}">
+													<div class="sub-list">
+														<div id="wpl-dbst-show131" class="rows feature  single  item-1">Piscina</div>
+													</div>
+												</h:panelGroup>
+												<h:panelGroup rendered="#{imovelSiteFaces.imovelModel.flagInfraestrutura}">
+													<div class="sub-list">
+														<div id="wpl-dbst-show137" class="rows feature  single  item-1">Infraestrutura</div>
+													</div>
+												</h:panelGroup>
+												<h:panelGroup rendered="#{imovelSiteFaces.imovelModel.flagArmariosBanheiro}">
+													<div class="sub-list">
+														<div id="wpl-dbst-show138" class="rows feature  single  item-1">Armários Banheiro</div>
+													</div>
+												</h:panelGroup>
+												<h:panelGroup rendered="#{imovelSiteFaces.imovelModel.flagArmariosCozinha}">
+													<div class="sub-list">
+														<div id="wpl-dbst-show138" class="rows feature  single  item-1">Armários Cozinha</div>
+													</div>
+												</h:panelGroup>
+												<h:panelGroup rendered="#{imovelSiteFaces.imovelModel.flagArmariosQuartos}">
+													<div class="sub-list">
+														<div id="wpl-dbst-show138" class="rows feature  single  item-1">Armários Quartos</div>
+													</div>
+												</h:panelGroup>
+												<h:panelGroup rendered="#{imovelSiteFaces.imovelModel.flagCozinhaAmericana}">
+													<div class="sub-list">
+														<div id="wpl-dbst-show138" class="rows feature  single  item-1">Cozinha Americana</div>
+													</div>
+												</h:panelGroup>
+												<h:panelGroup rendered="#{imovelSiteFaces.imovelModel.flagSalaoFestas}">
+													<div class="sub-list">
+														<div id="wpl-dbst-show138" class="rows feature  single  item-1">Salão de Festas</div>
+													</div>
+												</h:panelGroup>
+												<h:panelGroup rendered="#{imovelSiteFaces.imovelModel.flagPlayground}">
+													<div class="sub-list">
+														<div id="wpl-dbst-show138" class="rows feature  single  item-1">Playground</div>
+													</div>
+												</h:panelGroup>
+												<h:panelGroup rendered="#{imovelSiteFaces.imovelModel.flagAcademia}">
+													<div class="sub-list">
+														<div id="wpl-dbst-show138" class="rows feature  single  item-1">Academia</div>
+													</div>
+												</h:panelGroup>
+												<h:panelGroup rendered="#{imovelSiteFaces.imovelModel.flagQuadraPoliesportiva}">
+													<div class="sub-list">
+														<div id="wpl-dbst-show138" class="rows feature  single  item-1">Quadra Poliesportiva</div>
+													</div>
+												</h:panelGroup>
+												<h:panelGroup rendered="#{imovelSiteFaces.imovelModel.flagParqueInfantil}">
+													<div class="sub-list">
+														<div id="wpl-dbst-show138" class="rows feature  single  item-1">Parque Infantil</div>
+													</div>
+												</h:panelGroup>
+												<h:panelGroup rendered="#{imovelSiteFaces.imovelModel.flagCampo}">
+													<div class="sub-list">
+														<div id="wpl-dbst-show138" class="rows feature  single  item-1">Campo</div>
+													</div>
+												</h:panelGroup>
+												<h:panelGroup rendered="#{imovelSiteFaces.imovelModel.flagSalaoJogos}">
+													<div class="sub-list">
+														<div id="wpl-dbst-show138" class="rows feature  single  item-1">Salão de Jogos</div>
+													</div>
+												</h:panelGroup>
+											</div>
+										</div>
+										<div class="wpl_prp_show_position3"></div>
+									</div>
+									<div class="wpl_prp_container_content_right">
+										<div class="wpl_prp_right_boxes details" itemscope="">
+											<div class="wpl_prp_right_boxes_title">
+												<span>#{imovelSiteFaces.imovelModel.bairroModel.descricao}</span>
+											</div>
+											<div class="wpl_prp_right_boxes_content">
+												<div class="wpl_prp_right_boxe_details_top clearfix">
+													<div class="wpl_prp_right_boxe_details_left">
+														<ul>
+															<li>Código : <span itemprop="productID">#{imovelSiteFaces.imovelModel.codigo}</span></li>
+															<li>Quartos : <span>#{imovelSiteFaces.imovelModel.quartos}</span></li>
+															<li>Suítes : <span>#{imovelSiteFaces.imovelModel.suites}</span></li>
+															<li>Vagas : <span>#{imovelSiteFaces.imovelModel.qtdVagasEstacionamento}</span></li>
+														</ul>
+													</div>
+													<div class="wpl_prp_right_boxe_details_right"></div>
+												</div>
+												<div class="wpl_prp_right_boxe_details_bot">
+													<div class="price_box" itemprop="price">R$ <h:outputText value="#{imovelSiteFaces.imovelModel.valor}">
+																			<f:convertNumber type="number" pattern="#,###,##0.00" locale="pt_BR" />
+																		</h:outputText></div>
+												</div>
+											</div>
+										</div>
+										<div class="wpl_prp_show_position2">
+											<div class="wpl_prp_right_boxes agent_info">
+												<div class="wpl_prp_right_boxes_title">
+													<span>Corretora</span>
+												</div>
+												<div class="wpl_prp_right_boxes_content clearfix">
+													<div class="wpl_agent_info" id="wpl_agent_info1" itemscope="">
+														<div class="wpl_agent_info_l">
+															<div class="image_container">
+																<div class="front has_logo">
+																	<img itemprop="image" src="resources/images/thprofile_125x125.jpg" class="profile_image" alt="Nayara Maciel" />
+																</div>
+															</div>
+															<div class="company_details">
+																<div itemprop="name" class="company_name">Apartments</div>
+																<div itemprop="address" class="company_address">4578 Marmora Road,Glasgow D04 89GR</div>
+															</div>
+														</div>
+														<div class="wpl_agent_info_r clearfix">
+															<ul>
+																<li class="name" itemprop="name"><a href="http://www.nayaramaciel.com.br/">Nayara Maciel</a></li>
+																<li itemprop="telephone" class="phone" data-original-title="" title="">(71) 99949-2582</li>
+																<li itemprop="telephone" class="phone" data-original-title="" title="">(71) 98823-2582</li>
+																<li itemprop="telephone" class="phone" data-original-title="" title="">(71) 98194-5757</li>
+																<li itemprop="telephone" class="phone" data-original-title="" title="">(71) 99273-9749</li>
+															</ul>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="wpl_prp_right_boxes listing_contact">
+												<div class="wpl_prp_right_boxes_title">
+													<span>Contato</span> 
+												</div>
+												<div class="wpl_prp_right_boxes_content clearfix">
+													<div class="wpl_contact_container wpl-contact-listing-wp" id="wpl_contact_container9">
+														<h:panelGroup id="pgDadosMensagem">
+															<h:form id="formContato" prependId="false">
+																<div class="form-field">
+																	<p:inputText id="wpl_contact_fullname9" value="#{imovelSiteFaces.contatoModel.nome}" placeholder="Nome" label="Nome" styleClass="text-box coluna100" />
+																</div>
+																<div class="form-field">
+																	<p:inputText id="wpl_contact_phone9" value="#{imovelSiteFaces.contatoModel.telefone}" placeholder="Telefone" styleClass="text-box coluna100"/>
+																</div>
+																<div class="form-field">
+																	<p:inputText id="wpl_contact_email9" value="#{imovelSiteFaces.contatoModel.email}" placeholder="E-mail" styleClass="text-box coluna100"/>
+																</div>
+																<div class="form-field wpl-contact-listing-msg">
+																	<p:inputTextarea id="wpl_contact_message9" value="#{imovelSiteFaces.contatoModel.mensagem}" placeholder="Mensagem" required="true" label="Mensagem" rows="4" styleClass="text-box coluna100" />
+																</div>
+																<div class="form-field wpl-contact-listing-btn">
+																	<h:commandButton value="CONTATAR ANUNCIANTE" action="#{imovelSiteFaces.enviarMensagem}" process="@this, pgDadosMensagem" update="pgDadosMensagem" styleClass="btn btn-primary" style="background-color: #f89139; border-radius: 5px; width: 100%" />
+																</div>
+															</h:form>
+														</h:panelGroup>
+														<div id="wpl_contact_ajax_loader_9"></div>
+														<div id="wpl_contact_message_9"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="wpl_prp_show_bottom">
+										Imóveis Semelhantes
+										<script type="text/javascript">
+											$(function()
+											{
+											    wplj("#owl-slider2").owlCarousel({
+											        items : 4,
+											        lazyLoad : true,
+											        navigation : true,
+											        slideSpeed : 500,
+											        navigationText : false,
+											        pagination : false,
+											        autoWidth:true,
+											        itemsTablet: [768,2],
+											        itemsTabletSmall: false,
+											        itemsMobile : [480,1]
+											    });
+											});
+										</script>
+										<div id="owl-slider2" class="wpl-owl-carousel wpl-owl-theme container owl-carousel owl-theme" style="opacity: 1; display: block;">
+											<div class="owl-wrapper-outer">
+												<div class="owl-wrapper" style="width: 100%; left: 0px; display: block; transition: all 0ms ease; transform: translate3d(0px, 0px, 0px);">
+													<ui:repeat var="linha" value="#{imovelSiteFaces.imoveisRelacionados}">
+														<div class="owl-item" style="width: 293px;">
+															<div class="item">
+																<img itemprop="image" src="#{empty linha.imagemFotoPrincipalModel.arquivo ? 'resources/images/sem_foto2.jpg' : linha.imagemFotoPrincipalModel.arquivoMedio}" width="270" height="184" style="width: 270px; height: 184px;" />
+																<div class="title">
+																	<h3 itemprop="name">R$ <h:outputText value="#{imovelSiteFaces.imovelModel.valor}">
+																			<f:convertNumber type="number" pattern="#,###,##0.00" locale="pt_BR" />
+																		</h:outputText></h3>
+																	<p class="desc">#{linha.bairroModel.descricao}</p>
+																	<a itemprop="url" class="more_info" href="imovel.xhtml?codigo=#{linha.id}">Mais Detalhes</a>
+																</div>
+															</div>
+														</div>
+													</ui:repeat>
+												</div>
+											</div>
+
+											<div class="owl-controls clickable">
+												<div class="owl-buttons">
+													<div class="owl-prev icon-chevron-left"></div>
+													<div class="owl-next icon-chevron-right"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								</h:panelGroup>
+							</div>
+						</div>
+						<div class="clear"></div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</h:form>
+
+</ui:composition>

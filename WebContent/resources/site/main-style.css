@@ -3788,7 +3788,7 @@ blockquote p { line-height:22px; }
 }
 #wpl_prp_show_container .wpl_prp_container .wpl_prp_container_content .first-col {
 	float:left;
-	width:calc(100% - 210px);
+	width:calc(100%);
 }
 .ie8 #wpl_prp_show_container .wpl_prp_container .wpl_prp_container_content .first-col { width:65%; }
 @media (max-width: 768px) {

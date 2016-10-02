@@ -1,0 +1,198 @@
+<ui:composition template="template_site.xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xmlns:ts="http://java.sun.com/jsf/composite/components" xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<ui:define name="tituloPagina">
+		<title>
+			<h:outputText value="#{imovelSiteFaces.imovelModel.tituloAnuncio}" />
+		</title>
+	</ui:define>
+	
+	<ui:define name="dadosPagina">
+
+		<h:panelGroup layout="block" styleClass="coluna100" style="text-align: left;">
+
+			<style>
+				.ui-galleria-frame-content {
+					background-color: black;
+				}
+				
+				.ui-galleria-frame-image {
+					width: auto !important;
+					height: 40px !important;
+				}
+				
+				.destaqueImovel {
+					font-family: 'titillium_webregular' !important;
+					font-size: 28px;
+					color: #72828B;
+					margin-left: 10px;
+				}
+				
+				.labelImovel {
+					font-family: 'titillium_webregular' !important;
+					font-size: 12px;
+					color: #72828B;
+					margin-left: 10px;
+				}
+				
+				.affix {
+				    right: 32px; 
+				    top: 5px;
+				    position: fixed;
+				}
+				
+			</style>
+
+			<div class="EmptyBox10" />
+
+			<h:outputText value="#{imovelSiteFaces.imovelModel.tituloAnuncio}" styleClass="" style="font-size: 28px; color: #1578c9; font-family: 'titillium_webregular' !important; font-weight: bold; margin: 10px" />
+
+			<hr style="height: 1px; border: none; color: #72828B; background-color: #72828B; margin-top: 0px; margin-bottom: 0px;" />
+			
+			<div class="EmptyBox5" />
+			
+			<h:outputText value="" styleClass="icon-location Fs24" style="color: #1578c9;" />
+			<h:outputText value="#{imovelSiteFaces.imovelModel.bairroModel.descricao}" styleClass="textoPadrao"/>
+
+			<div class="EmptyBox10" />
+
+			<h:panelGroup layout="block" styleClass="Container50" style="text-align: center">
+				<p:galleria value="#{imovelSiteFaces.fotos}" var="image">
+					<p:graphicImage value="../arquivos/arquivos_imobile/#{image}.JPG" height="450px" />
+				</p:galleria>
+			</h:panelGroup>
+
+			<h:panelGroup layout="block" styleClass="Container25" style="background-color: white; text-align: left; height: 450px; padding: 10px">
+
+				<div style="float: left; text-align: center; padding-top: 8px; width: 50px; height: 50px; border: 2px solid #1578c9 !important; border-radius: 25px">
+					<h:outputText value="" styleClass="icon-dollar Fs28" style="color: #1578c9;" />
+				</div>
+
+				<div style="float: left; margin-top: -3px">
+					<h:outputText value="Valor" styleClass="labelImovel" /><br/>
+					<h:outputText value="R$ " styleClass="destaqueImovel" />
+					<h:outputText value="#{imovelSiteFaces.imovelModel.valor}" styleClass="destaqueImovel" style="margin-left: 0px !important;">
+						<f:convertNumber type="number" pattern="#,###,##0.00" locale="pt_BR" />
+					</h:outputText>
+				</div>
+
+				<div class="EmptyBox10" />
+
+				<div style="float: left; text-align: center; padding-top: 8px; width: 50px; height: 50px; border: 2px solid #1578c9 !important; border-radius: 25px">
+					<h:outputText value="" styleClass="#{imovelSiteFaces.imovelModel.tipoImovelModel.descricao == 'Apartamento' ? 'fa fa-building-o' : 'icon-home'} Fs28" style="color: #1578c9;" />
+				</div>
+				
+				<div style="float: left; margin-top: -3px">
+					<h:outputText value="Tipo" styleClass="labelImovel" /><br/>
+					<h:outputText value="#{imovelSiteFaces.imovelModel.tipoImovelModel.descricao} " styleClass="destaqueImovel" />
+				</div>
+
+				<div class="EmptyBox10" />
+
+				<div style="float: left; text-align: center; padding-top: 5px; width: 50px; height: 50px; border: 2px solid #1578c9 !important; border-radius: 25px">
+					<h:outputText value="" styleClass="icon-sun Fs28" style="color: #1578c9;" />
+				</div>
+
+				<div style="float: left; margin-top: -3px">
+					<h:outputText value="Posição do sol" styleClass="labelImovel" /><br/>
+					<h:outputText value="#{imovelSiteFaces.imovelModel.posicaoSolModel.descricao}" styleClass="destaqueImovel" />
+				</div>
+				
+				<div class="EmptyBox10" />
+
+				<div style="float: left; text-align: center; padding-top: 8px; width: 50px; height: 50px; border: 2px solid #1578c9 !important; border-radius: 25px">
+					<h:outputText value="" styleClass="fa fa-bed Fs28" style="color: #1578c9;" />
+				</div>
+				
+				<div style="float: left;">
+					<h:outputText value="#{imovelSiteFaces.imovelModel.quartos} dormitório(s)" styleClass="destaqueImovel" />
+				</div>
+				
+				<div class="EmptyBox10" />
+
+				<div style="float: left; text-align: center; padding-top: 8px; width: 50px; height: 50px; border: 2px solid #1578c9 !important; border-radius: 25px">
+					<h:outputText value="" styleClass="addict-tub Fs42" style="color: #1578c9; position: relative; top: -18px; left: -18px" />
+				</div>
+
+				<h:outputText value="#{imovelSiteFaces.imovelModel.suites} suíte(s)" styleClass="destaqueImovel" />
+				
+				<div class="EmptyBox10" />
+
+				<div style="float: left; text-align: center; padding-top: 8px; width: 50px; height: 50px; border: 2px solid #1578c9 !important; border-radius: 25px">
+					<h:outputText value="" styleClass="fa fa-car Fs28" style="color: #1578c9;" />
+				</div>
+
+				<h:outputText value="#{imovelSiteFaces.imovelModel.qtdVagasEstacionamento} Vaga(s)" styleClass="destaqueImovel" />
+
+				<div class="EmptyBox10" />
+
+				<div style="float: left; text-align: center; padding-top: 8px; width: 50px; height: 50px; border: 2px solid #1578c9 !important; border-radius: 25px">
+					<h:outputText value="" styleClass="fa fa-expand Fs28" style="color: #1578c9;" />
+				</div>
+
+				<h:outputText value="#{imovelSiteFaces.imovelModel.areaPrivativa}" styleClass="destaqueImovel">
+					<f:convertNumber pattern="#,###,##0.##" />
+				</h:outputText>
+				<h:outputText value=" m²" styleClass="destaqueImovel" style="margin-left: 0px !important;" />
+
+			</h:panelGroup>
+			
+			<nav data-spy="affix" data-offset-top="320">
+				<h:form id="frmDadosMensagem" prependId="false">
+					<h:panelGroup id="pgDadosMensagem" layout="block" styleClass="Container25" style="width: 320px; border-style: solid; border-width: 2px; border-color: rgb(217, 201, 84); background-color: rgb(255, 245, 163); text-align: left; height: 450px; padding: 10px;">
+						
+						<h:outputText value="Fale conosco agora mesmo" styleClass="Fs25 fontSite" />
+						<div class="EmptyBox10" />
+						<h:outputText value="" styleClass="icon-phone Fs22 fontAzul" />
+						<h:outputText value="(71) 99949-2582  /  98823-2582" styleClass="Fs18 fontSite" />
+						<p:inputText value="#{imovelSiteFaces.contatoModel.nome}" placeholder="Nome" required="true" label="Nome" styleClass="coluna100" />
+						<div class="EmptyBox10" />
+						<p:inputText value="#{imovelSiteFaces.contatoModel.telefone}" placeholder="Telefone" styleClass="coluna100"/>
+						<div class="EmptyBox10" />
+						<p:inputText value="#{imovelSiteFaces.contatoModel.email}" placeholder="E-mail" styleClass="coluna100"/>
+						<div class="EmptyBox10" />
+						<p:inputTextarea value="#{imovelSiteFaces.contatoModel.mensagem}" placeholder="Mensagem" required="true" label="Mensagem" rows="4" styleClass="coluna100" />
+						<div class="EmptyBox10" />
+						<h:outputText value="Desejo receber contato por:" />
+						<div class="EmptyBox5" />
+						<p:selectBooleanCheckbox value="#{imovelSiteFaces.contatoModel.flagRetornoWhatsapp}" itemLabel="Whatsapp"/>
+						<p:selectBooleanCheckbox value="#{imovelSiteFaces.contatoModel.flagRetornoTelefone}" itemLabel="Telefone" style="margin-left: 40px"/>
+						<div class="EmptyBox10" />
+						<hr style="height: 1px; border: none; color: #72828B; background-color: #72828B; margin-top: 0px; margin-bottom: 0px;" />
+						<div class="EmptyBox10" />
+						<p:commandButton value="CONTATAR ANUNCIANTE" action="#{imovelSiteFaces.enviarMensagem}" process="@this, pgDadosMensagem" update="pgDadosMensagem" styleClass="Fs28" style="width: 100%"></p:commandButton>
+					</h:panelGroup>
+				</h:form>
+			</nav>
+			
+			<div class="EmptyBox20" />
+			
+			<h:panelGroup layout="block" styleClass="Container100" style="background-color: white; text-align: left">
+				<h:outputText value="#{imovelSiteFaces.imovelModel.descricaoAnuncioPadraoHtml}" escape="false" styleClass="textoPadrao" />
+				<div class="EmptyBox20" />	
+				<h:outputText value="LOCALIZAÇÃO" styleClass="Fs40 fontSite" />
+				<div id="map" style=" width: 70%; height: 400px;"></div>
+			</h:panelGroup>
+
+		</h:panelGroup>
+		
+		<script>
+	      function initMap() {
+	        var mapDiv = document.getElementById('map');
+	        var map = new google.maps.Map(mapDiv, {
+	            center: {lat: -12.987152, lng: -38.434784},
+	            
+	            zoom: 15
+	        });
+	        var marker = new google.maps.Marker({
+	              position: new google.maps.LatLng(-12.987152, -38.434784),
+	              title: "Localização do imóvel: #{imovelSiteFaces.imovelModel.tituloAnuncio}",
+	              map: map
+	          });
+	      }
+	      
+	    </script>
+	    <script async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgaiOuO_uDTFsCrbiNUMv5a2yYISJHzMA&amp;callback=initMap">
+    </script>
+	</ui:define>
+
+</ui:composition>

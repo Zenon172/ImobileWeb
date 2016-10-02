@@ -2,18 +2,6 @@
  * @Author WPL UI Department of Realtyna Inc.
  * @Copyright 2015 Realtyna Inc. | realtyna.com
  */
-@font-face {
-	font-family: 'wpl-front';
-	src: url("../fonts/wpl_front.eot?158lmz");
-	src: url("../fonts/wpl_front.eot?#iefix158lmz")
-		format("embedded-opentype"), url("../fonts/wpl_front.woff?158lmz")
-		format("woff"), url("../fonts/wpl_front.ttf?158lmz")
-		format("truetype"), url("../fonts/wpl_front.svg?158lmz#wpl_front")
-		format("svg");
-	font-weight: normal;
-	font-style: normal
-}
-
 [class^="wpl-font-"], [class*=" wpl-font-"] {
 	font-family: 'wpl-front';
 	speak: none;
@@ -7514,19 +7502,9 @@ keyframes opa { 12.0%{
 	left: 10px
 }
 
-#wpl_prp_show_container .wpl_prp_container .wpl_prp_show_tabs .tabs_container .wpl_gallery_container .bx-controls-direction a.bx-prev:before
-	{
-	content: "\e654"
-}
-
 #wpl_prp_show_container .wpl_prp_container .wpl_prp_show_tabs .tabs_container .wpl_gallery_container .bx-controls-direction a.bx-next
 	{
 	right: 10px
-}
-
-#wpl_prp_show_container .wpl_prp_container .wpl_prp_show_tabs .tabs_container .wpl_gallery_container .bx-controls-direction a.bx-next:before
-	{
-	content: "\e655"
 }
 
 #wpl_prp_show_container .wpl_prp_container .wpl_prp_show_tabs .tabs_box
