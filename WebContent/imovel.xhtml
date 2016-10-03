@@ -1,5 +1,9 @@
 <ui:composition template="template_site_novo.xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xmlns:ts="http://java.sun.com/jsf/composite/components" xmlns:pe="http://primefaces.org/ui/extensions">
-
+	
+	<ui:define name="tituloPagina">
+		<title><h:outputText value="#{imovelSiteFaces.imovelModel.tituloAnuncio}" /></title>
+	</ui:define>
+	
 	<ui:define name="conteudo">
 
 		<div id="iframelive" class="no-responsive">

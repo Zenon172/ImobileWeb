@@ -5,7 +5,7 @@
 			<div class="row">
 				<div class="span12" data-motopress-type="static" data-motopress-static-file="static/static-title.php">
 					<section class="title-section">
-						<h1 class="title-header">TITULO ANUNCIO #{imovelSiteFaces.imovelModel.tituloAnuncio}</h1>
+						<h1 style="font-size: 28px; color: #1578c9; font-family: 'titillium_webregular' !important; font-weight: bold;">#{imovelSiteFaces.imovelModel.tituloAnuncio}</h1>
 					</section>
 				</div>
 			</div>
@@ -24,14 +24,14 @@
 															<ul class="bxslider" id="bxslider_9_3" style="width: auto; position: relative;">
 																<ui:repeat var="linha" value="#{imovelSiteFaces.imovelModel.fotos}">
 																	<li style="float: none; list-style: none; position: absolute; width: 1170px; z-index: 0; display: #{linha.id == imovelSiteFaces.fotoSelecionada.id ? 'list-item;' : 'none;'}">
-																		<img src="#{linha.arquivoView}" itemprop="image" class="wpl_gallery_image " id="wpl_gallery_image29" width="1600" height="750" alt="teste" />
+																		<img src="#{linha.arquivoView}" itemprop="image" class="wpl_gallery_image " id="wpl_gallery_image29" alt="teste" />
 																	</li>
 																</ui:repeat>
 															</ul>
 														</div>
 														<div class="bx-controls bx-has-controls-direction">
 															<div class="bx-controls-direction">
-																<p:commandLink styleClass="fa fa-chevron-left bx-prev" action="#{imovelSiteFaces.carregarFotoAnterior}" process="@this" update="@form" />
+																<h:commandLink styleClass="fa fa-chevron-left" action="#{imovelSiteFaces.carregarFotoAnterior}" process="@this" update="@form" />
 																<p:commandLink styleClass="fa fa-chevron-right bx-next" action="#{imovelSiteFaces.carregarProximaFoto}" process="@this" update="@form" />
 															</div>
 														</div>
@@ -39,7 +39,7 @@
 													<div id="bx-pager">
 														<div id="img_count">#{imovelSiteFaces.imovelModel.fotos.size()}</div>
 														<ui:repeat var="linha" value="#{imovelSiteFaces.imovelModel.fotos}">
-															<p:commandLink process="@this" update="@all" styleClass="#{linha.id == imovelSiteFaces.fotoSelecionada.id ? 'active' : ''}">
+															<p:commandLink process="@this" update="@form" styleClass="#{linha.id == imovelSiteFaces.fotoSelecionada.id ? 'active' : ''}">
 																<img src="#{linha.arquivoMini}" width="100" height="80" style="width: 100px; height: 80px;" itemprop="image" alt="" />
 																<f:setPropertyActionListener value="#{linha}" target="#{imovelSiteFaces.fotoSelecionada}" />
 															</p:commandLink>
@@ -156,7 +156,7 @@
 											<div class="wpl_prp_show_detail_boxes_title">Características</div>
 											<div class="wpl_prp_show_detail_boxes_cont">
 												<h:panelGroup rendered="#{imovelSiteFaces.imovelModel.flagPiscinaPrivativa}">
-													<div class="sub-list">
+													<div class="sub-list" style="margin-left: 2.5% !important;">
 														<div id="wpl-dbst-show131" class="rows feature  single  item-1">Piscina</div>
 													</div>
 												</h:panelGroup>
@@ -290,7 +290,7 @@
 																	<p:inputText id="wpl_contact_fullname9" value="#{imovelSiteFaces.contatoModel.nome}" placeholder="Nome" label="Nome" styleClass="text-box coluna100" />
 																</div>
 																<div class="form-field">
-																	<p:inputText id="wpl_contact_phone9" value="#{imovelSiteFaces.contatoModel.telefone}" placeholder="Telefone" styleClass="text-box coluna100"/>
+																	<p:inputText id="wpl_contact_phone9" value="#{imovelSiteFaces.contatoModel.telefone}" placeholder="Telefone" styleClass="telefone text-box coluna100"/>
 																</div>
 																<div class="form-field">
 																	<p:inputText id="wpl_contact_email9" value="#{imovelSiteFaces.contatoModel.email}" placeholder="E-mail" styleClass="text-box coluna100"/>
@@ -301,6 +301,22 @@
 																<div class="form-field wpl-contact-listing-btn">
 																	<h:commandButton value="CONTATAR ANUNCIANTE" action="#{imovelSiteFaces.enviarMensagem}" process="@this, pgDadosMensagem" update="pgDadosMensagem" styleClass="btn btn-primary" style="background-color: #f89139; border-radius: 5px; width: 100%" />
 																</div>
+																<p:outputPanel autoUpdate="true">
+																	<script type="text/javascript">
+																		$(".telefone").mask("(00) 00009-0000");
+																		$('.telefone').focusout(function(){
+																		    var phone, element;
+																		    element = $(this);
+																		    element.unmask();
+																		    phone = element.val().replace(/\D/g, '');
+																		    if(phone.length > 10) {
+																		        element.mask("(99) 99999-9999");
+																		    } else {
+																		        element.mask("(99) 9999-99999");
+																		    }
+																		}).trigger('focusout');
+																	</script>
+																</p:outputPanel>
 															</h:form>
 														</h:panelGroup>
 														<div id="wpl_contact_ajax_loader_9"></div>
@@ -350,6 +366,28 @@
 				</div>
 			</div>
 		</div>
+		<script type="text/javascript">
+			var markers = ${indexFaces.coordenadas};
+	
+			/** default values in case of no marker to showing **/
+			var default_lt = '-12.987152';
+			var default_ln = '-38.434784';
+			var default_zoom = 13;
+	
+			wplj(document).ready(
+					function() {
+						wpl_initialize14();
+	
+						if (markers.length == 1) {
+							/** restore the zoom level after the map is done scaling **/
+							var listener = google.maps.event.addListener(wpl_map,
+									'idle', function(event) {
+										wpl_map.setZoom(default_zoom);
+										google.maps.event.removeListener(listener);
+									});
+						}
+					});
+		</script>
 	</h:form>
 
 </ui:composition>

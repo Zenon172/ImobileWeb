@@ -7483,7 +7483,6 @@ keyframes opa { 12.0%{
 
 #wpl_prp_show_container .wpl_prp_container .wpl_prp_show_tabs .tabs_container .wpl_gallery_container .bx-controls-direction a:before
 	{
-	font: 12pt/25px "wpl-front";
 	display: block;
 	text-align: center;
 	top: 0;

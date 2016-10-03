@@ -115,8 +115,16 @@ public class ImovelSiteFaces extends TSMainFaces {
 		try {
 
 			this.contatoDAO.inserir(this.contatoModel);
+			
+			StringBuilder texto = new StringBuilder();
+			
+			texto.append("Nome: ").append(this.contatoModel.getNome()).append("<br/>");
+			texto.append("Telefone: ").append(this.contatoModel.getTelefone()).append("<br/>");
+			texto.append("E-mail: ").append(this.contatoModel.getEmail()).append("<br/>");
+			texto.append("Mensagem: ").append(this.contatoModel.getMensagem()).append("<br/><br/>");
+			texto.append("Imóvel: ").append(this.imovelModel.getCodigo()).append("<br/>");
 
-			new EmailUtil().enviar("contato@nayaramaciel.com.br", "Contato através do site: www.nayaramaciel.com.br", this.contatoModel.getMensagem());
+			new EmailUtil().enviar("contato@nayaramaciel.com.br", "Contato através do site: www.nayaramaciel.com.br", texto.toString());
 
 			this.instanciarContato();
 
@@ -128,7 +136,7 @@ public class ImovelSiteFaces extends TSMainFaces {
 
 		}
 
-		return null;
+		return "imovel.xhtml?codigo=" + this.imovelModel.getId()+ "&faces-redirect=true";
 	}
 
 	public ImovelModel getImovelModel() {
