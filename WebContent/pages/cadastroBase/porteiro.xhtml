@@ -1,0 +1,68 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+	<h:form id="porteiroForm" prependId="false">
+	
+		<p:tabView>
+			
+			<p:tab title="Cadastro">
+				
+				<div align="right">
+					<p:commandButton value="Novo Registro" action="#{porteiroFaces.limpar}" process="@form" update="@form"></p:commandButton>
+				</div>
+				
+				
+				<br/>
+				
+				<p:panel>
+				
+				<h:outputText value="Nome"></h:outputText><br/>
+				<p:inputText value="#{porteiroFaces.porteiroModel.nome}" maxlength="100" style="width: 50%"></p:inputText>
+				<br/><br/>
+				<h:outputText value="Ativo?"></h:outputText><br/>
+				<p:selectBooleanCheckbox value="#{porteiroFaces.porteiroModel.flagAtivo}"></p:selectBooleanCheckbox>
+				<br/>
+				<br/>
+				<p:commandButton value="Inserir" action="#{porteiroFaces.inserir}" process="@form" update="@form" rendered="#{porteiroFaces.porteiroModel.id == null}"></p:commandButton>
+				<p:commandButton value="Alterar" action="#{porteiroFaces.alterar}" process="@form" update="@form" rendered="#{porteiroFaces.porteiroModel.id != null}"></p:commandButton>
+				
+				</p:panel>
+							
+			</p:tab>
+			
+			<p:tab title="Pesquisa">
+				
+				<h:outputText value="Nome"></h:outputText><br/>
+				<p:inputText value="#{porteiroFaces.porteiroPesquisaModel.nome}" maxlength="100" style="width: 50%"></p:inputText>
+				<br/><br/>
+				<p:commandButton value="Pesquisar" action="#{porteiroFaces.pesquisar}" process="@form" update="@form"></p:commandButton>
+		<br/>
+				<p:dataTable value="#{porteiroFaces.listaPorteiros}" var="linha" emptyMessage="Nenhum registro encontrado">
+					
+					<p:column headerText="Nome">
+						<h:outputText value="#{linha.nome}"></h:outputText>
+					</p:column>
+					
+					<p:column headerText="Editar">
+						<p:commandButton value="Editar" process="@form" update="@form">
+							<f:setPropertyActionListener value="#{linha}" target="#{porteiroFaces.porteiroModel}"></f:setPropertyActionListener>
+						</p:commandButton>
+					</p:column>
+					
+					<p:column headerText="Excluir">
+						<p:commandButton value="Excluir" action="#{porteiroFaces.excluir(linha)}" process="@form" update="@form"></p:commandButton>
+					</p:column>
+					
+				</p:dataTable>
+				
+			</p:tab>
+			
+		</p:tabView>
+		
+		
+		
+		<br/>
+		<br/>
+	
+	</h:form>
+
+</ui:composition>
